@@ -74,6 +74,18 @@ app.get('/step2Q', (req, res) => {
   });
 });
 
+// الخطوة الثالثة - إنشاء كلمة المرور
+app.get('/step3', (req, res) => {
+  res.render('step3', {
+    title: 'إنشاء كلمة المرور - نظام التوثيق الوطني',
+    currentPage: 'step3'
+  });
+});
+
+app.post('/step3', (req, res) => {
+  res.send('تم إنشاء كلمة المرور بنجاح!');
+});
+
 // معالجة جميع الطلبات الأخرى
 app.use((req, res) => {
   res.status(404).send('Page not found');
