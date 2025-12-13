@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    
+    <style>
+        body {
+            font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            direction: rtl;
+        }
+        
+        .header {
+            background-color: #8b1538;
+            color: white;
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+        
+        .gray-container {
+            background-color: #f5f5f5;
+            padding: 30px;
+            border-radius: 8px;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+        
+        .gray-container h2 {
+            color: #8b1538;
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-size: 24px;
+            text-align: center;
+        }
+        
+        .payment-info {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+        }
+        
+        .payment-amount {
+            font-size: 36px;
+            color: #8b1538;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .payment-details {
+            margin: 20px 0;
+        }
+        
+        .payment-details p {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        
+        .btn-primary {
+            background-color: #8b1538;
+            border-color: #8b1538;
+            padding: 12px 40px;
+            font-size: 16px;
+        }
+        
+        .btn-primary:hover {
+            background-color: #6d1028;
+            border-color: #6d1028;
+        }
+        
+        .btn-default {
+            padding: 12px 40px;
+            font-size: 16px;
+        }
+        
+        .form-actions {
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .form-actions .btn {
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <%- include('partials/header') %>
+    <%- include('partials/progress') %>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="gray-container">
+                    <h2>التسديد</h2>
+                    
+                    <div class="payment-info">
+                        <h3 style="text-align: center; color: #333;">رسوم التسجيل</h3>
+                        <div class="payment-amount">100 ريال قطري</div>
+                        
+                        <div class="payment-details">
+                            <p><strong>الخدمة:</strong> رسوم التسجيل في نظام التوثيق الوطني</p>
+                            <p><strong>المبلغ:</strong> 100.00 ريال قطري</p>
+                            <p><strong>طريقة الدفع:</strong> بطاقة ائتمان / بطاقة مدى</p>
+                        </div>
+                        
+                        <div class="alert alert-info" style="margin-top: 20px;">
+                            <strong>ملاحظة:</strong> سيتم توجيهك إلى بوابة الدفع الآمنة لإتمام عملية الدفع.
+                        </div>
+                    </div>
+                    
+                    <form action="/step5" method="POST">
+                        <div class="form-actions">
+                            <a href="javascript:history.back()" class="btn btn-default">رجوع</a>
+                            <button type="submit" class="btn btn-primary">الدفع الآن</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <%- include('partials/footer') %>
+</body>
+</html>

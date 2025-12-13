@@ -1,0 +1,162 @@
+<style>
+.progress-container {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px 0;
+}
+
+.progress-steps {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    direction: ltr;
+}
+
+.progress-steps::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #ddd;
+    z-index: 0;
+}
+
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    flex: 1;
+}
+
+.progress-step-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #f5f5f5;
+    border: 2px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #999;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+}
+
+.progress-step.completed .progress-step-circle {
+    background-color: #5cb85c;
+    border-color: #5cb85c;
+    color: white;
+}
+
+.progress-step.active .progress-step-circle {
+    background-color: #337ab7;
+    border-color: #337ab7;
+    color: white;
+    box-shadow: 0 0 10px rgba(51, 122, 183, 0.5);
+}
+
+.progress-step-label {
+    font-size: 12px;
+    color: #666;
+    text-align: center;
+    max-width: 80px;
+}
+
+.progress-step.active .progress-step-label {
+    color: #337ab7;
+    font-weight: bold;
+}
+
+.progress-step.completed .progress-step-label {
+    color: #5cb85c;
+}
+
+@media (max-width: 768px) {
+    .progress-step-label {
+        font-size: 10px;
+        max-width: 60px;
+    }
+    
+    .progress-step-circle {
+        width: 30px;
+        height: 30px;
+        font-size: 12px;
+    }
+}
+</style>
+
+<div class="progress-container">
+    <div class="progress-steps">
+        <!-- الخطوة 1: نوع الحساب -->
+        <div class="progress-step <%= currentStep >= 1 ? (currentStep > 1 ? 'completed' : 'active') : '' %>">
+            <div class="progress-step-circle">
+                <% if (currentStep > 1) { %>
+                    ✓
+                <% } else { %>
+                    1
+                <% } %>
+            </div>
+            <div class="progress-step-label">نوع الحساب</div>
+        </div>
+
+        <!-- الخطوة 2: كلمة المرور -->
+        <div class="progress-step <%= currentStep >= 2 ? (currentStep > 2 ? 'completed' : 'active') : '' %>">
+            <div class="progress-step-circle">
+                <% if (currentStep > 2) { %>
+                    ✓
+                <% } else { %>
+                    2
+                <% } %>
+            </div>
+            <div class="progress-step-label">كلمة المرور</div>
+        </div>
+
+        <!-- الخطوة 3: البيانات الشخصية -->
+        <div class="progress-step <%= currentStep >= 3 ? (currentStep > 3 ? 'completed' : 'active') : '' %>">
+            <div class="progress-step-circle">
+                <% if (currentStep > 3) { %>
+                    ✓
+                <% } else { %>
+                    3
+                <% } %>
+            </div>
+            <div class="progress-step-label">البيانات الشخصية</div>
+        </div>
+
+        <!-- الخطوة 4: التسديد -->
+        <div class="progress-step <%= currentStep >= 4 ? (currentStep > 4 ? 'completed' : 'active') : '' %>">
+            <div class="progress-step-circle">
+                <% if (currentStep > 4) { %>
+                    ✓
+                <% } else { %>
+                    4
+                <% } %>
+            </div>
+            <div class="progress-step-label">التسديد</div>
+        </div>
+
+        <!-- الخطوة 5: توثيق رقم الهاتف -->
+        <div class="progress-step <%= currentStep >= 5 ? (currentStep > 5 ? 'completed' : 'active') : '' %>">
+            <div class="progress-step-circle">
+                <% if (currentStep > 5) { %>
+                    ✓
+                <% } else { %>
+                    5
+                <% } %>
+            </div>
+            <div class="progress-step-label">توثيق الهاتف</div>
+        </div>
+
+        <!-- الخطوة 6: إتمام التسجيل -->
+        <div class="progress-step <%= currentStep >= 6 ? 'active' : '' %>">
+            <div class="progress-step-circle">6</div>
+            <div class="progress-step-label">إتمام التسجيل</div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    
+    <style>
+        body {
+            font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            direction: rtl;
+        }
+        
+        .header {
+            background-color: #8b1538;
+            color: white;
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+        
+        .success-container {
+            background-color: white;
+            padding: 50px 30px;
+            border-radius: 8px;
+            margin: 40px auto;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            background-color: #28a745;
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: white;
+        }
+        
+        .success-container h2 {
+            color: #28a745;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        
+        .success-message {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+        
+        .account-info {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 30px 0;
+            text-align: right;
+        }
+        
+        .account-info p {
+            margin: 10px 0;
+            font-size: 15px;
+        }
+        
+        .account-info strong {
+            color: #8b1538;
+        }
+        
+        .btn-primary {
+            background-color: #8b1538;
+            border-color: #8b1538;
+            padding: 12px 40px;
+            font-size: 16px;
+            margin: 10px;
+        }
+        
+        .btn-primary:hover {
+            background-color: #6d1028;
+            border-color: #6d1028;
+        }
+        
+        .btn-success {
+            padding: 12px 40px;
+            font-size: 16px;
+            margin: 10px;
+        }
+        
+        .next-steps {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #e8f4f8;
+            border-radius: 5px;
+            text-align: right;
+        }
+        
+        .next-steps h3 {
+            color: #8b1538;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .next-steps ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .next-steps li {
+            padding: 8px 0;
+            font-size: 15px;
+        }
+        
+        .next-steps li:before {
+            content: "✓ ";
+            color: #28a745;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <%- include('partials/header') %>
+    <%- include('partials/progress') %>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="success-container">
+                    <div class="success-icon">
+                        ✓
+                    </div>
+                    
+                    <h2>تم إتمام التسجيل بنجاح!</h2>
+                    
+                    <p class="success-message">
+                        تهانينا! لقد تم إنشاء حسابك في نظام التوثيق الوطني بنجاح.<br>
+                        يمكنك الآن استخدام حسابك للوصول إلى جميع الخدمات الحكومية الإلكترونية.
+                    </p>
+                    
+                    <div class="account-info">
+                        <p><strong>رقم الحساب:</strong> QA-2024-123456</p>
+                        <p><strong>تاريخ التسجيل:</strong> <%= new Date().toLocaleDateString('ar-QA', { year: 'numeric', month: 'long', day: 'numeric' }) %></p>
+                        <p><strong>حالة الحساب:</strong> نشط ✓</p>
+                    </div>
+                    
+                    <div class="next-steps">
+                        <h3>الخطوات التالية:</h3>
+                        <ul>
+                            <li>تحقق من بريدك الإلكتروني لتأكيد التسجيل</li>
+                            <li>قم بتسجيل الدخول باستخدام بيانات الاعتماد الخاصة بك</li>
+                            <li>أكمل ملفك الشخصي لتحسين تجربتك</li>
+                            <li>استكشف الخدمات الحكومية المتاحة</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="margin-top: 40px;">
+                        <a href="/login" class="btn btn-primary">تسجيل الدخول</a>
+                        <a href="/" class="btn btn-success">العودة للصفحة الرئيسية</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <%- include('partials/footer') %>
+</body>
+</html>

