@@ -40,6 +40,36 @@
     line-height: 1.428571429;
     border-radius: 15px;
 }
+
+/* Responsive للموبايل */
+@media (max-width: 767px) {
+    .stepwizard-step p {
+        font-size: 10px;
+        margin-top: 5px;
+    }
+    .btn-circle {
+        width: 25px;
+        height: 25px;
+        padding: 4px 0;
+        font-size: 10px;
+    }
+    .stepwizard {
+        padding-bottom: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+    .stepwizard-step p {
+        font-size: 8px;
+        margin-top: 3px;
+    }
+    .btn-circle {
+        width: 20px;
+        height: 20px;
+        padding: 2px 0;
+        font-size: 9px;
+    }
+}
 </style>
 
 <nav aria-label="تسجيل خطوة الملاحة">
@@ -49,13 +79,13 @@
                 <span class="btn <%= currentStep === 1 ? 'btn-primary' : 'btn-default' %> btn-circle" aria-selected="<%= currentStep === 1 ? 'true' : 'false' %>">1</span>
                 <p>نوع الحساب</p>
             </div>
-            <div class="stepwizard-step col-sm-3" aria-label="كلمة المرور">
-                <span class="btn <%= currentStep === 2 ? 'btn-primary' : 'btn-default' %> btn-circle" aria-selected="<%= currentStep === 2 ? 'true' : 'false' %>">2</span>
-                <p>كلمة المرور</p>
-            </div>
             <div class="stepwizard-step col-sm-3" aria-label="البيانات الشخصية">
-                <span class="btn <%= currentStep === 3 ? 'btn-primary' : 'btn-default' %> btn-circle" aria-selected="<%= currentStep === 3 ? 'true' : 'false' %>">3</span>
+                <span class="btn <%= currentStep === 2 ? 'btn-primary' : 'btn-default' %> btn-circle" aria-selected="<%= currentStep === 2 ? 'true' : 'false' %>">2</span>
                 <p>البيانات الشخصية</p>
+            </div>
+            <div class="stepwizard-step col-sm-3" aria-label="كلمة المرور">
+                <span class="btn <%= currentStep === 3 ? 'btn-primary' : 'btn-default' %> btn-circle" aria-selected="<%= currentStep === 3 ? 'true' : 'false' %>">3</span>
+                <p>كلمة المرور</p>
             </div>
             <div class="stepwizard-step col-sm-3" aria-label="التسديد">
                 <span class="btn <%= currentStep === 4 ? 'btn-primary' : 'btn-default' %> btn-circle" aria-selected="<%= currentStep === 4 ? 'true' : 'false' %>">4</span>

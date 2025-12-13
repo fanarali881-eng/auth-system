@@ -64,7 +64,7 @@ app.get('/step2', (req, res) => {
   res.render('step2', {
     title: 'الخطوة الثانية - نظام التوثيق الوطني',
     currentPage: 'step2',
-    currentStep: 3
+    currentStep: 2
   });
 });
 
@@ -75,7 +75,7 @@ app.get('/step2Q', (req, res) => {
     title: 'الخطوة الثانية - نظام التوثيق الوطني',
     currentPage: 'step2Q',
     userType: userType,
-    currentStep: 3
+    currentStep: 2
   });
 });
 
@@ -84,7 +84,7 @@ app.get('/step3', (req, res) => {
   res.render('step3', {
     title: 'إنشاء كلمة المرور - نظام التوثيق الوطني',
     currentPage: 'step3',
-    currentStep: 2
+    currentStep: 3
   });
 });
 
