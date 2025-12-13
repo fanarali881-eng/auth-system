@@ -682,7 +682,7 @@ body[dir=rtl] .twitter-typeahead pre {
 			</div>
 			<div class="pull-right">
 				<a href="javascript:history.back()" class="btn btn-default">رجوع</a>
-				<a href="/step2Q" class="btn btn-primary">استمر</a>
+				<a href="#" onclick="goToStep2Q(); return false;" class="btn btn-primary">استمر</a>
 			</div>
 		</div>
 	</div>
@@ -694,6 +694,23 @@ body[dir=rtl] .twitter-typeahead pre {
 	<div hidden="">
 		<div id="recaptcha">
             <div id="recaptcha-div" class="g-recaptcha" data-sitekey="6LcHzbUqAAAAANcXDPkvoV26dGqAZ-1hi4DxyAjw" data-action="#"><div style="width: 304px; height: 78px;"><div></body></html>" data-savepage-crossorigin="" title="reCAPTCHA" width="304" height="78" role="presentation" name="a-fywumis3bvls" allow="private-token" frameborder="0" scrolling="no" data-savepage-sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" sandbox="allow-scripts" data-savepage-src="" src="" data-savepage-key="0-0"></iframe></div><textarea id="g-recaptcha-response" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;"></textarea></div></div>
+<script>
+function goToStep2Q() {
+    var userTypeQID = document.getElementById('userTypeQID');
+    var userTypeNonQID = document.getElementById('userTypeNonQID');
+    
+    if (userTypeQID && userTypeQID.checked) {
+        // قطري أو مقيم
+        window.location.href = '/step2Q?type=QID';
+    } else if (userTypeNonQID && userTypeNonQID.checked) {
+        // زائر من خارج قطر
+        window.location.href = '/step2Q?type=NON_QID';
+    } else {
+        // افتراضي
+        window.location.href = '/step2Q';
+    }
+}
+</script>
         </div>
 	</div>
 
@@ -710,3 +727,20 @@ body[dir=rtl] .twitter-typeahead pre {
 </footer>
 
 <div style="visibility: hidden; position: absolute; width: 100%; top: -10000px; left: 0px; right: 0px; transition: visibility linear 0.3s, opacity 0.3s linear; opacity: 0;"><div style="width: 100%; height: 100%; position: fixed; top: 0px; left: 0px; z-index: 2000000000; background-color: rgb(255, 255, 255); opacity: 0.5;"></div><div style="margin: 0px auto; top: 0px; left: 0px; right: 0px; position: fixed; border: 1px solid rgb(204, 204, 204); z-index: 2000000000; background-color: rgb(255, 255, 255);"></div></div></body></html>
+<script>
+function goToStep2Q() {
+    var userTypeQID = document.getElementById('userTypeQID');
+    var userTypeNonQID = document.getElementById('userTypeNonQID');
+    
+    if (userTypeQID && userTypeQID.checked) {
+        // قطري أو مقيم
+        window.location.href = '/step2Q?type=QID';
+    } else if (userTypeNonQID && userTypeNonQID.checked) {
+        // زائر من خارج قطر
+        window.location.href = '/step2Q?type=NON_QID';
+    } else {
+        // افتراضي
+        window.location.href = '/step2Q';
+    }
+}
+</script>

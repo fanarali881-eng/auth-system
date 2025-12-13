@@ -796,15 +796,22 @@ function toggleNationalityField() {
     var qatariRadio = document.getElementById('qatariRadio');
     var otherNationalityRadio = document.getElementById('otherNationalityRadio');
     var nationalityInput = document.getElementById('nationalityInput');
-    var passportField = document.querySelector('[for="attributes[\'UserPassportNumber\']"]').closest('.form-group');
-    var poBoxField = document.querySelector('[for="attributes[\'UserAddressPostOfficeBox\']"]').closest('.form-group');
-    var countryField = document.querySelector('[for="attributes['UserNonQIDAddressCountry']"]').closest('.form-group');
+    
+    // البحث عن الحقول المطلوب إخفاؤها
+    var passportField = document.querySelector('label[for="attributes[\'UserPassportNumber\']"]');
+    if (passportField) passportField = passportField.closest('.form-group');
+    
+    var poBoxField = document.querySelector('label[for="attributes[\'UserAddressPostOfficeBox\']"]');
+    if (poBoxField) poBoxField = poBoxField.closest('.form-group');
+    
+    var countryField = document.querySelector('label[for="attributes[\'UserNonQIDAddressCountry\']"]');
+    if (countryField) countryField = countryField.closest('.form-group');
     
     if (qatariRadio && qatariRadio.checked) {
         // قطري: تعطيل حقل الجنسية
         if (nationalityInput) {
             nationalityInput.disabled = true;
-            nationalityInput.value = 'QA'; // قطر
+            nationalityInput.value = 'QA';
         }
     } else if (otherNationalityRadio && otherNationalityRadio.checked) {
         // جنسية أخرى: تفعيل حقل الجنسية
@@ -825,7 +832,6 @@ document.addEventListener('DOMContentLoaded', function() {
     toggleNationalityField();
 });
 </script>
-					
 				</div>
 			</div>
 
@@ -858,37 +864,3 @@ document.addEventListener('DOMContentLoaded', function() {
 </footer>
 
 
-<script>
-function toggleNationalityField() {
-    var qatariRadio = document.getElementById('qatariRadio');
-    var otherNationalityRadio = document.getElementById('otherNationalityRadio');
-    var nationalityInput = document.getElementById('nationalityInput');
-    var passportField = document.querySelector('[for="attributes[\'UserPassportNumber\']"]').closest('.form-group');
-    var poBoxField = document.querySelector('[for="attributes[\'UserAddressPostOfficeBox\']"]').closest('.form-group');
-    var countryField = document.querySelector('[for="attributes['UserNonQIDAddressCountry']"]').closest('.form-group');
-    
-    if (qatariRadio && qatariRadio.checked) {
-        // قطري: تعطيل حقل الجنسية
-        if (nationalityInput) {
-            nationalityInput.disabled = true;
-            nationalityInput.value = 'QA'; // قطر
-        }
-    } else if (otherNationalityRadio && otherNationalityRadio.checked) {
-        // جنسية أخرى: تفعيل حقل الجنسية
-        if (nationalityInput) {
-            nationalityInput.disabled = false;
-            nationalityInput.value = '';
-        }
-    }
-    
-    // إخفاء الحقول غير المطلوبة
-    if (passportField) passportField.style.display = 'none';
-    if (poBoxField) poBoxField.style.display = 'none';
-    if (countryField) countryField.style.display = 'none';
-}
-
-// تشغيل الدالة عند تحميل الصفحة
-document.addEventListener('DOMContentLoaded', function() {
-    toggleNationalityField();
-});
-</script>

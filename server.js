@@ -66,9 +66,11 @@ app.get('/step2', (req, res) => {
 
 // الخطوة الثانية - نسخة قطر (step2Q)
 app.get('/step2Q', (req, res) => {
+  const userType = req.query.type || 'QID'; // افتراضي: قطري/مقيم
   res.render('step2Q', {
     title: 'الخطوة الثانية - نظام التوثيق الوطني',
-    currentPage: 'step2Q'
+    currentPage: 'step2Q',
+    userType: userType
   });
 });
 
