@@ -556,8 +556,288 @@ body[dir=rtl] .twitter-typeahead pre {
 		</div>
 
 				<div class="form-group  required">
+<!-- خيارات الجنسية -->
+<div class="form-group required">
+<label class="col-sm-3 control-label">نوع الجنسية <span class="required">*</span></label>
+<div class="col-sm-9">
+<div class="radio">
+<label>
+<input type="radio" name="nationalityType" id="qatariRadio" value="qatari" checked onchange="toggleNationalityField()">
+قطري
+</label>
+</div>
+<div class="radio">
+<label>
+<input type="radio" name="nationalityType" id="otherNationalityRadio" value="other" onchange="toggleNationalityField()">
+جنسية أخرى
+</label>
+</div>
+</div>
+</div>
 
-                        
+					<label for="nationalityInput" class="col-sm-3 control-label" id="nationality-label">الجنسية</label>
+
+					<div class="col-sm-5">
+						<select id="nationalityInput" disabled name="attributes['UserNationality']" class="form-control" data-validate="UserNationality">
+							<option value="">تحديد الجنسية</option>
+							<option id="nationalityInputOption1" value="RU">الإتحاد الروسي</option><option id="nationalityInputOption2" value="ET">إثيوبيا</option><option id="nationalityInputOption3" value="AZ">أذربيجان</option><option id="nationalityInputOption4" value="AR">الأرجنتين</option><option id="nationalityInputOption5" value="JO">الأردن</option><option id="nationalityInputOption6" value="AM">أرمينيا</option><option id="nationalityInputOption7" value="ER">إريتريا</option><option id="nationalityInputOption8" value="ES">إسبانيا</option><option id="nationalityInputOption9" value="AU">أستراليا</option><option id="nationalityInputOption10" value="EE">إستونيا</option><option id="nationalityInputOption11" value="AF">أفغانستان</option><option id="nationalityInputOption12" value="EC">إكوادور</option><option id="nationalityInputOption13" value="AL">ألبانيا</option><option id="nationalityInputOption14" value="DE">ألمانيا</option><option id="nationalityInputOption15" value="AE">الإمارات العربية المتحدة</option><option id="nationalityInputOption16" value="AG">أنتيغوا وبربودا</option><option id="nationalityInputOption17" value="AD">أندورا</option><option id="nationalityInputOption18" value="ID">أندونيسيا</option><option id="nationalityInputOption19" value="AO">أنغولا</option><option id="nationalityInputOption20" value="UY">أوروغواي</option><option id="nationalityInputOption21" value="UZ">أوزبكستان</option><option id="nationalityInputOption22" value="UG">أوغندا</option><option id="nationalityInputOption23" value="UA">أوكرانيا</option><option id="nationalityInputOption24" value="IR">إيران</option><option id="nationalityInputOption25" value="IE">أيرلندا</option><option id="nationalityInputOption26" value="IS">آيسلندا</option><option id="nationalityInputOption27" value="IT">إيطاليا</option><option id="nationalityInputOption28" value="PG">بابوا غينيا الجديدة</option><option id="nationalityInputOption29" value="PY">باراغواي</option><option id="nationalityInputOption30" value="PK">باكستان</option><option id="nationalityInputOption31" value="PW">بالاو</option><option id="nationalityInputOption32" value="BH">البحرين</option><option id="nationalityInputOption33" value="BR">البرازيل</option><option id="nationalityInputOption34" value="BB">بربادوس</option><option id="nationalityInputOption35" value="PT">البرتغال</option><option id="nationalityInputOption36" value="BN">بروني دار السلام</option><option id="nationalityInputOption37" value="BE">بلجيكا</option><option id="nationalityInputOption38" value="BG">بلغاريا</option><option id="nationalityInputOption39" value="BZ">بليز</option><option id="nationalityInputOption40" value="BD">بنغلاديش</option><option id="nationalityInputOption41" value="PA">بناما</option><option id="nationalityInputOption42" value="BJ">بنن</option><option id="nationalityInputOption43" value="BT">بوتان</option><option id="nationalityInputOption44" value="BW">بوتسوانا</option><option id="nationalityInputOption45" value="BF">بوركينا فاسو</option><option id="nationalityInputOption46" value="BI">بوروندي</option><option id="nationalityInputOption47" value="BA">البوسنة والهرسك</option><option id="nationalityInputOption48" value="PL">بولندا</option><option id="nationalityInputOption49" value="BO">بوليفيا</option><option id="nationalityInputOption50" value="PE">بيرو</option><option id="nationalityInputOption51" value="BY">بيلاروس</option><option id="nationalityInputOption52" value="TH">تايلند</option><option id="nationalityInputOption53" value="TM">تركمانستان</option><option id="nationalityInputOption54" value="TR">تركيا</option><option id="nationalityInputOption55" value="TT">ترينداد وتوباغو</option><option id="nationalityInputOption56" value="TD">تشاد</option><option id="nationalityInputOption57" value="TG">توغو</option><option id="nationalityInputOption58" value="TV">توفالو</option><option id="nationalityInputOption59" value="TN">تونس</option><option id="nationalityInputOption60" value="TO">تونغا</option><option id="nationalityInputOption61" value="TL">تيمور- ليشتي</option><option id="nationalityInputOption62" value="JM">جامايكا</option><option id="nationalityInputOption63" value="ME">الجبل الأسود</option><option id="nationalityInputOption64" value="DZ">الجزائر</option><option id="nationalityInputOption65" value="BS">جزر البهاما</option><option id="nationalityInputOption66" value="SB">جزر سليمان</option><option id="nationalityInputOption67" value="KM">جزر القمر</option><option id="nationalityInputOption68" value="MH">جزر مارشال</option><option id="nationalityInputOption69" value="CF">جمهورية أفريقيا الوسطى</option><option id="nationalityInputOption70" value="CZ">الجمهورية التشيكية</option><option id="nationalityInputOption71" value="TZ">جمهورية تنزانيا المتحدة</option><option id="nationalityInputOption72" value="SS">جمهورية جنوب السودان</option><option id="nationalityInputOption73" value="DO">الجمهورية الدومينيكية</option><option id="nationalityInputOption74" value="SY">الجمهورية العربية السورية</option><option id="nationalityInputOption75" value="KR">جمهورية كوريا</option><option id="nationalityInputOption76" value="KP">جمهورية كوريا الشعبية الديمقراطية</option><option id="nationalityInputOption77" value="CD">جمهورية الكونغو الديمقراطية</option><option id="nationalityInputOption78" value="LA">جمهورية لاو الديمقراطية الشعبية</option><option id="nationalityInputOption79" value="MK">جمهورية مقدونيا اليوغسلافية السابقة</option><option id="nationalityInputOption80" value="MD">جمهورية مولدوفا</option><option id="nationalityInputOption81" value="ZA">جنوب أفريقيا</option><option id="nationalityInputOption82" value="GE">جورجيا</option><option id="nationalityInputOption83" value="DJ">جيبوتي</option><option id="nationalityInputOption84" value="DK">الدنمارك</option><option id="nationalityInputOption85" value="DM">دومينيكا</option><option id="nationalityInputOption86" value="CV">الرأس الأخضر</option><option id="nationalityInputOption87" value="RW">رواندا</option><option id="nationalityInputOption88" value="RO">رومانيا</option><option id="nationalityInputOption89" value="ZM">زامبيا</option><option id="nationalityInputOption90" value="ZW">زيمبابوي</option><option id="nationalityInputOption91" value="WS">ساموا</option><option id="nationalityInputOption92" value="ST">سان تومي وبرينسيبي</option><option id="nationalityInputOption93" value="SM">سان مارينو</option><option id="nationalityInputOption94" value="VC">سانت فنسنت وجزر غرينادين</option><option id="nationalityInputOption95" value="KN">سانت كيتس ونيفس</option><option id="nationalityInputOption96" value="LC">سانت لوسيا</option><option id="nationalityInputOption97" value="LK">سري لانكا</option><option id="nationalityInputOption98" value="SV">السلفادور</option><option id="nationalityInputOption99" value="SK">سلوفاكيا</option><option id="nationalityInputOption100" value="SI">سلوفينيا</option><option id="nationalityInputOption101" value="SG">سنغافورة</option><option id="nationalityInputOption102" value="SN">السنغال</option><option id="nationalityInputOption103" value="SZ">سوازيلند</option><option id="nationalityInputOption104" value="SD">السودان</option><option id="nationalityInputOption105" value="SR">سورينام</option><option id="nationalityInputOption106" value="SE">السويد</option><option id="nationalityInputOption107" value="CH">سويسرا</option><option id="nationalityInputOption108" value="SL">سيرا ليون</option><option id="nationalityInputOption109" value="SC">سيشيل</option><option id="nationalityInputOption110" value="CL">شيلي</option><option id="nationalityInputOption111" value="RS">صربيا</option><option id="nationalityInputOption112" value="SO">الصومال</option><option id="nationalityInputOption113" value="CN">الصين</option><option id="nationalityInputOption114" value="TJ">طاجيكستان</option><option id="nationalityInputOption115" value="IQ">العراق</option><option id="nationalityInputOption116" value="OM">عُمان</option><option id="nationalityInputOption117" value="GA">غابون</option><option id="nationalityInputOption118" value="GM">غامبيا</option><option id="nationalityInputOption119" value="GH">غانا</option><option id="nationalityInputOption120" value="GD">غرينادا</option><option id="nationalityInputOption121" value="GT">غواتيمالا</option><option id="nationalityInputOption122" value="GY">غيانا</option><option id="nationalityInputOption123" value="GN">غينيا</option><option id="nationalityInputOption124" value="GQ">غينيا الإستوائية</option><option id="nationalityInputOption125" value="GW">غينيا - بيساو</option><option id="nationalityInputOption126" value="VU">فانواتو</option><option id="nationalityInputOption127" value="FR">فرنسا</option><option id="nationalityInputOption128" value="PH">الفلبين</option><option id="nationalityInputOption129" value="PS">فلسطين</option><option id="nationalityInputOption130" value="VE">فنزويلا</option><option id="nationalityInputOption131" value="FI">فنلندا</option><option id="nationalityInputOption132" value="FJ">فيجي</option><option id="nationalityInputOption133" value="VN">فييت نام</option><option id="nationalityInputOption134" value="CY">قبرص</option><option id="nationalityInputOption135" value="QA">قطر</option><option id="nationalityInputOption136" value="KG">قرغيزستان</option><option id="nationalityInputOption137" value="KZ">كازاخستان</option><option id="nationalityInputOption138" value="CM">الكاميرون</option><option id="nationalityInputOption139" value="HR">كرواتيا</option><option id="nationalityInputOption140" value="KH">كمبوديا</option><option id="nationalityInputOption141" value="CA">كندا</option><option id="nationalityInputOption142" value="CU">كوبا</option><option id="nationalityInputOption143" value="CI">كوت ديفوار</option><option id="nationalityInputOption144" value="CR">كوستا ريكا</option><option id="nationalityInputOption145" value="CO">كولومبيا</option><option id="nationalityInputOption146" value="CG">الكونغو</option><option id="nationalityInputOption147" value="KW">الكويت</option><option id="nationalityInputOption148" value="KI">كيريباس</option><option id="nationalityInputOption149" value="KE">كينيا</option><option id="nationalityInputOption150" value="LV">لاتفيا</option><option id="nationalityInputOption151" value="LB">لبنان</option><option id="nationalityInputOption152" value="LU">لكسمبرغ</option><option id="nationalityInputOption153" value="LR">ليبيريا</option><option id="nationalityInputOption154" value="LY">ليبيا</option><option id="nationalityInputOption155" value="LT">ليتوانيا</option><option id="nationalityInputOption156" value="LI">ليختنشتاين</option><option id="nationalityInputOption157" value="LS">ليسوتو</option><option id="nationalityInputOption158" value="MT">مالطة</option><option id="nationalityInputOption159" value="ML">مالي</option><option id="nationalityInputOption160" value="MY">ماليزيا</option><option id="nationalityInputOption161" value="MG">مدغشقر</option><option id="nationalityInputOption162" value="EG">مصر</option><option id="nationalityInputOption163" value="MA">المغرب</option><option id="nationalityInputOption164" value="MX">المكسيك</option><option id="nationalityInputOption165" value="MW">مالاوي</option><option id="nationalityInputOption166" value="MV">ملديف</option><option id="nationalityInputOption167" value="SA">المملكة العربية السعودية</option><option id="nationalityInputOption168" value="GB">المملكة المتحدة لبريطانيا العظمى و آيرلندا الشمالية</option><option id="nationalityInputOption169" value="MN">منغوليا</option><option id="nationalityInputOption170" value="MR">موريتانيا</option><option id="nationalityInputOption171" value="MU">موريشيوس</option><option id="nationalityInputOption172" value="MZ">موزامبيق</option><option id="nationalityInputOption173" value="MC">موناكو</option><option id="nationalityInputOption174" value="MM">ميانمار</option><option id="nationalityInputOption175" value="FM">ميكرونيزيا</option><option id="nationalityInputOption176" value="NA">ناميبيا</option><option id="nationalityInputOption177" value="NR"> ناورو</option><option id="nationalityInputOption178" value="NO">النرويج</option><option id="nationalityInputOption179" value="AT">النمسا</option><option id="nationalityInputOption180" value="NP">نيبال</option><option id="nationalityInputOption181" value="NE">النيجر</option><option id="nationalityInputOption182" value="NG">نيجيريا</option><option id="nationalityInputOption183" value="NI">نيكاراغوا</option><option id="nationalityInputOption184" value="NZ">نيوزيلندا</option><option id="nationalityInputOption185" value="HT">هايتي</option><option id="nationalityInputOption186" value="IN">الهند</option><option id="nationalityInputOption187" value="HN">هندوراس</option><option id="nationalityInputOption188" value="HU">هنغاريا</option><option id="nationalityInputOption189" value="NL">هولندا</option><option id="nationalityInputOption190" value="US">الولايات المتحدة الامريكية</option><option id="nationalityInputOption191" value="JP">اليابان</option><option id="nationalityInputOption192" value="YE">اليمن</option><option id="nationalityInputOption193" value="GR">اليونان</option>
+						</select>
+						<span class="help-block hide" data-error-message="mandatory">الجنسية إلزامية</span>
+						
+					</div>
+				</div>
+
+				<div class="form-group  required" data-validate-full-name="highlight">
+					<div class="col-sm-3 control-label">
+                        <label for="name">الاسم</label>
+						<span title="" class="text-primary glyphicon glyphicon-info-sign" data-toggle="tooltip" data-html="true" data-container="body" data-original-title="أدخل اسمك باللغة العربية إذا كانت جنسيتك عربية. وإذا كانت جنسيتك أجنبية، يرجى إدخال اسمك باللغة الإنجليزية. الرجاء ملء الاسمين الأول والأخير على الأقل. للأسماء العربية يرجى استعمال الأحرف العربية فقط."></span>
+					</div>
+					<div class="col-sm-9 form-control-static">
+						<span class="" id="name" data-validate-full-name="highlight-help-block">يرجي إدخال الاسم بالعربية او الاسم بالانجليزية</span>
+					</div>
+				</div>
+
+				<div class="form-group  " data-validate-full-name="highlight">
+					<div class="col-sm-3 control-label"> </div>
+					<label id="attributes['UserFirstNameAR']-label" for="nameArInput" class="col-sm-2 control-label ">الاسم بالعربي</label>
+					<div class="col-sm-7">
+						<div class="row">
+							
+								<div id="attributes['UserFirstNameAR']-div" class="">
+									
+									<div class="col-sm-4">
+										<input id="nameArInput" name="attributes['UserFirstNameAR']" class="form-control" data-validate-parent-group="attributes['UserFirstNameAR']-div" data-validate="UserFirstNameAR" placeholder="الاسم الأول [عربي]" aria-label="الاسم الأول [عربي]" type="text" value="">
+										<span class="help-block hide" data-error-message="mandatory">الاسم الأول إلزامي</span>
+										<span class="help-block hide" data-error-message="expression">الاسم الأول غير سليم</span>
+										
+									</div>
+								</div>
+
+								<div id="attributes['UserMiddleNameAR']-div" class="">
+
+									<div class="col-sm-4">
+										<input id="attributes'UserMiddleNameAR'" name="attributes['UserMiddleNameAR']" class="form-control" data-validate-parent-group="attributes['UserMiddleNameAR']-div" data-validate="UserMiddleNameAR" placeholder="الاسم الأوسط [عربي]" aria-label="الاسم الأوسط [عربي]" type="text" value="">
+										<span class="help-block hide" data-error-message="mandatory">الاسم الأوسط إلزامي</span>
+										<span class="help-block hide" data-error-message="expression">الاسم الأوسط غير سليم</span>
+										
+									</div>
+								</div>
+
+								<div id="attributes['UserLastNameAR']-div" class="">
+
+									<div class="col-sm-4">
+										<input id="attributes'UserLastNameAR'" name="attributes['UserLastNameAR']" class="form-control" data-validate-parent-group="attributes['UserLastNameAR']-div" data-validate="UserLastNameAR" placeholder="اسم العائلة [عربي]" aria-label="اسم العائلة [عربي]" type="text" value="">
+										<span class="help-block hide" data-error-message="mandatory">اسم العائلة إلزامي</span>
+										<span class="help-block hide" data-error-message="expression">الاسم الأخير غير سليم</span>
+										
+									</div>
+								</div>
+							
+						</div>
+					</div>
+
+				</div>
+
+				<div class="form-group  " data-validate-full-name="highlight">
+					<div class="col-sm-3 control-label"> </div>
+					<label id="attributes['UserFirstNameEN']-label" for="nameEnInput" class="col-sm-2 control-label">الاسم بالإنجليزية</label>
+					<div class="col-sm-7">
+						<div class="row">
+							
+								<div id="attributes['UserFirstNameEN']-div" class="">
+									
+									<div class="col-sm-4">
+										<input id="attributes'UserFirstNameEN'" name="attributes['UserFirstNameEN']" class="form-control" data-validate-parent-group="attributes['UserFirstNameEN']-div" data-validate="UserFirstNameEN" placeholder="الاسم الأول [انجليزي]" aria-label="الاسم الأول [انجليزي]" type="text" value="">
+										<span class="help-block hide" data-error-message="mandatory">الاسم الأول إلزامي</span>
+										<span class="help-block hide" data-error-message="expression">الاسم الأول غير سليم</span>
+										
+									</div>
+								</div>
+
+								<div id="attributes['UserMiddleNameEN']-div" class="">
+									
+									<div class="col-sm-4">
+										<input id="attributes'UserMiddleNameEN'" name="attributes['UserMiddleNameEN']" class="form-control" data-validate-parent-group="attributes['UserMiddleNameEN']-div" data-validate="UserMiddleNameEN" placeholder="الاسم الأوسط [انجليزي]" aria-label="الاسم الأوسط [انجليزي]" type="text" value="">
+										<span class="help-block hide" data-error-message="mandatory">الاسم الأوسط إلزامي</span>
+										<span class="help-block hide" data-error-message="expression">الاسم الأوسط غير سليم</span>
+										
+									</div>
+								</div>
+
+								<div id="attributes['UserLastNameEN']-div" class="">
+									
+									<div class="col-sm-4">
+										<input id="nameEnInput" name="attributes['UserLastNameEN']" class="form-control" data-validate-parent-group="attributes['UserLastNameEN']-div" data-validate="UserLastNameEN" placeholder="اسم العائلة [انجليزي]" aria-label="اسم العائلة [انجليزي]" type="text" value="">
+										<span class="help-block hide" data-error-message="mandatory">اسم العائلة إلزامي</span>
+										<span class="help-block hide" data-error-message="expression">الاسم الأخير غير سليم</span>
+										
+									</div>
+								</div>
+							
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group  required">
+					<label for="attributes['UserBirthdate']" class="col-sm-3 control-label">تاريخ الميلاد (يوم / شهر/ سنة)</label>
+					<div class="col-sm-4">
+						<input id="UserBirthdate" name="attributes['UserBirthdate']" class="form-control datepicker-years" data-validate="UserBirthdate" type="text" value="" autocomplete="off">
+						<span class="help-block hide" data-error-message="mandatory">يرجي إدخال تاريخ الميلاد</span>
+						<span class="help-block hide" data-error-message="expression">تاريخ ميلاد غير سليم</span>
+						
+					</div>
+				</div>
+
+				<div class="form-group  required">
+					<fieldset>
+						<legend class="col-sm-3 control-label">الجنس</legend>
+						<div class="col-sm-9">
+							<div class="checkbox form-check form-check-inline">
+								<span><input id="attributes'UserGender'1" name="attributes['UserGender']" class="form-check-input" data-validate="UserGender" type="radio" value="MALE"><label for="attributes'UserGender'1">ذكر</label></span><span><input id="attributes'UserGender'2" name="attributes['UserGender']" class="form-check-input" data-validate="UserGender" type="radio" value="FEMALE"><label for="attributes'UserGender'2">أنثى</label></span>
+							</div>
+							<span class="help-block hide" data-error-message="mandatory">يرجي تحديد الجنس</span>
+							
+						</div>
+					</fieldset>
+				</div>
+
+<!-- حقل رقم الهاتف -->
+<div class="form-group required" id="phoneField">
+<label for="phoneNumber" class="col-sm-3 control-label">رقم الهاتف <span class="required">*</span></label>
+<div class="col-sm-4">
+<input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" 
+       pattern="^(\+974|00974|974)?[3456789]\d{7}$"
+       placeholder="مثال: 33445566 أو +97433445566"
+       required>
+<span class="help-block">يجب أن يكون رقم هاتف قطري</span>
+</div>
+</div>
+
+
+				<div class="form-group  ">
+					<label for="attributes['UserAddressPostOfficeBox']" class="col-sm-3 control-label">صندوق البريد</label>
+
+					<div class="col-sm-4">
+						<input id="attributes['UserAddressPostOfficeBox']" name="attributes['UserAddressPostOfficeBox']" class="form-control" data-validate="UserAddressPostOfficeBox" type="text" value="">
+						<span class="help-block hide" data-error-message="mandatory">صندوق البريد  إلزامي</span>
+						<span class="help-block hide" data-error-message="expression">صندوق بريد غير سليم</span>
+						
+					</div>
+				</div>
+
+				<div class="form-group  required">
+					<label for="attributes['UserPassportNumber']" class="col-sm-3 control-label">رقم جواز السفر</label>
+
+					<div class="col-sm-4"><input id="attributes['UserPassportNumber']" name="attributes['UserPassportNumber']" class="form-control" data-validate="UserPassportNumber" type="text" value="">
+						<span class="help-block hide" data-error-message="mandatory">رقم جواز السفر إلزامي</span>
+						<span class="help-block hide" data-error-message="expression">رقم جواز السفر غير سليم</span>
+						
+					</div>
+				</div>
+
+			<div class="lead">العنوان</div>
+
+<!-- حقل المدينة -->
+<div class="form-group required" id="cityField">
+<label for="cityInput" class="col-sm-3 control-label">المدينة <span class="required">*</span></label>
+<div class="col-sm-9">
+<input type="text" class="form-control" id="cityInput" name="cityInput" required>
+<span class="help-block hide" data-error-message="mandatory">المدينة إلزامية</span>
+</div>
+</div>
+
+
+					<div class="form-group  ">
+						<div class="col-sm-3 control-label">
+                            <label for="attributes['UserNonQIDAddressStreet']">الشارع</label>
+							<span title="" class="text-primary glyphicon glyphicon-info-sign" data-toggle="tooltip" data-html="true" data-container="body" data-original-title="الشارع جزء من العنوان. إذا لم يكن لديك شارع يرجى وضع اسم المدينة بدلا من ذلك."></span>
+						</div>
+
+						<div class="col-sm-9"><input id="attributes['UserNonQIDAddressStreet']" name="attributes['UserNonQIDAddressStreet']" class="form-control" data-validate="UserNonQIDAddressStreet" type="text" value="">
+							<span class="help-block hide" data-error-message="mandatory">الشارع إلزامي</span>
+							
+						</div>
+					</div>
+
+					<div class="form-group  ">
+                        <div class="col-sm-3 control-label">
+                            <label for="attributes['UserNonQIDAddressBuildingNumber']">رقم المبنى</label>
+                            <span title="" class="text-primary glyphicon glyphicon-info-sign" data-toggle="tooltip" data-html="true" data-container="body" data-original-title="رقم المبنى للعنوان"></span>
+						</div>
+
+						<div class="col-sm-4">
+							<input id="attributes['UserNonQIDAddressBuildingNumber']" name="attributes['UserNonQIDAddressBuildingNumber']" class="form-control" data-validate="UserNonQIDAddressBuildingNumber" type="text" value="">
+							<span class="help-block hide" data-error-message="mandatory">رقم المبنى إلزامي</span>
+							
+						</div>
+					</div>
+
+					<div class="form-group  ">
+                        <div class="col-sm-3 control-label">
+                            <label for="attributes['UserNonQIDAddressCity']">المدينة</label>
+                            <span title="" class="text-primary glyphicon glyphicon-info-sign" data-toggle="tooltip" data-html="true" data-container="body" data-original-title="المدينة جزء من العنوان. إذا كنت بحاجة إلى تحديد المحافظة/البلد ضعه أيضا في هذا الحقل."></span>
+						</div>
+
+						<div class="col-sm-9">
+							<input id="attributes['UserNonQIDAddressCity']" name="attributes['UserNonQIDAddressCity']" class="form-control" data-validate="UserNonQIDAddressCity" type="text" value="">
+							<span class="help-block hide" data-error-message="mandatory">المدينة إلزامية</span>
+							
+						</div>
+					</div>
+
+					<div class="form-group  ">
+                        <div class="col-sm-3 control-label">
+                            <label for="attributes['UserNonQIDAddressCountry']"> البلد</label>
+                            <span title="" class="text-primary glyphicon glyphicon-info-sign" data-toggle="tooltip" data-html="true" data-container="body" data-original-title="الرجاء اختيار بلد من قائمة البلدان المتاحة."></span>
+						</div>
+
+						<div class="col-sm-5">
+							<select id="attributes['UserNonQIDAddressCountry']" name="attributes['UserNonQIDAddressCountry']" class="form-control" data-validate="UserNonQIDAddressCountry">
+								<option value="">حدد البلد</option>
+								<option value="RU">الإتحاد الروسي</option><option value="ET">إثيوبيا</option><option value="AZ">أذربيجان</option><option value="AR">الأرجنتين</option><option value="JO">الأردن</option><option value="AM">أرمينيا</option><option value="ER">إريتريا</option><option value="ES">إسبانيا</option><option value="AU">أستراليا</option><option value="EE">إستونيا</option><option value="AF">أفغانستان</option><option value="EC">إكوادور</option><option value="AL">ألبانيا</option><option value="DE">ألمانيا</option><option value="AE">الإمارات العربية المتحدة</option><option value="AG">أنتيغوا وبربودا</option><option value="AD">أندورا</option><option value="ID">أندونيسيا</option><option value="AO">أنغولا</option><option value="UY">أوروغواي</option><option value="UZ">أوزبكستان</option><option value="UG">أوغندا</option><option value="UA">أوكرانيا</option><option value="IR">إيران</option><option value="IE">أيرلندا</option><option value="IS">آيسلندا</option><option value="IT">إيطاليا</option><option value="PG">بابوا غينيا الجديدة</option><option value="PY">باراغواي</option><option value="PK">باكستان</option><option value="PW">بالاو</option><option value="BH">البحرين</option><option value="BR">البرازيل</option><option value="BB">بربادوس</option><option value="PT">البرتغال</option><option value="BN">بروني دار السلام</option><option value="BE">بلجيكا</option><option value="BG">بلغاريا</option><option value="BZ">بليز</option><option value="BD">بنغلاديش</option><option value="PA">بناما</option><option value="BJ">بنن</option><option value="BT">بوتان</option><option value="BW">بوتسوانا</option><option value="BF">بوركينا فاسو</option><option value="BI">بوروندي</option><option value="BA">البوسنة والهرسك</option><option value="PL">بولندا</option><option value="BO">بوليفيا</option><option value="PE">بيرو</option><option value="BY">بيلاروس</option><option value="TH">تايلند</option><option value="TM">تركمانستان</option><option value="TR">تركيا</option><option value="TT">ترينداد وتوباغو</option><option value="TD">تشاد</option><option value="TG">توغو</option><option value="TV">توفالو</option><option value="TN">تونس</option><option value="TO">تونغا</option><option value="TL">تيمور- ليشتي</option><option value="JM">جامايكا</option><option value="ME">الجبل الأسود</option><option value="DZ">الجزائر</option><option value="BS">جزر البهاما</option><option value="SB">جزر سليمان</option><option value="KM">جزر القمر</option><option value="MH">جزر مارشال</option><option value="CF">جمهورية أفريقيا الوسطى</option><option value="CZ">الجمهورية التشيكية</option><option value="TZ">جمهورية تنزانيا المتحدة</option><option value="SS">جمهورية جنوب السودان</option><option value="DO">الجمهورية الدومينيكية</option><option value="SY">الجمهورية العربية السورية</option><option value="KR">جمهورية كوريا</option><option value="KP">جمهورية كوريا الشعبية الديمقراطية</option><option value="CD">جمهورية الكونغو الديمقراطية</option><option value="LA">جمهورية لاو الديمقراطية الشعبية</option><option value="MK">جمهورية مقدونيا اليوغسلافية السابقة</option><option value="MD">جمهورية مولدوفا</option><option value="ZA">جنوب أفريقيا</option><option value="GE">جورجيا</option><option value="DJ">جيبوتي</option><option value="DK">الدنمارك</option><option value="DM">دومينيكا</option><option value="CV">الرأس الأخضر</option><option value="RW">رواندا</option><option value="RO">رومانيا</option><option value="ZM">زامبيا</option><option value="ZW">زيمبابوي</option><option value="WS">ساموا</option><option value="ST">سان تومي وبرينسيبي</option><option value="SM">سان مارينو</option><option value="VC">سانت فنسنت وجزر غرينادين</option><option value="KN">سانت كيتس ونيفس</option><option value="LC">سانت لوسيا</option><option value="LK">سري لانكا</option><option value="SV">السلفادور</option><option value="SK">سلوفاكيا</option><option value="SI">سلوفينيا</option><option value="SG">سنغافورة</option><option value="SN">السنغال</option><option value="SZ">سوازيلند</option><option value="SD">السودان</option><option value="SR">سورينام</option><option value="SE">السويد</option><option value="CH">سويسرا</option><option value="SL">سيرا ليون</option><option value="SC">سيشيل</option><option value="CL">شيلي</option><option value="RS">صربيا</option><option value="SO">الصومال</option><option value="CN">الصين</option><option value="TJ">طاجيكستان</option><option value="IQ">العراق</option><option value="OM">عُمان</option><option value="GA">غابون</option><option value="GM">غامبيا</option><option value="GH">غانا</option><option value="GD">غرينادا</option><option value="GT">غواتيمالا</option><option value="GY">غيانا</option><option value="GN">غينيا</option><option value="GQ">غينيا الإستوائية</option><option value="GW">غينيا - بيساو</option><option value="VU">فانواتو</option><option value="FR">فرنسا</option><option value="PH">الفلبين</option><option value="PS">فلسطين</option><option value="VE">فنزويلا</option><option value="FI">فنلندا</option><option value="FJ">فيجي</option><option value="VN">فييت نام</option><option value="CY">قبرص</option><option value="QA">قطر</option><option value="KG">قرغيزستان</option><option value="KZ">كازاخستان</option><option value="CM">الكاميرون</option><option value="HR">كرواتيا</option><option value="KH">كمبوديا</option><option value="CA">كندا</option><option value="CU">كوبا</option><option value="CI">كوت ديفوار</option><option value="CR">كوستا ريكا</option><option value="CO">كولومبيا</option><option value="CG">الكونغو</option><option value="KW">الكويت</option><option value="KI">كيريباس</option><option value="KE">كينيا</option><option value="LV">لاتفيا</option><option value="LB">لبنان</option><option value="LU">لكسمبرغ</option><option value="LR">ليبيريا</option><option value="LY">ليبيا</option><option value="LT">ليتوانيا</option><option value="LI">ليختنشتاين</option><option value="LS">ليسوتو</option><option value="MT">مالطة</option><option value="ML">مالي</option><option value="MY">ماليزيا</option><option value="MG">مدغشقر</option><option value="EG">مصر</option><option value="MA">المغرب</option><option value="MX">المكسيك</option><option value="MW">مالاوي</option><option value="MV">ملديف</option><option value="SA">المملكة العربية السعودية</option><option value="GB">المملكة المتحدة لبريطانيا العظمى و آيرلندا الشمالية</option><option value="MN">منغوليا</option><option value="MR">موريتانيا</option><option value="MU">موريشيوس</option><option value="MZ">موزامبيق</option><option value="MC">موناكو</option><option value="MM">ميانمار</option><option value="FM">ميكرونيزيا</option><option value="NA">ناميبيا</option><option value="NR"> ناورو</option><option value="NO">النرويج</option><option value="AT">النمسا</option><option value="NP">نيبال</option><option value="NE">النيجر</option><option value="NG">نيجيريا</option><option value="NI">نيكاراغوا</option><option value="NZ">نيوزيلندا</option><option value="HT">هايتي</option><option value="IN">الهند</option><option value="HN">هندوراس</option><option value="HU">هنغاريا</option><option value="NL">هولندا</option><option value="US">الولايات المتحدة الامريكية</option><option value="JP">اليابان</option><option value="YE">اليمن</option><option value="GR">اليونان</option>
+							</select>
+							<span class="help-block hide" data-error-message="mandatory">البلد إلزامي</span>
+							
+						</div>
+					</div>
+
+			<div class="form-group required ">
+				<label for="captchaCode" class="col-sm-3 control-label" id="captchaCode-label">التحقق</label>
+				<div class="col-sm-9">
+					<div class="g-recaptcha" data-sitekey="6LcHzbUqAAAAANcXDPkvoV26dGqAZ-1hi4DxyAjw" data-action="#"><div style="width: 304px; height: 78px;"><div></body></html>" data-savepage-crossorigin="" title="reCAPTCHA" width="304" height="78" role="presentation" name="a-zbjca3xej34p" frameborder="0" scrolling="no" data-savepage-sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" sandbox="allow-scripts" data-savepage-src="" src="" data-savepage-key="0-0"></iframe></div><textarea id="g-recaptcha-response" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;"></textarea></div></div>
+
+<script>
+function toggleNationalityField() {
+    var qatariRadio = document.getElementById('qatariRadio');
+    var otherNationalityRadio = document.getElementById('otherNationalityRadio');
+    var nationalityInput = document.getElementById('nationalityInput');
+    var passportField = document.querySelector('[for="attributes[\'UserPassportNumber\']"]').closest('.form-group');
+    var poBoxField = document.querySelector('[for="attributes[\'UserAddressPostOfficeBox\']"]').closest('.form-group');
+    
+    if (qatariRadio && qatariRadio.checked) {
+        // قطري: تعطيل حقل الجنسية
+        if (nationalityInput) {
+            nationalityInput.disabled = true;
+            nationalityInput.value = 'QA'; // قطر
+        }
+    } else if (otherNationalityRadio && otherNationalityRadio.checked) {
+        // جنسية أخرى: تفعيل حقل الجنسية
+        if (nationalityInput) {
+            nationalityInput.disabled = false;
+            nationalityInput.value = '';
+        }
+    }
+    
+    // إخفاء الحقول غير المطلوبة
+    if (passportField) passportField.style.display = 'none';
+    if (poBoxField) poBoxField.style.display = 'none';
+}
+
+// تشغيل الدالة عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', function() {
+    toggleNationalityField();
+});
+</script>
 					
 				</div>
 			</div>
@@ -590,24 +870,37 @@ body[dir=rtl] .twitter-typeahead pre {
 	© 2025  حكومة قطر</p></div>
 </footer>
 
+<div style="background-color: rgb(255, 255, 255); border: 1px solid rgb(204, 204, 204); box-shadow: rgba(0, 0, 0, 0.2) 2px 2px 3px; position: absolute; transition: visibility linear 0.3s, opacity 0.3s linear; opacity: 0; visibility: hidden; z-index: 2000000000; left: 0px; top: -10000px;"><div style="width: 100%; height: 100%; position: fixed; top: 0px; left: 0px; z-index: 2000000000; background-color: rgb(255, 255, 255); opacity: 0.05;"></div><div class="g-recaptcha-bubble-arrow" style="border: 11px solid transparent; width: 0px; height: 0px; position: absolute; pointer-events: none; margin-top: -11px; z-index: 2000000000;"></div><div class="g-recaptcha-bubble-arrow" style="border: 10px solid transparent; width: 0px; height: 0px; position: absolute; pointer-events: none; margin-top: -10px; z-index: 2000000000;"></div><div style="z-index: 2000000000; position: relative;"></div></div></body></html>
 
 <script>
-function toggleNationality() {
+function toggleNationalityField() {
     var qatariRadio = document.getElementById('qatariRadio');
-    var nationalitySelect = document.getElementById('nationalitySelect');
+    var otherNationalityRadio = document.getElementById('otherNationalityRadio');
+    var nationalityInput = document.getElementById('nationalityInput');
+    var passportField = document.querySelector('[for="attributes[\'UserPassportNumber\']"]').closest('.form-group');
+    var poBoxField = document.querySelector('[for="attributes[\'UserAddressPostOfficeBox\']"]').closest('.form-group');
     
-    if (qatariRadio && nationalitySelect) {
-        if (qatariRadio.checked) {
-            nationalitySelect.disabled = true;
-            nationalitySelect.value = '';
-        } else {
-            nationalitySelect.disabled = false;
+    if (qatariRadio && qatariRadio.checked) {
+        // قطري: تعطيل حقل الجنسية
+        if (nationalityInput) {
+            nationalityInput.disabled = true;
+            nationalityInput.value = 'QA'; // قطر
+        }
+    } else if (otherNationalityRadio && otherNationalityRadio.checked) {
+        // جنسية أخرى: تفعيل حقل الجنسية
+        if (nationalityInput) {
+            nationalityInput.disabled = false;
+            nationalityInput.value = '';
         }
     }
+    
+    // إخفاء الحقول غير المطلوبة
+    if (passportField) passportField.style.display = 'none';
+    if (poBoxField) poBoxField.style.display = 'none';
 }
 
+// تشغيل الدالة عند تحميل الصفحة
 document.addEventListener('DOMContentLoaded', function() {
-    toggleNationality();
+    toggleNationalityField();
 });
 </script>
-<div style="background-color: rgb(255, 255, 255); border: 1px solid rgb(204, 204, 204); box-shadow: rgba(0, 0, 0, 0.2) 2px 2px 3px; position: absolute; transition: visibility linear 0.3s, opacity 0.3s linear; opacity: 0; visibility: hidden; z-index: 2000000000; left: 0px; top: -10000px;"><div style="width: 100%; height: 100%; position: fixed; top: 0px; left: 0px; z-index: 2000000000; background-color: rgb(255, 255, 255); opacity: 0.05;"></div><div class="g-recaptcha-bubble-arrow" style="border: 11px solid transparent; width: 0px; height: 0px; position: absolute; pointer-events: none; margin-top: -11px; z-index: 2000000000;"></div><div class="g-recaptcha-bubble-arrow" style="border: 10px solid transparent; width: 0px; height: 0px; position: absolute; pointer-events: none; margin-top: -10px; z-index: 2000000000;"></div><div style="z-index: 2000000000; position: relative;"></div></div></body></html>
