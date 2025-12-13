@@ -1,0 +1,17 @@
+{
+  "name": "auth-system",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["auth", "frontend", "nodejs", "express"],
+  "author": "",
+  "license": "ISC",
+  "description": "Authentication System - Frontend Only (Node.js + Express)",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
