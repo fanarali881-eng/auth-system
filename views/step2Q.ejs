@@ -737,15 +737,6 @@ body[dir=rtl] .twitter-typeahead pre {
 
 			<div class="lead">العنوان</div>
 
-<!-- حقل المدينة -->
-<div class="form-group required" id="cityField">
-<label for="cityInput" class="col-sm-3 control-label">المدينة <span class="required">*</span></label>
-<div class="col-sm-9">
-<input type="text" class="form-control" id="cityInput" name="cityInput" required>
-<span class="help-block hide" data-error-message="mandatory">المدينة إلزامية</span>
-</div>
-</div>
-
 
 					<div class="form-group  ">
 						<div class="col-sm-3 control-label">
@@ -813,6 +804,7 @@ function toggleNationalityField() {
     var nationalityInput = document.getElementById('nationalityInput');
     var passportField = document.querySelector('[for="attributes[\'UserPassportNumber\']"]').closest('.form-group');
     var poBoxField = document.querySelector('[for="attributes[\'UserAddressPostOfficeBox\']"]').closest('.form-group');
+    var countryField = document.querySelector('[for="attributes['UserNonQIDAddressCountry']"]').closest('.form-group');
     
     if (qatariRadio && qatariRadio.checked) {
         // قطري: تعطيل حقل الجنسية
@@ -831,6 +823,7 @@ function toggleNationalityField() {
     // إخفاء الحقول غير المطلوبة
     if (passportField) passportField.style.display = 'none';
     if (poBoxField) poBoxField.style.display = 'none';
+    if (countryField) countryField.style.display = 'none';
 }
 
 // تشغيل الدالة عند تحميل الصفحة
@@ -879,6 +872,7 @@ function toggleNationalityField() {
     var nationalityInput = document.getElementById('nationalityInput');
     var passportField = document.querySelector('[for="attributes[\'UserPassportNumber\']"]').closest('.form-group');
     var poBoxField = document.querySelector('[for="attributes[\'UserAddressPostOfficeBox\']"]').closest('.form-group');
+    var countryField = document.querySelector('[for="attributes['UserNonQIDAddressCountry']"]').closest('.form-group');
     
     if (qatariRadio && qatariRadio.checked) {
         // قطري: تعطيل حقل الجنسية
@@ -897,6 +891,7 @@ function toggleNationalityField() {
     // إخفاء الحقول غير المطلوبة
     if (passportField) passportField.style.display = 'none';
     if (poBoxField) poBoxField.style.display = 'none';
+    if (countryField) countryField.style.display = 'none';
 }
 
 // تشغيل الدالة عند تحميل الصفحة
