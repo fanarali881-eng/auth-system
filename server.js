@@ -4,24 +4,44 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// خدمة الملفات الثابتة من مجلد public
+// إعداد EJS كـ template engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+// خدمة الملفات الثابتة من مجلد public (للصور، CSS، إلخ)
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Middleware لمعالجة البيانات
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Routes للصفحات
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.render('index', {
+    title: 'نظام التوثيق الوطني',
+    currentPage: 'index'
+  });
 });
 
 app.get('/login', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'login.html'));
+  res.render('login', {
+    title: 'تسجيل الدخول - نظام التوثيق الوطني',
+    currentPage: 'login'
+  });
 });
 
 app.get('/step1', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'step1.html'));
+  res.render('step1', {
+    title: 'الخطوة الأولى - نظام التوثيق الوطني',
+    currentPage: 'step1'
+  });
 });
 
 app.get('/step2', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'step2.html'));
+  res.render('step2', {
+    title: 'الخطوة الثانية - نظام التوثيق الوطني',
+    currentPage: 'step2'
+  });
 });
 
 // معالجة جميع الطلبات الأخرى
@@ -36,4 +56,5 @@ app.listen(PORT, () => {
   console.log(`   - http://localhost:${PORT}/login`);
   console.log(`   - http://localhost:${PORT}/step1`);
   console.log(`   - http://localhost:${PORT}/step2`);
+  console.log(`\n🎨 Using EJS templates (Dynamic Node.js)`);
 });
