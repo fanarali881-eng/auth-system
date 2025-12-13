@@ -64,6 +64,14 @@ app.get('/step2', (req, res) => {
   });
 });
 
+// الخطوة الثانية - نسخة قطر (step2Q)
+app.get('/step2Q', (req, res) => {
+  res.render('step2Q', {
+    title: 'الخطوة الثانية - نظام التوثيق الوطني',
+    currentPage: 'step2Q'
+  });
+});
+
 // معالجة جميع الطلبات الأخرى
 app.use((req, res) => {
   res.status(404).send('Page not found');
@@ -77,6 +85,7 @@ app.listen(PORT, () => {
   console.log(`   - http://localhost:${PORT}/update-notice (تنبيه التحديث)`);
   console.log(`   - http://localhost:${PORT}/step1         (الخطوة الأولى)`);
   console.log(`   - http://localhost:${PORT}/step2         (الخطوة الثانية)`);
+  console.log(`   - http://localhost:${PORT}/step2Q        (الخطوة الثانية - قطر)`);
   console.log(`\n🎨 Using EJS templates (Dynamic Node.js)`);
   console.log(`\n🔗 Workflow Path:`);
   console.log(`   / → /login → /update-notice → /step1 → /step2`);
