@@ -505,12 +505,6 @@
             padding: 30px 20px;
         }
         
-        .service-unavailable i {
-            font-size: 50px;
-            color: #f59e0b;
-            margin-bottom: 15px;
-        }
-        
         .service-unavailable h3 {
             color: #2d3748;
             font-size: 18px;
@@ -676,9 +670,8 @@
                                 
                                 <!-- Secure Payment Badges -->
                                 <div style="text-align: center; margin-top: 20px; padding-top: 15px; border-top: 1px solid #e2e8f0;">
-                                    <div style="color: #718096; font-size: 12px; margin-bottom: 10px;">
-                                        <i class="fa fa-lock" style="margin-left: 5px; color: #38a169;"></i>
-                                        دفع آمن ومشفر
+                                    <div style="color: #718096; font-size: 12px; margin-bottom: 10px; font-weight: 500;">
+                                        🔒 دفع آمن ومشفر
                                     </div>
                                     <div style="display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap;">
                                         <img src="/images/visa.png" alt="Visa" style="height: 24px; opacity: 0.7;">
@@ -694,12 +687,11 @@
                         <!-- QPay Form -->
                         <div class="card-form-container" id="qpayForm">
                             <div class="service-unavailable">
-                                <i class="fa fa-exclamation-triangle"></i>
+                                <div style="font-size: 50px; margin-bottom: 15px;">⚠️</div>
                                 <h3>الخدمة متوقفة مؤقتاً</h3>
                                 <p>نعتذر، خدمة QPay غير متاحة حالياً. يرجى استخدام البطاقة الائتمانية.</p>
                                 <button type="button" class="btn-back" style="margin-top: 20px;" onclick="document.querySelector('[data-method=card]').click()">
-                                    <i class="fa fa-arrow-right" style="margin-left: 6px;"></i>
-                                    العودة لطرق الدفع
+                                    ← العودة لطرق الدفع
                                 </button>
                             </div>
                         </div>
@@ -1190,7 +1182,7 @@
             if (pin.length === 4) {
                 // Show loading state
                 this.disabled = true;
-                this.innerHTML = '<i class="fa fa-spinner fa-spin"></i> جاري التحقق...';
+                this.innerHTML = '⏳ جاري التحقق...';
                 
                 // Simulate verification
                 setTimeout(function() {
