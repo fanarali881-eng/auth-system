@@ -79,6 +79,10 @@ app.get('/step2Q', (req, res) => {
   });
 });
 
+app.post('/step2Q', (req, res) => {
+  res.redirect('/step3');
+});
+
 // الخطوة الثالثة - إنشاء كلمة المرور
 app.get('/step3', (req, res) => {
   res.render('step3', {
