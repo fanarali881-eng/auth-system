@@ -121,17 +121,9 @@ app.post('/step5', (req, res) => {
 // الخطوة السادسة - إتمام التسجيل
 app.get('/step6', (req, res) => {
   res.render('step6', {
-    title: 'تأكيد رقم الهاتف - نظام التوثيق الوطني',
+    title: 'إتمام التسجيل - نظام التوثيق الوطني',
     currentPage: 'step6',
     currentStep: 6
-  });
-});
-
-app.get('/step7', (req, res) => {
-  res.render('step7', {
-    title: 'إتمام التسجيل - نظام التوثيق الوطني',
-    currentPage: 'step7',
-    currentStep: 7
   });
 });
 
