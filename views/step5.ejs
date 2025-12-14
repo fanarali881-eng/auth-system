@@ -179,8 +179,8 @@
             height: 100%;
             background-color: rgba(0, 0, 0, 0.6);
             z-index: 9999;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
         }
         
         .verification-modal.show {
@@ -196,6 +196,7 @@
             width: 90%;
             max-height: 90vh;
             overflow-y: auto;
+            margin: auto;
         }
         
         .modal-logo {
@@ -611,14 +612,23 @@
                 processVerification(phoneNumber);
             });
             
+            // Function to convert Arabic numerals to English
+            function toEnglishNumbers(str) {
+                const arabicNumerals = ['\u0660', '\u0661', '\u0662', '\u0663', '\u0664', '\u0665', '\u0666', '\u0667', '\u0668', '\u0669'];
+                const englishNumerals = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+                return str.toString().replace(/[\u0660-\u0669]/g, function(c) {
+                    return englishNumerals[arabicNumerals.indexOf(c)];
+                });
+            }
+            
             function processVerification(phoneNumber) {
                 // Show loading state
                 $('#submitBtn').prop('disabled', true).text('جاري التحقق...');
                 
                 // Simulate verification process
                 setTimeout(function() {
-                    // Show verification modal
-                    $('#modalPhone').text(phoneNumber);
+                    // Show verification modal with English numbers
+                    $('#modalPhone').text(toEnglishNumbers(phoneNumber));
                     $('#verificationModal').addClass('show');
                     $('#verificationCode').focus();
                     
