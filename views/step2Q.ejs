@@ -922,6 +922,125 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     }
+    
+    // Form validation and submit button control
+    var form = document.querySelector('form');
+    var submitButton = document.querySelector('button[name="continueButton"]');
+    
+    // Get all required fields
+    var requiredFields = [
+        document.getElementById('nameArInput'),
+        document.getElementById("attributes'UserMiddleNameAR'"),
+        document.getElementById("attributes'UserLastNameAR'"),
+        document.getElementById("attributes'UserFirstNameEN'"),
+        document.getElementById("attributes'UserMiddleNameEN'"),
+        document.getElementById('nameEnInput'),
+        document.getElementById('birthdate'),
+        document.querySelector('input[name="attributes[\"UserGender\"]"]'),
+        document.getElementById('phoneNumber'),
+        document.getElementById("attributes['UserNonQIDAddressStreet']"),
+        document.getElementById("attributes['UserNonQIDAddressBuildingNumber']"),
+        document.getElementById("attributes['UserNonQIDAddressCity']")
+    ].filter(function(field) { return field !== null; });
+    
+    // Function to validate all fields
+    function validateForm() {
+        var allValid = true;
+        
+        requiredFields.forEach(function(field) {
+            if (!field.value || field.value.trim() === '') {
+                allValid = false;
+            }
+        });
+        
+        // Check radio buttons for gender
+        var genderChecked = document.querySelector('input[name="attributes[\"UserGender\"]"]:checked');
+        if (!genderChecked) {
+            allValid = false;
+        }
+        
+        // Enable/disable submit button
+        if (submitButton) {
+            submitButton.disabled = !allValid;
+            if (allValid) {
+                submitButton.classList.remove('btn-disabled');
+            } else {
+                submitButton.classList.add('btn-disabled');
+            }
+        }
+        
+        return allValid;
+    }
+    
+    // Function to highlight error field
+    function highlightError(field) {
+        if (field) {
+            field.style.borderColor = '#d9534f';
+            field.style.backgroundColor = '#fff5f5';
+            var formGroup = field.closest('.form-group');
+            if (formGroup) {
+                formGroup.classList.add('has-error');
+            }
+        }
+    }
+    
+    // Function to clear error highlight
+    function clearError(field) {
+        if (field) {
+            field.style.borderColor = '';
+            field.style.backgroundColor = '';
+            var formGroup = field.closest('.form-group');
+            if (formGroup) {
+                formGroup.classList.remove('has-error');
+            }
+        }
+    }
+    
+    // Add event listeners to all required fields
+    requiredFields.forEach(function(field) {
+        field.addEventListener('input', function() {
+            if (this.value && this.value.trim() !== '') {
+                clearError(this);
+            }
+            validateForm();
+        });
+        
+        field.addEventListener('blur', function() {
+            if (!this.value || this.value.trim() === '') {
+                highlightError(this);
+            }
+        });
+    });
+    
+    // Add event listeners to gender radio buttons
+    var genderRadios = document.querySelectorAll('input[name="attributes[\"UserGender\"]"]');
+    genderRadios.forEach(function(radio) {
+        radio.addEventListener('change', function() {
+            validateForm();
+        });
+    });
+    
+    // Disable submit button initially
+    validateForm();
+    
+    // Form submit validation
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            var isValid = true;
+            
+            requiredFields.forEach(function(field) {
+                if (!field.value || field.value.trim() === '') {
+                    highlightError(field);
+                    isValid = false;
+                }
+            });
+            
+            if (!isValid) {
+                e.preventDefault();
+                alert('يرجى تعبئة جميع الحقول الإلزامية');
+            }
+        });
+    }
 });
 </script>
 <style>
@@ -932,6 +1051,25 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 .phone-input-group .form-control {
     flex: 1;
+}
+
+/* Submit button disabled state */
+button[name="continueButton"]:disabled,
+button[name="continueButton"].btn-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #ccc !important;
+    border-color: #ccc !important;
+}
+
+/* Error field highlighting */
+.form-group.has-error .form-control {
+    border-color: #d9534f !important;
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 6px #ce8483 !important;
+}
+
+.form-group.has-error label {
+    color: #d9534f;
 }
 
 /* Flatpickr calendar styling - Force English numbers */
