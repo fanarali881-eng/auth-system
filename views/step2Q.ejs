@@ -664,7 +664,7 @@ body[dir=rtl] .twitter-typeahead pre {
 					<div class="col-sm-4">
 						<div class="input-group date">
 <input id="UserBirthdate" name="attributes['UserBirthdate']" class="form-control datepicker-years" data-validate="UserBirthdate" type="text" value="" autocomplete="off" readonly style="background-color: white; cursor: pointer;">
-<span class="input-group-addon" style="cursor: pointer;"><i class="glyphicon glyphicon-calendar"></i></span>
+<span class="input-group-addon" id="calendarIcon" style="cursor: pointer; font-size: 18px;">📅</span>
 </div>
 						<span class="help-block hide" data-error-message="mandatory">يرجي إدخال تاريخ الميلاد</span>
 						<span class="help-block hide" data-error-message="expression">تاريخ ميلاد غير سليم</span>
@@ -889,6 +889,16 @@ document.addEventListener('DOMContentLoaded', function() {
         birthdateField.parent().find('.input-group-addon').on('click', function() {
             birthdateField.datepicker('show');
         });
+        
+        // Make input field clickable to open datepicker
+        birthdateField.on('click', function() {
+            jQuery(this).datepicker('show');
+        });
+        
+        // Also trigger on focus
+        birthdateField.on('focus', function() {
+            jQuery(this).datepicker('show');
+        });
     }
 });
 </script>
@@ -902,32 +912,38 @@ document.addEventListener('DOMContentLoaded', function() {
     flex: 1;
 }
 
+/* Datepicker positioning and styling */
+.datepicker {
+    z-index: 9999 !important;
+}
+
 /* Responsive datepicker for mobile */
 @media (max-width: 768px) {
     .datepicker {
-        width: 95% !important;
-        max-width: 350px !important;
+        width: 90vw !important;
+        max-width: 320px !important;
         font-size: 14px !important;
+        position: fixed !important;
+        left: 50% !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        margin: 0 !important;
     }
     .datepicker table {
         width: 100% !important;
     }
     .datepicker td, .datepicker th {
-        width: 40px !important;
-        height: 40px !important;
-        line-height: 40px !important;
-        font-size: 16px !important;
+        width: 36px !important;
+        height: 36px !important;
+        line-height: 36px !important;
+        font-size: 14px !important;
     }
     .datepicker .datepicker-switch {
-        font-size: 16px !important;
-        padding: 10px !important;
+        font-size: 15px !important;
+        padding: 8px !important;
     }
     .datepicker .prev, .datepicker .next {
-        font-size: 20px !important;
-    }
-    .datepicker-dropdown {
-        left: 50% !important;
-        transform: translateX(-50%) !important;
+        font-size: 18px !important;
     }
 }
 
