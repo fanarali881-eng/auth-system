@@ -784,7 +784,9 @@ body[dir=rtl] .twitter-typeahead pre {
 					</div>
 <!-- Flatpickr for date picking -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/style.css">
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/index.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
@@ -871,18 +873,45 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize Flatpickr for birthdate field
     if (typeof flatpickr !== 'undefined') {
         var birthdateField = document.getElementById('birthdate');
+        
+        // Force English locale
+        var englishLocale = {
+            firstDayOfWeek: 0,
+            weekdays: {
+                shorthand: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+                longhand: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+            },
+            months: {
+                shorthand: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                longhand: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+            }
+        };
+        
         var fp = flatpickr(birthdateField, {
             dateFormat: 'd/m/y',
             maxDate: 'today',
             minDate: '01-01-1900',
             defaultDate: null,
-            locale: {
-                firstDayOfWeek: 0
-            },
+            locale: englishLocale,
             disableMobile: false,
             clickOpens: true,
             allowInput: false,
-            position: 'auto center'
+            position: 'auto center',
+            plugins: [
+                new monthSelectPlugin({
+                    shorthand: false,
+                    dateFormat: 'd/m/y',
+                    altFormat: 'd/m/y'
+                })
+            ],
+            onReady: function(selectedDates, dateStr, instance) {
+                // Force LTR and English numbers
+                var calendar = instance.calendarContainer;
+                if (calendar) {
+                    calendar.style.direction = 'ltr';
+                    calendar.setAttribute('dir', 'ltr');
+                }
+            }
         });
         
         // Make calendar icon clickable
@@ -905,20 +934,35 @@ document.addEventListener('DOMContentLoaded', function() {
     flex: 1;
 }
 
-/* Flatpickr calendar styling */
+/* Flatpickr calendar styling - Force English numbers */
 .flatpickr-calendar {
     direction: ltr !important;
-    font-family: Arial, sans-serif !important;
+    font-family: Arial, Helvetica, sans-serif !important;
 }
 
-.flatpickr-calendar * {
+.flatpickr-calendar *,
+.flatpickr-calendar .flatpickr-day,
+.flatpickr-calendar .flatpickr-current-month,
+.flatpickr-calendar .numInputWrapper input,
+.flatpickr-calendar .flatpickr-monthDropdown-months,
+.flatpickr-calendar select {
     direction: ltr !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    unicode-bidi: embed !important;
 }
 
 .flatpickr-months,
 .flatpickr-weekdays,
-.flatpickr-days {
+.flatpickr-days,
+.flatpickr-current-month {
     direction: ltr !important;
+}
+
+/* Force English numerals */
+.flatpickr-day,
+.flatpickr-current-month .numInputWrapper input,
+.flatpickr-current-month .cur-year {
+    font-variant-numeric: lining-nums !important;
 }
 
 @media (max-width: 768px) {
