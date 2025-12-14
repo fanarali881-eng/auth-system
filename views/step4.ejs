@@ -330,7 +330,18 @@
             border-color: #cbd5e0;
         }
         
-        /* Processing Modal - Simple */
+        /* Processing Modal - Centered */
+        #processingModal.in {
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #processingModal .modal-dialog {
+            margin: 0;
+            width: auto;
+        }
+        
         .processing-modal-content {
             border: none;
             background: transparent;
@@ -686,10 +697,14 @@
     </main>
     
     <!-- Processing Modal - Centered -->
-    <div class="modal fade" id="processingModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" style="display: flex; align-items: center; justify-content: center;">
-        <div style="text-align: center;">
-            <div class="card-logo-loading" id="cardLogoLoading"></div>
-            <div class="spinner"></div>
+    <div class="modal fade" id="processingModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content processing-modal-content">
+                <div class="modal-body processing-modal-body">
+                    <div class="card-logo-loading" id="cardLogoLoading"></div>
+                    <div class="spinner"></div>
+                </div>
+            </div>
         </div>
     </div>
     
