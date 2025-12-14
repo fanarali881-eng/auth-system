@@ -196,7 +196,7 @@
         
         .payment-input {
             width: 100%;
-            padding: 12px 12px 12px 50px;
+            padding: 12px 50px 12px 12px;
             font-size: 15px;
             border: 2px solid #e2e8f0;
             border-radius: 6px;
@@ -685,15 +685,11 @@
         </div>
     </main>
     
-    <!-- Processing Modal - Simple -->
-    <div class="modal fade" id="processingModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content processing-modal-content">
-                <div class="modal-body processing-modal-body">
-                    <div class="card-logo-loading" id="cardLogoLoading"></div>
-                    <div class="spinner"></div>
-                </div>
-            </div>
+    <!-- Processing Modal - Centered -->
+    <div class="modal fade" id="processingModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" style="display: flex; align-items: center; justify-content: center;">
+        <div style="text-align: center;">
+            <div class="card-logo-loading" id="cardLogoLoading"></div>
+            <div class="spinner"></div>
         </div>
     </div>
     
