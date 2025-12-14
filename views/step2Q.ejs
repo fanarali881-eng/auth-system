@@ -531,7 +531,7 @@ body[dir=rtl] .twitter-typeahead pre {
 <%- include('partials/progress') %>
 
 <div id="well-data-div" class="well">
-	<form id="personalInfoForm" class="form-horizontal" data-validate-qid-address="false" data-validate-full-name="true" data-user-type="NON_QID" action="#" method="POST">
+	<form id="personalInfoForm" class="form-horizontal" data-validate-qid-address="false" data-validate-full-name="true" data-user-type="NON_QID" action="/step3" method="POST">
 		<div class="page-header">
 			<h1>يرجى تعبئة البيانات الشخصية</h1>
 		</div>
@@ -1234,19 +1234,20 @@ body[dir="rtl"] .datepicker table,
 				</div>
 			</div>
 
-		<div class="row">
-			<div class="col-sm-12">
-				<div class="pull-left">
-					<a href="javascript:history.back()" class="btn btn-default">رجوع</a>
-				</div>
-				<div class="pull-right">
-					<button type="submit" class="btn btn-primary" name="continueButton">استمر</button>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="pull-left">
+						<a href="javascript:history.back()" class="btn btn-default">رجوع</a>
+					</div>
+					<div class="pull-right">
+						<button type="submit" class="btn btn-primary" name="continueButton">استمر</button>
+					</div>
 				</div>
 			</div>
-		</div>
-	<div>
-<input type="hidden" name="_csrf" value="460d5f86-472e-4a10-b622-69f565488fbf">
-</div></form>
+		<div>
+	<input type="hidden" name="_csrf" value="460d5f86-472e-4a10-b622-69f565488fbf">
+	</div>
+	</form>
 </div>
 
 			</div>
