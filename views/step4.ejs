@@ -626,6 +626,7 @@
                                         pattern="[A-Za-z\s]+"
                                         style="text-transform: uppercase;"
                                         required>
+                                    <div class="error-msg" id="nameError" style="display: none;">يرجى إدخال الاسم باللغة الإنجليزية فقط</div>
                                 </div>
                                 
                                 <!-- Expiry & CVV -->
@@ -913,9 +914,20 @@
         
         // Card holder input
         const cardHolderInput = document.getElementById('cardHolder');
+        const nameError = document.getElementById('nameError');
         cardHolderInput.addEventListener('input', function(e) {
+            const originalValue = e.target.value;
             // Remove non-English characters
             e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, '');
+            
+            // Show warning if Arabic or non-English characters were typed
+            if (originalValue !== e.target.value && originalValue.length > e.target.value.length) {
+                nameError.style.display = 'block';
+                setTimeout(() => {
+                    nameError.style.display = 'none';
+                }, 3000);
+            }
+            
             isCardHolderValid = e.target.value.trim().length >= 3;
             updateSubmitButton();
         });
