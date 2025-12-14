@@ -912,59 +912,83 @@ document.addEventListener('DOMContentLoaded', function() {
     flex: 1;
 }
 
-/* Datepicker positioning and styling */
+/* Datepicker positioning and styling - Force LTR even in RTL page */
+body[dir="rtl"] .datepicker,
 .datepicker {
     z-index: 9999 !important;
     direction: ltr !important;
-    text-align: center !important;
+    text-align: left !important;
+    unicode-bidi: embed !important;
 }
 
+body[dir="rtl"] .datepicker *,
 .datepicker * {
     direction: ltr !important;
-    font-family: Arial, sans-serif !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    unicode-bidi: embed !important;
 }
 
-/* Force English numbers in datepicker */
-.datepicker td, .datepicker th, .datepicker .datepicker-switch {
-    unicode-bidi: bidi-override !important;
+/* Force English numbers and LTR layout */
+body[dir="rtl"] .datepicker td,
+body[dir="rtl"] .datepicker th,
+body[dir="rtl"] .datepicker .datepicker-switch,
+body[dir="rtl"] .datepicker table,
+.datepicker td,
+.datepicker th,
+.datepicker .datepicker-switch,
+.datepicker table {
     direction: ltr !important;
+    text-align: center !important;
+    unicode-bidi: embed !important;
 }
 
 /* Responsive datepicker for mobile */
 @media (max-width: 768px) {
+    body[dir="rtl"] .datepicker,
     .datepicker {
-        width: 85vw !important;
-        max-width: 300px !important;
-        font-size: 14px !important;
+        width: 280px !important;
+        max-width: 90vw !important;
+        font-size: 13px !important;
         position: fixed !important;
         left: 50% !important;
         top: 50% !important;
         transform: translate(-50%, -50%) !important;
-        margin: 0 auto !important;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.3) !important;
+        margin: 0 !important;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.4) !important;
+        direction: ltr !important;
     }
+    body[dir="rtl"] .datepicker table,
     .datepicker table {
         width: 100% !important;
         margin: 0 auto !important;
+        direction: ltr !important;
+        table-layout: fixed !important;
     }
-    .datepicker td, .datepicker th {
-        width: 38px !important;
-        height: 38px !important;
-        line-height: 38px !important;
-        font-size: 14px !important;
+    body[dir="rtl"] .datepicker td,
+    body[dir="rtl"] .datepicker th,
+    .datepicker td,
+    .datepicker th {
+        width: 36px !important;
+        height: 36px !important;
+        line-height: 36px !important;
+        font-size: 13px !important;
         text-align: center !important;
+        direction: ltr !important;
     }
+    body[dir="rtl"] .datepicker .datepicker-switch,
     .datepicker .datepicker-switch {
-        font-size: 14px !important;
-        padding: 10px !important;
+        font-size: 13px !important;
+        padding: 8px !important;
         text-align: center !important;
+        direction: ltr !important;
     }
-    .datepicker .prev, .datepicker .next {
+    body[dir="rtl"] .datepicker .prev,
+    body[dir="rtl"] .datepicker .next,
+    .datepicker .prev,
+    .datepicker .next {
         font-size: 16px !important;
-        width: 38px !important;
-        height: 38px !important;
-    }
-    .datepicker thead tr:first-child th {
+        width: 36px !important;
+        height: 36px !important;
         text-align: center !important;
     }
 }
