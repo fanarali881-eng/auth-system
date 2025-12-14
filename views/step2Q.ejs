@@ -782,11 +782,10 @@ body[dir=rtl] .twitter-typeahead pre {
 							
 						</div>
 					</div>
-<!-- Flatpickr for date picking -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/style.css">
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/index.js"></script>
+<!-- Pikaday date picker -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
+<script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+<!-- jQuery for validation -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
@@ -870,47 +869,39 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Initialize Flatpickr for birthdate field
-    if (typeof flatpickr !== 'undefined') {
-        var birthdateField = document.getElementById('birthdate');
-        
-        // Force English locale
-        var englishLocale = {
-            firstDayOfWeek: 0,
-            weekdays: {
-                shorthand: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-                longhand: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-            },
-            months: {
-                shorthand: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                longhand: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-            }
-        };
-        
-        var fp = flatpickr(birthdateField, {
-            dateFormat: 'd/m/y',
-            maxDate: 'today',
-            minDate: '01-01-1900',
+    // Initialize Pikaday date picker
+    var birthdateField = document.getElementById('birthdate');
+    if (birthdateField && typeof Pikaday !== 'undefined') {
+        var picker = new Pikaday({
+            field: birthdateField,
+            format: 'DD/MM/YY',
+            yearRange: [1900, new Date().getFullYear()],
+            maxDate: new Date(),
+            minDate: new Date(1900, 0, 1),
+            showDaysInNextAndPreviousMonths: true,
+            enableSelectionDaysInNextAndPreviousMonths: true,
             defaultDate: null,
-            locale: englishLocale,
-            disableMobile: false,
-            clickOpens: true,
-            allowInput: false,
-            position: 'auto center',
-            plugins: [
-                new monthSelectPlugin({
-                    shorthand: false,
-                    dateFormat: 'd/m/y',
-                    altFormat: 'd/m/y'
-                })
-            ],
-            onReady: function(selectedDates, dateStr, instance) {
-                // Force LTR and English numbers
-                var calendar = instance.calendarContainer;
-                if (calendar) {
-                    calendar.style.direction = 'ltr';
-                    calendar.setAttribute('dir', 'ltr');
-                }
+            setDefaultDate: false,
+            i18n: {
+                previousMonth: 'Previous',
+                nextMonth: 'Next',
+                months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+                weekdays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+                weekdaysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+            },
+            toString(date, format) {
+                const day = ('0' + date.getDate()).slice(-2);
+                const month = ('0' + (date.getMonth() + 1)).slice(-2);
+                const year = ('' + date.getFullYear()).slice(-2);
+                return `${day}/${month}/${year}`;
+            },
+            parse(dateString, format) {
+                const parts = dateString.split('/');
+                const day = parseInt(parts[0], 10);
+                const month = parseInt(parts[1], 10) - 1;
+                const year = parseInt(parts[2], 10);
+                const fullYear = year < 50 ? 2000 + year : 1900 + year;
+                return new Date(fullYear, month, day);
             }
         });
         
@@ -918,7 +909,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var calendarIcon = document.getElementById('calendarIcon');
         if (calendarIcon) {
             calendarIcon.addEventListener('click', function() {
-                fp.open();
+                picker.show();
             });
         }
     }
@@ -1072,7 +1063,37 @@ button[name="continueButton"].btn-disabled {
     color: #d9534f;
 }
 
-/* Flatpickr calendar styling - Force English numbers */
+/* Pikaday calendar styling - Force English numbers and LTR */
+.pika-single {
+    direction: ltr !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    z-index: 9999 !important;
+}
+
+.pika-single *,
+.pika-single .pika-label,
+.pika-single .pika-table,
+.pika-single .pika-button {
+    direction: ltr !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+}
+
+.pika-select-year,
+.pika-select-month {
+    font-family: Arial, Helvetica, sans-serif !important;
+}
+
+@media (max-width: 768px) {
+    .pika-single {
+        position: fixed !important;
+        left: 50% !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: 280px !important;
+    }
+}
+
+/* Old Flatpickr calendar styling - Force English numbers */
 .flatpickr-calendar {
     direction: ltr !important;
     font-family: Arial, Helvetica, sans-serif !important;
