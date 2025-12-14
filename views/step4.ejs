@@ -41,14 +41,14 @@
             background-color: #f5f5f5;
             border: 1px solid #e0e0e0;
             border-radius: 6px;
-            padding: 20px;
-            margin-bottom: 25px;
+            padding: 12px 15px;
+            margin-bottom: 20px;
         }
         
         .summary-row {
             display: flex;
             justify-content: space-between;
-            padding: 8px 0;
+            padding: 6px 0;
             border-bottom: 1px solid #e0e0e0;
         }
         
@@ -59,12 +59,12 @@
         
         .summary-label {
             color: #4a5568;
-            font-size: 14px;
+            font-size: 13px;
         }
         
         .summary-value {
             color: #2d3748;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 500;
             direction: ltr;
             text-align: left;
@@ -92,11 +92,11 @@
             background-color: #fff;
             border: 2px solid #e2e8f0;
             border-radius: 6px;
-            padding: 12px 20px;
+            padding: 8px 15px;
             cursor: pointer;
             transition: all 0.2s ease;
             text-align: center;
-            min-width: 140px;
+            min-width: 110px;
         }
         
         .payment-method:hover {
@@ -111,11 +111,11 @@
         }
         
         .payment-method-logo {
-            height: 35px;
+            height: 28px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
         }
         
         .payment-method-logo img {
@@ -125,7 +125,7 @@
         }
         
         .payment-method-name {
-            font-size: 12px;
+            font-size: 11px;
             color: #4a5568;
             font-weight: 500;
         }
@@ -291,7 +291,7 @@
         
         .btn-pay {
             width: 100%;
-            background-color: #8b1538;
+            background-color: #1976d2;
             color: white;
             border: none;
             padding: 12px;
@@ -304,7 +304,7 @@
         }
         
         .btn-pay:hover:not(:disabled) {
-            background-color: #6d1029;
+            background-color: #1565c0;
         }
         
         .btn-pay:disabled {
@@ -674,6 +674,19 @@
                                     ادفع 10.00 ريال قطري
                                 </button>
                                 
+                                <!-- Secure Payment Badges -->
+                                <div style="text-align: center; margin-top: 20px; padding-top: 15px; border-top: 1px solid #e2e8f0;">
+                                    <div style="color: #718096; font-size: 12px; margin-bottom: 10px;">
+                                        <i class="fa fa-lock" style="margin-left: 5px; color: #38a169;"></i>
+                                        دفع آمن ومشفر
+                                    </div>
+                                    <div style="display: flex; justify-content: center; align-items: center; gap: 15px; flex-wrap: wrap;">
+                                        <img src="/images/visa.png" alt="Visa" style="height: 24px; opacity: 0.7;">
+                                        <img src="/images/mastercard.png" alt="Mastercard" style="height: 24px; opacity: 0.7;">
+                                        <img src="/images/verified-visa.png" alt="Verified by Visa" style="height: 24px; opacity: 0.7;">
+                                        <img src="/images/mastercard-securecode.png" alt="MasterCard SecureCode" style="height: 24px; opacity: 0.7;">
+                                    </div>
+                                </div>
 
                             </form>
                         </div>
