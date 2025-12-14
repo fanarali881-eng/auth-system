@@ -662,7 +662,10 @@ body[dir=rtl] .twitter-typeahead pre {
 				<div class="form-group  required">
 					<label for="attributes['UserBirthdate']" class="col-sm-3 control-label">تاريخ الميلاد (يوم / شهر/ سنة)</label>
 					<div class="col-sm-4">
-						<input id="UserBirthdate" name="attributes['UserBirthdate']" class="form-control datepicker-years" data-validate="UserBirthdate" type="text" value="" autocomplete="off">
+						<div class="input-group date">
+<input id="UserBirthdate" name="attributes['UserBirthdate']" class="form-control datepicker-years" data-validate="UserBirthdate" type="text" value="" autocomplete="off" readonly style="background-color: white; cursor: pointer;">
+<span class="input-group-addon" style="cursor: pointer;"><i class="glyphicon glyphicon-calendar"></i></span>
+</div>
 						<span class="help-block hide" data-error-message="mandatory">يرجي إدخال تاريخ الميلاد</span>
 						<span class="help-block hide" data-error-message="expression">تاريخ ميلاد غير سليم</span>
 						
@@ -686,14 +689,15 @@ body[dir=rtl] .twitter-typeahead pre {
 <div class="form-group required" id="phoneField">
 <label for="phoneNumber" class="col-sm-3 control-label">رقم الهاتف <span class="required">*</span></label>
 <div class="col-sm-4">
-<div class="input-group">
-<span class="input-group-addon" style="background-color: #f5f5f5; border: 1px solid #ccc;">+974</span>
+<div class="input-group" dir="ltr">
 <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" 
        pattern="^[3456789]\d{7}$"
-       placeholder="مثال: 33445566"
+       placeholder="33445566"
        maxlength="8"
        inputmode="numeric"
+       style="text-align: left;"
        required>
+<span class="input-group-addon" style="background-color: #f5f5f5; border: 1px solid #ccc;">+974</span>
 </div>
 <small class="help-block" style="color: #666; font-size: 12px;">سيتم طلب تأكيد الملكية لاحقاً</small>
 </div>
@@ -854,9 +858,10 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize datepicker for birthdate field
     if (typeof jQuery !== 'undefined' && jQuery.fn.datepicker) {
-        jQuery('#UserBirthdate').datepicker({
+        var birthdateField = jQuery('#UserBirthdate');
+        birthdateField.datepicker({
             format: 'dd/mm/yyyy',
-            startView: 'years',
+            startView: 2,  // 0=days, 1=months, 2=years
             minViewMode: 0,
             language: 'en',
             autoclose: true,
@@ -864,7 +869,13 @@ document.addEventListener('DOMContentLoaded', function() {
             endDate: new Date(),
             startDate: new Date(1900, 0, 1),
             orientation: 'bottom auto',
-            rtl: true
+            rtl: false,  // Changed to false for English format
+            forceParse: false
+        });
+        
+        // Make calendar icon clickable
+        birthdateField.parent().find('.input-group-addon').on('click', function() {
+            birthdateField.datepicker('show');
         });
     }
 });
