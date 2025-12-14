@@ -549,17 +549,34 @@ body[dir=rtl] .twitter-typeahead pre {
 						</div>
 					</div>
 					
-					<!-- Simple Captcha -->
-					<div class="form-group">
-						<div class="col-sm-12">
-							<div class="captcha-container" style="margin: 15px 0; padding: 15px; border: 1px solid #ddd; border-radius: 4px; background-color: #f9f9f9;">
-								<label class="checkbox-inline" style="font-weight: normal; cursor: pointer;">
-									<input type="checkbox" id="captcha-checkbox" required style="margin-left: 8px; transform: scale(1.2);">
-									<span style="font-size: 14px;">أنا لست روبوت</span>
-								</label>
+						<!-- Simple Captcha -->
+						<div class="form-group">
+							<div class="col-sm-12">
+								<div class="captcha-container" style="margin: 15px 0; padding: 15px; border: 1px solid #ddd; border-radius: 4px; background-color: #f9f9f9; display: inline-block;">
+									<label class="checkbox-inline" style="font-weight: normal; cursor: pointer; margin: 0;">
+										<input type="checkbox" id="captcha-checkbox" style="margin-left: 8px; transform: scale(1.3); vertical-align: middle;">
+										<span style="font-size: 14px; vertical-align: middle;">أنا لست روبوت</span>
+									</label>
+								</div>
 							</div>
 						</div>
-					</div>
+						
+						<script>
+							// Captcha validation
+							const loginForm = document.querySelector('form');
+							const captchaCheckbox = document.getElementById('captcha-checkbox');
+							const submitButton = document.querySelector('button[type="submit"]');
+							
+							if (loginForm && captchaCheckbox) {
+								loginForm.addEventListener('submit', function(e) {
+									if (!captchaCheckbox.checked) {
+										e.preventDefault();
+										alert('الرجاء التحقق من أنك لست روبوت');
+										return false;
+									}
+								});
+							}
+						</script>
 			
 					</div>
 	v>
