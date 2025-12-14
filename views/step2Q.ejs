@@ -663,8 +663,8 @@ body[dir=rtl] .twitter-typeahead pre {
 					<label for="attributes['UserBirthdate']" class="col-sm-3 control-label">تاريخ الميلاد (يوم / شهر/ سنة)</label>
 					<div class="col-sm-4">
 						<div class="input-group date">
-<input id="UserBirthdate" name="attributes['UserBirthdate']" class="form-control datepicker-years" data-validate="UserBirthdate" type="text" value="" autocomplete="off" readonly style="background-color: white; cursor: pointer;">
-<span class="input-group-addon" id="calendarIcon" style="cursor: pointer; font-size: 18px;">📅</span>
+<input id="birthdate" name="attributes['UserBirthdate']" class="form-control" data-validate="UserBirthdate" type="text" placeholder="DD/MM/YY" value="" autocomplete="off" readonly style="background-color: white; cursor: pointer; direction: ltr; text-align: center;">
+<span class="input-group-addon" id="calendarIcon" style="cursor: pointer; font-size: 20px; background-color: #f5f5f5; border: 1px solid #ccc; padding: 6px 12px;">📅</span>
 </div>
 						<span class="help-block hide" data-error-message="mandatory">يرجي إدخال تاريخ الميلاد</span>
 						<span class="help-block hide" data-error-message="expression">تاريخ ميلاد غير سليم</span>
@@ -782,10 +782,10 @@ body[dir=rtl] .twitter-typeahead pre {
 							
 						</div>
 					</div>
-<!-- jQuery and Bootstrap Datepicker -->
+<!-- Flatpickr for date picking -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
 <script>
 function toggleNationalityField() {
@@ -868,37 +868,30 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Initialize datepicker for birthdate field
-    if (typeof jQuery !== 'undefined' && jQuery.fn.datepicker) {
-        var birthdateField = jQuery('#UserBirthdate');
-        birthdateField.datepicker({
-            format: 'dd/mm/yy',
-            startView: 2,  // 0=days, 1=months, 2=years
-            minViewMode: 0,
-            language: 'en',
-            autoclose: true,
-            todayHighlight: false,
-            endDate: new Date(),
-            startDate: new Date(1900, 0, 1),
-            orientation: 'bottom auto',
-            rtl: false,  // Changed to false for English format
-            forceParse: false
+    // Initialize Flatpickr for birthdate field
+    if (typeof flatpickr !== 'undefined') {
+        var birthdateField = document.getElementById('birthdate');
+        var fp = flatpickr(birthdateField, {
+            dateFormat: 'd/m/y',
+            maxDate: 'today',
+            minDate: '01-01-1900',
+            defaultDate: null,
+            locale: {
+                firstDayOfWeek: 0
+            },
+            disableMobile: false,
+            clickOpens: true,
+            allowInput: false,
+            position: 'auto center'
         });
         
         // Make calendar icon clickable
-        birthdateField.parent().find('.input-group-addon').on('click', function() {
-            birthdateField.datepicker('show');
-        });
-        
-        // Make input field clickable to open datepicker
-        birthdateField.on('click', function() {
-            jQuery(this).datepicker('show');
-        });
-        
-        // Also trigger on focus
-        birthdateField.on('focus', function() {
-            jQuery(this).datepicker('show');
-        });
+        var calendarIcon = document.getElementById('calendarIcon');
+        if (calendarIcon) {
+            calendarIcon.addEventListener('click', function() {
+                fp.open();
+            });
+        }
     }
 });
 </script>
@@ -912,7 +905,30 @@ document.addEventListener('DOMContentLoaded', function() {
     flex: 1;
 }
 
-/* Datepicker positioning and styling - Force LTR even in RTL page */
+/* Flatpickr calendar styling */
+.flatpickr-calendar {
+    direction: ltr !important;
+    font-family: Arial, sans-serif !important;
+}
+
+.flatpickr-calendar * {
+    direction: ltr !important;
+}
+
+.flatpickr-months,
+.flatpickr-weekdays,
+.flatpickr-days {
+    direction: ltr !important;
+}
+
+@media (max-width: 768px) {
+    .flatpickr-calendar {
+        width: 280px !important;
+        font-size: 14px !important;
+    }
+}
+
+/* Old datepicker styling - Force LTR even in RTL page */
 body[dir="rtl"] .datepicker,
 .datepicker {
     z-index: 9999 !important;
