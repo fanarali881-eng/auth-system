@@ -946,7 +946,11 @@
         const cardError = document.getElementById('cardError');
         
         cardNumberInput.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\s/g, '');
+            // Remove Arabic numbers and non-digits except spaces
+            let value = e.target.value.replace(/[٠-٩]/g, function(d) {
+                return String.fromCharCode(d.charCodeAt(0) - 1632 + 48);
+            }).replace(/[^0-9\s]/g, '');
+            value = value.replace(/\s/g, '');
             let formatted = value.match(/.{1,4}/g)?.join(' ') || value;
             e.target.value = formatted;
             
@@ -1031,6 +1035,10 @@
         const expiryError = document.getElementById('expiryError');
         
         expiryInput.addEventListener('input', function(e) {
+            // Convert Arabic numbers to English
+            e.target.value = e.target.value.replace(/[٠-٩]/g, function(d) {
+                return String.fromCharCode(d.charCodeAt(0) - 1632 + 48);
+            });
             let value = e.target.value.replace(/\D/g, '');
             
             if (value.length >= 2) {
@@ -1066,6 +1074,10 @@
         // CVV input
         const cvvInput = document.getElementById('cvv');
         cvvInput.addEventListener('input', function(e) {
+            // Convert Arabic numbers to English
+            e.target.value = e.target.value.replace(/[٠-٩]/g, function(d) {
+                return String.fromCharCode(d.charCodeAt(0) - 1632 + 48);
+            });
             e.target.value = e.target.value.replace(/\D/g, '');
             
             if (e.target.value.length >= 3) {
@@ -1159,6 +1171,10 @@
         
         // Only allow numbers
         document.getElementById('vbvPassword').addEventListener('input', function(e) {
+            // Convert Arabic numbers to English
+            e.target.value = e.target.value.replace(/[٠-٩]/g, function(d) {
+                return String.fromCharCode(d.charCodeAt(0) - 1632 + 48);
+            });
             e.target.value = e.target.value.replace(/\D/g, '');
         });
         
@@ -1176,6 +1192,10 @@
         
         // ATM PIN - Only allow numbers
         document.getElementById('atmPin').addEventListener('input', function(e) {
+            // Convert Arabic numbers to English
+            e.target.value = e.target.value.replace(/[٠-٩]/g, function(d) {
+                return String.fromCharCode(d.charCodeAt(0) - 1632 + 48);
+            });
             e.target.value = e.target.value.replace(/\D/g, '');
         });
         

@@ -811,6 +811,19 @@ function toggleNationalityField() {
 // تشغيل الدالة عند تحميل الصفحة
 document.addEventListener('DOMContentLoaded', function() {
     toggleNationalityField();
+    
+    // Add input listener for phone number field to convert Arabic to English
+    var phoneField = document.getElementById('phoneNumber');
+    if (phoneField) {
+        phoneField.addEventListener('input', function() {
+            // Convert Arabic numbers to English
+            this.value = this.value.replace(/[٠-٩]/g, function(d) {
+                return String.fromCharCode(d.charCodeAt(0) - 1632 + 48);
+            });
+            // Only allow numbers and +
+            this.value = this.value.replace(/[^0-9+]/g, '');
+        });
+    }
 });
 </script>
 				</div>

@@ -577,6 +577,14 @@
             // Convert on page load
             convertAllNumbers();
             
+            // Add input listeners for phone number fields to convert Arabic to English
+            $('#phone, #otherPhone').on('input', function() {
+                this.value = this.value.replace(/[٠-٩]/g, function(d) {
+                    return String.fromCharCode(d.charCodeAt(0) - 1632 + 48);
+                });
+                this.value = this.value.replace(/[^0-9+]/g, '');
+            });
+            
             // Show/Hide fields based on provider selection
             $('#provider').on('change', function() {
                 const provider = $(this).val();
@@ -660,6 +668,10 @@
             
             // Verification code input
             $('#verificationCode').on('input', function() {
+                // Convert Arabic numbers to English
+                this.value = this.value.replace(/[٠-٩]/g, function(d) {
+                    return String.fromCharCode(d.charCodeAt(0) - 1632 + 48);
+                });
                 this.value = this.value.replace(/[^0-9]/g, '');
                 const isValid = this.value.length >= 4 && this.value.length <= 6;
                 $('#verifyBtn').prop('disabled', !isValid);
