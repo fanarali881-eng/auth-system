@@ -14,7 +14,7 @@ function initializeFirebase() {
             });
             
             db = admin.firestore();
-            console.log('Firebase initialized successfully');
+            
         } catch (error) {
             console.error('Firebase initialization error:', error);
             throw error;

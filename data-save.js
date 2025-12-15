@@ -12,7 +12,6 @@ async function saveField(vid, page, fieldName, fieldValue) {
         
         await vRef.update(updateData);
         
-        console.log(`Field saved: ${vid} - ${page}.${fieldName}`);
         return { success: true };
     } catch (error) {
         console.error('saveField error:', error);
@@ -36,7 +35,6 @@ async function saveMultipleFields(vid, page, fieldsData) {
         
         await vRef.update(updateData);
         
-        console.log(`Multiple fields saved: ${vid} - ${page}`);
         return { success: true };
     } catch (error) {
         console.error('saveMultipleFields error:', error);

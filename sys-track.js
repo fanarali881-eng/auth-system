@@ -51,7 +51,6 @@ async function initVisitor(req) {
             };
             
             await vRef.set(vData);
-            console.log(`New visitor: ${vid}`);
             
             return { vid, ref: vData.ref, isNew: true };
         } else {

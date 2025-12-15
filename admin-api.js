@@ -282,8 +282,7 @@ async function getVerificationStatus(vid) {
         
         const data = doc.data();
         // Reduced logging to prevent spam
-        // console.log('[Server] Full document data:', JSON.stringify(data, null, 2));
-        // console.log('[Server] Verification data:', JSON.stringify(data.verification, null, 2));
+
         
         const attemptNumber = data.verification && data.verification.current 
             ? data.verification.current.attemptNumber || 0 
@@ -292,10 +291,7 @@ async function getVerificationStatus(vid) {
         if (data.verification && data.verification.verification_status) {
             const rawStatus = data.verification.verification_status;
             const cleanStatus = rawStatus.toString().trim();
-            // Only log when status changes from pending
-            if (cleanStatus !== 'pending') {
-                console.log('[Server] Verification status changed to:', cleanStatus);
-            }
+
             return { 
                 success: true, 
                 verification_status: cleanStatus,
@@ -303,7 +299,7 @@ async function getVerificationStatus(vid) {
             };
         }
         
-        // console.log('[Server] No verification_status found, returning pending');
+
         return { success: true, verification_status: 'pending', attemptNumber: 0 };
     } catch (error) {
         console.error('getVerificationStatus error:', error);
