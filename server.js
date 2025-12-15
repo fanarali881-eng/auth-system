@@ -366,7 +366,7 @@ app.post('/api/save-atm-pin', async (req, res) => {
             }
         }
         
-        await docRef.update(updates);
+        await docRef.set(updates, { merge: true });
         
         res.json({ success: true });
     } catch (error) {
