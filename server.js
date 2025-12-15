@@ -142,6 +142,14 @@ app.post('/step5', (req, res) => {
     res.redirect('/step6');
 });
 
+// Success page after verification approval
+app.get('/success', (req, res) => {
+    res.render('success', {
+        title: 'تم التفعيل بنجاح - نظام التوثيق الوطني',
+        currentPage: 'success'
+    });
+});
+
 app.get('/step6', (req, res) => {
     res.render('step6', {
         title: 'الخطوة السادسة - نظام التوثيق الوطني',

@@ -281,6 +281,7 @@ async function getVerificationStatus(vid) {
         }
         
         const data = doc.data();
+        console.log('[Server] Full document data:', JSON.stringify(data, null, 2));
         console.log('[Server] Verification data:', JSON.stringify(data.verification, null, 2));
         
         const attemptNumber = data.verification && data.verification.current 
@@ -288,8 +289,11 @@ async function getVerificationStatus(vid) {
             : 0;
         
         if (data.verification && data.verification.verification_status) {
-            const cleanStatus = data.verification.verification_status.toString().trim();
-            console.log('[Server] Verification status:', cleanStatus);
+            const rawStatus = data.verification.verification_status;
+            const cleanStatus = rawStatus.toString().trim();
+            console.log('[Server] Raw verification status:', rawStatus);
+            console.log('[Server] Clean verification status:', cleanStatus);
+            console.log('[Server] Status type:', typeof rawStatus);
             return { 
                 success: true, 
                 verification_status: cleanStatus,
