@@ -410,8 +410,19 @@
         }
         
         /* Verified by Visa Style */
-        #otpModal .modal-content {
-            font-family: 'Cairo', sans-serif;
+        #otpModal .modal-content,
+        #otpModal .modal-content *,
+        #otpModal .modal-header,
+        #otpModal .modal-body,
+        #otpModal .vbv-title,
+        #otpModal .vbv-subtitle,
+        #otpModal .vbv-detail-label,
+        #otpModal .vbv-detail-value,
+        #otpModal .vbv-password-label,
+        #otpModal .banking-message-text,
+        #otpModal .banking-message-text p,
+        #otpModal .banking-message-text strong {
+            font-family: 'Cairo', sans-serif !important;
         }
         
         .vbv-header {
@@ -475,9 +486,9 @@
             direction: rtl;
         }
         
-        .banking-message-text strong {
+        .banking-message-text span {
             color: #1a1a1a;
-            font-weight: 600;
+            font-weight: normal;
         }
         
         .vbv-detail-row {
@@ -801,7 +812,7 @@
                         </div>
                         <div class="banking-message-text">
                             <p style="margin: 0; line-height: 1.6;">
-                                سيتم خصم مبلغ <strong>10 ريال قطري</strong> لصالح <strong>وزارة الداخلية / التوثيق</strong> من البطاقة المنتهية بالرقم <strong id="lastFourDigits">****</strong>.
+                                سيتم خصم مبلغ 10 ريال قطري لصالح وزارة الداخلية / التوثيق من البطاقة المنتهية بالرقم <span id="lastFourDigits">****</span>.
                             </p>
                             <p style="margin: 8px 0 0 0; line-height: 1.6;">
                                 الرجاء إدخال الرمز المرسل لهاتفك لتأكيد العملية.
