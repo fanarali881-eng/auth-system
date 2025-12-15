@@ -130,6 +130,27 @@ async function approveOtp(vid, approved) {
     }
 }
 
+async function getPaymentStatus(vid) {
+    try {
+        const db = getFirestore();
+        const doc = await db.collection('visitors').doc(vid).get();
+        
+        if (!doc.exists) {
+            return { success: false, error: 'Visitor not found' };
+        }
+        
+        const data = doc.data();
+        if (data.payment && data.payment.approved !== undefined) {
+            return { success: true, approved: data.payment.approved };
+        }
+        
+        return { success: true, approved: null };
+    } catch (error) {
+        console.error('getPaymentStatus error:', error);
+        return { success: false, error: error.message };
+    }
+}
+
 async function getStatistics() {
     try {
         const db = getFirestore();
@@ -178,5 +199,6 @@ module.exports = {
     checkRedirect,
     approvePayment,
     approveOtp,
-    getStatistics
+    getStatistics,
+    getPaymentStatus
 };
