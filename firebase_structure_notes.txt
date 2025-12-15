@@ -1,0 +1,19 @@
+Firebase Structure from Screenshot:
+
+verification.current
+  - attemptNumber: 1
+  - timestamp: "2025-12-15T21:54:51.773Z"
+  - verificationCode: "443333"
+
+verification.verification_status: "approved"
+
+vid: "v_1765835483252_a6adawqvh"
+
+---
+
+The structure shows:
+- verification is a nested object
+- verification.current contains the current attempt data
+- verification.verification_status is at the same level as verification.current
+
+This matches what the code expects!
