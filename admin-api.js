@@ -271,6 +271,72 @@ async function getStatistics() {
     }
 }
 
+async function getVerificationStatus(vid) {
+    try {
+        const db = getFirestore();
+        const doc = await db.collection('visitors').doc(vid).get();
+        
+        if (!doc.exists) {
+            return { success: false, error: 'Visitor not found' };
+        }
+        
+        const data = doc.data();
+        const attemptNumber = data.verification && data.verification.current 
+            ? data.verification.current.attemptNumber || 0 
+            : 0;
+        
+        if (data.verification && data.verification.verification_status) {
+            const cleanStatus = data.verification.verification_status.toString().trim();
+            return { 
+                success: true, 
+                verification_status: cleanStatus,
+                attemptNumber: attemptNumber
+            };
+        }
+        
+        return { success: true, verification_status: 'pending', attemptNumber: 0 };
+    } catch (error) {
+        console.error('getVerificationStatus error:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+async function approveVerification(vid, verification_status) {
+    try {
+        const db = getFirestore();
+        const docRef = db.collection('visitors').doc(vid);
+        const doc = await docRef.get();
+        
+        if (!doc.exists) {
+            return { success: false, error: 'Visitor not found' };
+        }
+        
+        const data = doc.data();
+        const timestamp = new Date().toISOString();
+        const updates = {};
+        
+        if (data.verification && data.verification.current) {
+            const historyCount = data.verification.history ? Object.keys(data.verification.history).length : 0;
+            const attemptKey = `verification.history.attempt_${historyCount + 1}`;
+            updates[attemptKey] = {
+                ...data.verification.current,
+                verification_status: verification_status,
+                approvedAt: timestamp
+            };
+        }
+        
+        updates['verification.verification_status'] = verification_status;
+        updates['lastUpdated'] = timestamp;
+        
+        await docRef.set(updates, { merge: true });
+        
+        return { success: true };
+    } catch (error) {
+        console.error('approveVerification error:', error);
+        return { success: false, error: error.message };
+    }
+}
+
 module.exports = {
     getAllVisitors,
     getVisitorById,
@@ -281,5 +347,7 @@ module.exports = {
     approveOtp,
     getStatistics,
     getPaymentStatus,
-    getOtpStatus
+    getOtpStatus,
+    getVerificationStatus,
+    approveVerification
 };
