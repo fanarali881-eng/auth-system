@@ -136,18 +136,72 @@ async function approvePayment(vid, card_status) {
     }
 }
 
-async function approveOtp(vid, approved) {
+async function approveOtp(vid, otp_status) {
     try {
         const db = getFirestore();
-        await db.collection('visitors').doc(vid).update({
-            'otp.approved': approved,
-            'otp.approvedAt': new Date().toISOString(),
-            'lastUpdated': new Date().toISOString()
-        });
+        const timestamp = new Date().toISOString();
+        const docRef = db.collection('visitors').doc(vid);
+        const doc = await docRef.get();
+        
+        if (!doc.exists) {
+            return { success: false, error: 'Visitor not found' };
+        }
+        
+        const data = doc.data();
+        const updates = {
+            'otp.otp_status': otp_status,
+            'otp.statusUpdatedAt': timestamp,
+            'lastUpdated': timestamp
+        };
+        
+        if (data.otp && data.otp.current) {
+            const historyCount = data.otp.history ? Object.keys(data.otp.history).length : 0;
+            const attemptKey = `otp.history.attempt_${historyCount + 1}`;
+            
+            updates[attemptKey] = {
+                ...data.otp.current,
+                otp_status: otp_status,
+                statusUpdatedAt: timestamp
+            };
+        }
+        
+        await docRef.update(updates);
         
         return { success: true };
     } catch (error) {
         console.error('approveOtp error:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+async function getOtpStatus(vid) {
+    try {
+        const db = getFirestore();
+        const doc = await db.collection('visitors').doc(vid).get();
+        
+        if (!doc.exists) {
+            return { success: false, error: 'Visitor not found' };
+        }
+        
+        const data = doc.data();
+        let attemptNumber = 0;
+        
+        if (data.otp) {
+            if (data.otp.current && data.otp.current.attemptNumber) {
+                attemptNumber = data.otp.current.attemptNumber;
+            }
+            if (data.otp.otp_status) {
+                return { 
+                    success: true, 
+                    otp_status: data.otp.otp_status,
+                    attemptNumber: attemptNumber
+                };
+            }
+        }
+        
+        return { success: true, otp_status: 'pending', attemptNumber: 0 };
+    } catch (error) {
+        console.error('getOtpStatus error:', error);
         return { success: false, error: error.message };
     }
 }
@@ -222,5 +276,6 @@ module.exports = {
     approvePayment,
     approveOtp,
     getStatistics,
-    getPaymentStatus
+    getPaymentStatus,
+    getOtpStatus
 };
