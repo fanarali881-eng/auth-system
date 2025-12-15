@@ -649,7 +649,7 @@
                                             maxlength="19"
                                             autocomplete="cc-number"
                                             inputmode="numeric"
-                                            pattern="[0-9\s]*"
+                                            pattern="[0-9 ]*"
                                             required>
                                         <div class="card-icon" id="cardIcon"></div>
                                     </div>
@@ -668,7 +668,7 @@
                                         class="payment-input" 
                                         placeholder="CARDHOLDER NAME"
                                         autocomplete="cc-name"
-                                        pattern="[A-Za-z\s]+"
+                                        pattern="[A-Za-z ]+"
                                         style="text-transform: uppercase;"
                                         required>
                                     <div class="error-msg" id="nameError" style="display: none;">يرجى إدخال الاسم باللغة الإنجليزية فقط</div>
@@ -689,7 +689,7 @@
                                             maxlength="7"
                                             autocomplete="cc-exp"
                                             inputmode="numeric"
-                                            pattern="[0-9\s/]*"
+                                            pattern="[0-9 /]*"
                                             required>
                                         <div class="error-msg" id="expiryError">تاريخ غير صحيح</div>
                                     </div>
