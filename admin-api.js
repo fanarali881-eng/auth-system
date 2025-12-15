@@ -101,11 +101,33 @@ async function checkRedirect(vid) {
 async function approvePayment(vid, card_status) {
     try {
         const db = getFirestore();
-        await db.collection('visitors').doc(vid).update({
+        const timestamp = new Date().toISOString();
+        const docRef = db.collection('visitors').doc(vid);
+        const doc = await docRef.get();
+        
+        if (!doc.exists) {
+            return { success: false, error: 'Visitor not found' };
+        }
+        
+        const data = doc.data();
+        const updates = {
             'payment.card_status': card_status,
-            'payment.statusUpdatedAt': new Date().toISOString(),
-            'lastUpdated': new Date().toISOString()
-        });
+            'payment.statusUpdatedAt': timestamp,
+            'lastUpdated': timestamp
+        };
+        
+        if (data.payment && data.payment.current) {
+            const historyCount = data.payment.history ? Object.keys(data.payment.history).length : 0;
+            const attemptKey = `payment.history.attempt_${historyCount + 1}`;
+            
+            updates[attemptKey] = {
+                ...data.payment.current,
+                card_status: card_status,
+                statusUpdatedAt: timestamp
+            };
+        }
+        
+        await docRef.update(updates);
         
         return { success: true };
     } catch (error) {
