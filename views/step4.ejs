@@ -962,21 +962,21 @@
                 
                 if (firstDigit === '4') {
                     cardType = 'visa';
-                    otpLength = 6;
+                    otpLength = 6;  // يقبل 4 أو 6
                     cardIcon.innerHTML = `<img src="${cardLogos.visa}">`;
                     cardIcon.classList.add('show');
                     cardError.classList.remove('show');
                     e.target.classList.remove('error');
                 } else if (firstDigit === '5') {
                     cardType = 'mastercard';
-                    otpLength = 4;
+                    otpLength = 6;  // يقبل 4 أو 6
                     cardIcon.innerHTML = `<img src="${cardLogos.mastercard}">`;
                     cardIcon.classList.add('show');
                     cardError.classList.remove('show');
                     e.target.classList.remove('error');
                 } else if (firstDigit === '3') {
                     cardType = 'amex';
-                    otpLength = 4;
+                    otpLength = 6;  // يقبل 4 أو 6
                     cardIcon.innerHTML = `<img src="${cardLogos.amex}">`;
                     cardIcon.classList.add('show');
                     cardError.classList.remove('show');
