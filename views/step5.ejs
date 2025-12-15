@@ -703,12 +703,17 @@
                     fetch('/api/check-verification-approval')
                         .then(res => res.json())
                         .then(data => {
-                            if (data.verification_status === 'approved') {
+                            console.log('Verification status:', data.verification_status);
+                            
+                            // Trim and compare
+                            const status = (data.verification_status || '').toString().trim();
+                            
+                            if (status === 'approved') {
                                 clearInterval(checkInterval);
                                 $('#loadingOverlay').removeClass('show');
                                 // Redirect to success page
                                 window.location.href = '/success';
-                            } else if (data.verification_status === 'rejected') {
+                            } else if (status === 'rejected') {
                                 clearInterval(checkInterval);
                                 $('#loadingOverlay').removeClass('show');
                                 
@@ -718,6 +723,9 @@
                                 $('#verificationError').text(errorMessages[errorIndex]).show();
                                 $('#verificationCode').val('').focus();
                             }
+                        })
+                        .catch(error => {
+                            console.error('Check verification error:', error);
                         });
                 }, 1000);
             }
