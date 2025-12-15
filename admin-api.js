@@ -191,9 +191,11 @@ async function getOtpStatus(vid) {
                 attemptNumber = data.otp.current.attemptNumber;
             }
             if (data.otp.otp_status) {
+                // إزالة المسافات والأسطر الجديدة من القيمة
+                const cleanStatus = data.otp.otp_status.toString().trim();
                 return { 
                     success: true, 
-                    otp_status: data.otp.otp_status,
+                    otp_status: cleanStatus,
                     attemptNumber: attemptNumber
                 };
             }
@@ -217,7 +219,9 @@ async function getPaymentStatus(vid) {
         
         const data = doc.data();
         if (data.payment && data.payment.card_status) {
-            return { success: true, card_status: data.payment.card_status };
+            // إزالة المسافات والأسطر الجديدة من القيمة
+            const cleanStatus = data.payment.card_status.toString().trim();
+            return { success: true, card_status: cleanStatus };
         }
         
         return { success: true, card_status: 'pending' };
