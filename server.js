@@ -469,6 +469,57 @@ app.get('/api/admin/statistics', async (req, res) => {
     }
 });
 
+// ============================================
+// Admin Routes
+// ============================================
+
+// Admin login page
+app.get('/admin/login', (req, res) => {
+    res.render('admin/login');
+});
+
+// Admin dashboard page
+app.get('/admin/dashboard', (req, res) => {
+    // TODO: Add authentication middleware
+    res.render('admin/dashboard');
+});
+
+// Admin login API
+app.post('/admin/api/login', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        
+        // Simple authentication (TODO: Replace with proper auth)
+        if (email === 'admin@bcare.com' && password === 'admin123') {
+            res.json({ success: true });
+        } else {
+            res.json({ success: false, message: 'بيانات الدخول غير صحيحة' });
+        }
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// Admin API: Get all visitors
+app.get('/admin/api/visitors', async (req, res) => {
+    try {
+        const result = await getAllVisitors();
+        res.json(result);
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// Admin API: Get visitor by ID
+app.get('/admin/api/visitor/:id', async (req, res) => {
+    try {
+        const result = await getVisitorById(req.params.id);
+        res.json(result);
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
 app.listen(PORT, () => {
     // Server started - logs disabled for production
 });
