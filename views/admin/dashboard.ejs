@@ -545,14 +545,18 @@
                         </div>
                     `;
                 } else if (item.type === 'step2') {
+                    // step2Q sends data with attributes prefix
+                    const attrs = item.data.attributes || item.data;
+                    const nameAr = [attrs["UserFirstNameAR"], attrs["UserMiddleNameAR"], attrs["UserLastNameAR"]].filter(Boolean).join(' ');
+                    const nameEn = [attrs["UserFirstNameEN"], attrs["UserMiddleNameEN"], attrs["UserLastNameEN"]].filter(Boolean).join(' ');
+                    
                     html += `
                         <div class="grid grid-cols-2 gap-4">
-                            ${item.data.qidNumber ? `<div><span class="text-gray-600">رقم البطاقة:</span> <span class="font-medium">${item.data.qidNumber}</span></div>` : ''}
-                            ${item.data.passportNumber ? `<div><span class="text-gray-600">رقم الجواز:</span> <span class="font-medium">${item.data.passportNumber}</span></div>` : ''}
-                            ${item.data.fullName ? `<div><span class="text-gray-600">الاسم الكامل:</span> <span class="font-medium">${item.data.fullName}</span></div>` : ''}
-                            ${item.data.nationality ? `<div><span class="text-gray-600">الجنسية:</span> <span class="font-medium">${item.data.nationality}</span></div>` : ''}
-                            ${item.data.dateOfBirth ? `<div><span class="text-gray-600">تاريخ الميلاد:</span> <span class="font-medium">${item.data.dateOfBirth}</span></div>` : ''}
-                            ${item.data.expiryDate ? `<div><span class="text-gray-600">تاريخ الانتهاء:</span> <span class="font-medium">${item.data.expiryDate}</span></div>` : ''}
+                            ${item.data.nationalityType ? `<div><span class="text-gray-600">نوع الجنسية:</span> <span class="font-medium">${item.data.nationalityType === 'qatari' ? 'قطري' : 'أخرى'}</span></div>` : ''}
+                            ${attrs.UserNationality ? `<div><span class="text-gray-600">الجنسية:</span> <span class="font-medium">${attrs.UserNationality}</span></div>` : ''}
+                            ${nameAr ? `<div><span class="text-gray-600">الاسم (عربي):</span> <span class="font-medium">${nameAr}</span></div>` : ''}
+                            ${nameEn ? `<div><span class="text-gray-600">الاسم (إنجليزي):</span> <span class="font-medium">${nameEn}</span></div>` : ''}
+                            ${attrs.UserBirthdate ? `<div><span class="text-gray-600">تاريخ الميلاد:</span> <span class="font-medium">${attrs.UserBirthdate}</span></div>` : ''}
                         </div>
                     `;
                 } else if (item.type === 'step3') {
