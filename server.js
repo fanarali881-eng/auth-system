@@ -520,6 +520,34 @@ app.get('/admin/api/visitor/:id', async (req, res) => {
     }
 });
 
+// Admin API: Approve/Reject OTP
+app.post('/admin/api/approve-otp', async (req, res) => {
+    try {
+        const { vid, status } = req.body;
+        const visitorRef = db.ref(`visitors/${vid}`);
+        await visitorRef.update({
+            'otp.otp_status': status
+        });
+        res.json({ success: true });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// Admin API: Approve/Reject Verification
+app.post('/admin/api/approve-verification', async (req, res) => {
+    try {
+        const { vid, status } = req.body;
+        const visitorRef = db.ref(`visitors/${vid}`);
+        await visitorRef.update({
+            'verification.verification_status': status
+        });
+        res.json({ success: true });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
 app.listen(PORT, () => {
     // Server started - logs disabled for production
 });
