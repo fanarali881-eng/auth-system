@@ -102,7 +102,28 @@ app.get('/step2Q', (req, res) => {
     });
 });
 
-app.post('/step2Q', (req, res) => {
+app.post('/step2Q', async (req, res) => {
+    try {
+        const vid = req.cookies.vid;
+        if (vid) {
+            const { getFirestore } = require('./firebase-config');
+            const db = getFirestore();
+            const timestamp = new Date().toISOString();
+            
+            // Save step2 data
+            await db.collection('visitors').doc(vid).set({
+                data: {
+                    step2: {
+                        ...req.body,
+                        timestamp
+                    }
+                },
+                lastUpdated: timestamp
+            }, { merge: true });
+        }
+    } catch (error) {
+        console.error('Step2Q save error:', error);
+    }
     res.redirect('/step3');
 });
 
