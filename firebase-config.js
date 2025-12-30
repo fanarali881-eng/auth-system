@@ -6,8 +6,25 @@ let db;
 function initializeFirebase() {
     if (admin.apps.length === 0) {
         try {
+            // Try to load service account file first
+            const fs = require('fs');
+            const path = require('path');
+            const serviceAccountPath = path.join(__dirname, 'service-account.json');
+            
+            if (fs.existsSync(serviceAccountPath)) {
+                console.log('[Firebase] Loading from service-account.json');
+                // Clear require cache to ensure fresh load
+                delete require.cache[require.resolve(serviceAccountPath)];
+                const serviceAccount = require(serviceAccountPath);
+                console.log('[Firebase] Service account loaded, project:', serviceAccount.project_id);
+                admin.initializeApp({
+                    credential: admin.credential.cert(serviceAccount),
+                    databaseURL: `https://${serviceAccount.project_id}.firebaseio.com`
+                });
+                console.log('[Firebase] Successfully initialized from file');
+            }
             // Check if we have individual environment variables (Vercel/Render)
-            if (process.env.FIREBASE_PROJECT_ID && process.env.FIREBASE_PRIVATE_KEY && process.env.FIREBASE_CLIENT_EMAIL) {
+            else if (process.env.FIREBASE_PROJECT_ID && process.env.FIREBASE_PRIVATE_KEY && process.env.FIREBASE_CLIENT_EMAIL) {
                 const serviceAccount = {
                     type: "service_account",
                     project_id: process.env.FIREBASE_PROJECT_ID,
