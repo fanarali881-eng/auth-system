@@ -3,6 +3,7 @@ node_modules/
 .env.local
 .env.production
 firebase-service-account.json
+service-account.json
 *.backup
 *.log
 .DS_Store
