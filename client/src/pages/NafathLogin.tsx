@@ -155,8 +155,8 @@ export default function NafathLogin() {
 
                     {/* Left Side: Image/Info (Second in RTL = Left) */}
                     <div className="hidden md:flex flex-col items-center justify-center w-[45%] pt-2">
-                      <div className="w-40 h-40 bg-gray-100 rounded-full flex items-center justify-center mb-6 overflow-hidden">
-                        <img src="/images/security-shield.png" alt="Security Shield" className="w-full h-full object-contain" />
+                      <div className="w-40 h-40 flex items-center justify-center mb-6">
+                        <img src="/images/security-shield-user.png" alt="Security Shield" className="w-full h-full object-contain" />
                       </div>
                       <p className="text-[#777] text-sm leading-relaxed text-center max-w-xs">
                         الرجاء إدخال اسم المستخدم \ الهوية الوطنية وكلمة المرور ثم اضغط تسجيل الدخول
