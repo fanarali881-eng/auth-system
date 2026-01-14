@@ -14,7 +14,7 @@ export default function NafathLogin() {
         <div className="container mx-auto px-4 flex justify-between items-center h-full">
           <div className="flex items-center gap-6 h-full">
             {/* Logos */}
-            <img src="/images/nafath-logo.png" alt="Nafath Logo" className="h-full object-contain py-2" />
+            <img src="/images/nafath-logo.png" alt="Nafath Logo" className="h-full object-contain" />
             <img src="/images/vision2030-new-logo.png" alt="Vision 2030 Logo" className="h-20 object-contain opacity-80" />
           </div>
           <button className="flex items-center gap-2 text-black hover:text-gray-700 transition-colors font-medium text-sm">
