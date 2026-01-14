@@ -11,13 +11,13 @@ export default defineConfig({
   plugins,
   resolve: {
     alias: {
-      "@": path.resolve(import.meta.dirname, "src"),
+      "@": path.resolve(import.meta.dirname, "client", "src"),
       "@shared": path.resolve(import.meta.dirname, "shared"),
     },
   },
-  root: process.cwd(),
+  root: path.resolve(import.meta.dirname, "client"), // Set root to client folder
   build: {
-    outDir: "dist",
+    outDir: "../dist", // Output to dist folder in project root
     emptyOutDir: true,
   },
 });
